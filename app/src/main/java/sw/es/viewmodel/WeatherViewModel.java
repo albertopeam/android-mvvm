@@ -18,7 +18,7 @@ public class WeatherViewModel implements ViewModel {
 
     @Override
     public void destroy() {
-
+        weatherListener = null;
     }
 
     public interface WeatherListener {

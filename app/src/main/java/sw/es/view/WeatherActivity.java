@@ -14,7 +14,7 @@ import sw.es.viewmodel.WeatherViewModel;
 
 public class WeatherActivity extends AppCompatActivity implements WeatherViewModel.WeatherListener {
 
-    private  
+    //private W
     private WeatherViewModel viewModel;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
@@ -22,13 +22,15 @@ public class WeatherActivity extends AppCompatActivity implements WeatherViewMod
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
+        //TODO:
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
         viewModel = new WeatherViewModel(this);
         setSupportActionBar(toolbar);
     }
+
 
     @Override
     public void onWeatherChanged(List<Weather> weatherList) {

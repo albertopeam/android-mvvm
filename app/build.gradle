@@ -47,4 +47,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.trello:rxlifecycle:0.3.0'
     compile 'com.trello:rxlifecycle-components:0.3.0'
+
+    //datetime
+    compile 'joda-time:joda-time:2.8.2'
 }
