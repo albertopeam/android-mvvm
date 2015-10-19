@@ -1,13 +1,9 @@
-package es.sw.repositorysample.repository.weather;
+package sw.es.repository.weather;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import es.sw.repositorysample.repository.criteria.FetchCriteria;
-import es.sw.repositorysample.repository.criteria.StoreCriteria;
-import es.sw.repositorysample.repository.exceptions.NoMoreCriteriaException;
-import es.sw.repositorysample.repository.interfaces.DataStore;
-import es.sw.repositorysample.repository.outdate.WeatherOutdate;
+import sw.es.repository.interfaces.Outdate;
 
 /**
  * Created by albertopenasamor on 27/5/15.
@@ -21,7 +17,7 @@ public class WeatherDataStoreFactory {
     private WeatherOutdate weatherOutdate;
 
     @Inject
-    public WeatherDataStoreFactory(CloudWeatherDataStore cloudWeatherDataStore, DatabaseWeatherDataStore databaseWeatherDataStore, WeatherOutdate weatherOutdate) {
+    public WeatherDataStoreFactory(CloudWeatherDataStore cloudWeatherDataStore, DatabaseWeatherDataStore databaseWeatherDataStore, Outdate outdate) {
         this.cloudWeatherDataStore = cloudWeatherDataStore;
         this.databaseWeatherDataStore = databaseWeatherDataStore;
         this.weatherOutdate = weatherOutdate;
