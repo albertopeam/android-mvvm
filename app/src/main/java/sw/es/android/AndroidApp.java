@@ -4,8 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import sw.es.dagger2.BuildConfig;
-import sw.es.di.ApplicationComponent;
-import sw.es.di.ApplicationModule;
+import sw.es.di.component.ApplicationComponent;
+import sw.es.di.module.ApplicationModule;
 import sw.es.di.DaggerApplicationComponent;
 
 /**

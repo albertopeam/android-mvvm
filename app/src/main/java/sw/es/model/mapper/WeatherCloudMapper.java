@@ -2,7 +2,7 @@ package sw.es.model.mapper;
 
 
 import sw.es.model.local.Weather;
-import sw.es.model.api.WeatherCloud;
+import sw.es.model.backend.model.WeatherCloud;
 import sw.es.model.mapper.interfaces.CloudMapper;
 
 /**

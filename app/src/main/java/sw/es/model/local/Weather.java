@@ -6,7 +6,6 @@ package sw.es.model.local;
 public class Weather {
 
     private long id;
-    private long remoteId;
     private double latitude;
     private double longitude;
     private double temp;
@@ -20,9 +19,6 @@ public class Weather {
         return id;
     }
 
-    public long getRemoteId() {
-        return remoteId;
-    }
 
     public double getLatitude() {
         return latitude;
@@ -50,10 +46,6 @@ public class Weather {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setRemoteId(long remoteId) {
-        this.remoteId = remoteId;
     }
 
     public void setLatitude(double latitude) {
