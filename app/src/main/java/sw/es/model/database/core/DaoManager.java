@@ -1,10 +1,11 @@
-package es.sw.activerecordapp.database.core;
+package sw.es.model.database.core;
 
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
-import es.sw.activerecordapp.database.model.Entity;
+import sw.es.model.database.model.Entity;
+
 
 /**
  * Created by alberto on 27/9/15.

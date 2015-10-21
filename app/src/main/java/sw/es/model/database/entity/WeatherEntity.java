@@ -12,10 +12,15 @@ import sw.es.model.database.model.Entity;
 @DatabaseTable
 public class WeatherEntity extends Entity {
 
-    public static final String REMOTE_ID = "remote_id";
+    public static final String COLUMN_REMOTE_ID = "remote_id";
+    public static final String COLUMN_NAME = "name";
 
-    @DatabaseField(id = true, columnName =  REMOTE_ID)
+
+    @DatabaseField(id = true, columnName = COLUMN_REMOTE_ID)
     private long remoteId;
+
+    @DatabaseField(columnName = COLUMN_NAME)
+    private String name;
 
     @DatabaseField
     private double latitude;

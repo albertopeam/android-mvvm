@@ -1,9 +1,10 @@
-package es.sw.activerecordapp.database.core;
+package sw.es.model.database.core;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 
-import es.sw.activerecordapp.database.exception.DatabaseNotInitializedException;
+import sw.es.model.database.exception.DatabaseNotInitializedException;
+
 
 /**
  * Created by alberto on 29/9/15.

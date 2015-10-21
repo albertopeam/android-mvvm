@@ -1,4 +1,4 @@
-package es.sw.activerecordapp.database.core;
+package sw.es.model.database.core;
 
 import com.j256.ormlite.dao.Dao;
 
