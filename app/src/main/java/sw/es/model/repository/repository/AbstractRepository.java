@@ -2,52 +2,70 @@ package sw.es.model.repository.repository;
 
 import rx.Observable;
 import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import sw.es.model.repository.callback.FetchCallback;
 import sw.es.model.repository.criteria.FetchCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
-import sw.es.model.repository.datastore.AbsDataStoreFactory;
 import sw.es.model.repository.datastore.DataStore;
+import sw.es.model.repository.datastore.DataStoreFactory;
+import sw.es.model.repository.exceptions.NoMoreCriteriaException;
+import sw.es.model.repository.exceptions.NotFoundInRepositoryException;
 
 
 /**
  * Created by albertopenasamor on 27/5/15.
  */
+//TODO: gestionar la parada de los observables....Subscription....
 public class AbstractRepository<Model, Params> implements Repository<Model, Params> {
 
 
-    private AbsDataStoreFactory<Model> absDataStoreFactory;
-    private Scheduler scheduler;
+    private DataStoreFactory dataStoreFactory;
+    private Scheduler publishScheduler;
 
 
-    public AbstractRepository(AbsDataStoreFactory<Model> absDataStoreFactory, Scheduler scheduler) {
-        this.absDataStoreFactory = absDataStoreFactory;
-        this.scheduler = scheduler;
+    public AbstractRepository(DataStoreFactory dataStoreFactory, Scheduler publishScheduler) {
+        this.dataStoreFactory = dataStoreFactory;
+        this.publishScheduler = publishScheduler;
     }
 
-    //TODO: LIKE SOURCE TREE!!!! is a repo
-    JODIDO LOS OBSERVABLES!!!!
-    todo: no tiene sentido devolver observable + callback
 
     @Override
-    public Observable<Model> fetch(Params params, FetchCriteria fetchCriteria, final FetchCallback<Model, Params> callback) {
-        DataStore weatherDataStore = absDataStoreFactory.get(fetchCriteria);
-        Observable<Model> modelObservable = weatherDataStore.fetch(params);
-        modelObservable.subscribeOn(scheduler)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
-        //TODO: null => next criteria, dejar tirar con null, la idea es hacerlo recursivo y si da weatherDataStore == null => devolver al callback un vacio
-
-        //TODO: error => callback error
+    public void fetch(final Params params,final FetchCriteria fetchCriteria, final FetchCallback<Model, Params> callback) {
+        DataStore dataStore = dataStoreFactory.get(fetchCriteria);
+        Observable<Model> fetchObservable = dataStore.fetch(params);
+        fetchObservable.subscribeOn(publishScheduler)
+                .subscribe(new Action1<Model>() {
+                    @Override
+                    public void call(Model model) {
+                        callback.onFetch(params, fetchCriteria, model);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        if (throwable instanceof NotFoundInRepositoryException) {
+                            try {
+                                FetchCriteria newFetchCriteria = fetchCriteria.next();
+                                fetch(params, newFetchCriteria, callback);
+                            } catch (NoMoreCriteriaException e) {
+                                callback.onFetchError(params, fetchCriteria, e);
+                            }
+                        }else{
+                            callback.onFetchError(params, fetchCriteria, throwable);
+                        }
+                    }
+                });
     }
+
 
     @Override
     public Observable<Model> pull(Params params, FetchCriteria fetchCriteria) {
+        todo
         return null;
     }
 
     @Override
     public Observable<Boolean> commit(Model model, StoreCriteria storeCriteria) {
+        todo
         return null;
     }
 
@@ -55,6 +73,5 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
     public Observable<Boolean> push(Model model, StoreCriteria storeCriteria) {
         return null;
     }
-
 
 }

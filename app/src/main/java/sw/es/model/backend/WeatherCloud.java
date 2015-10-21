@@ -73,4 +73,39 @@ public class WeatherCloud {
         public long sunrise;
         public long sunset;
     }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name!= null?name:"";
+    }
+
+    public double getLatitude(){
+        return coord != null?coord.lat:0d;
+    }
+
+    public double getLongitude(){
+        return coord != null?coord.lon:0d;
+    }
+
+
+    public double getHumidity(){
+        return main != null?main.humidity:0d;
+    }
+
+    public double getPressure(){
+        return main != null?main.pressure:0d;
+    }
+
+    public double getTemp(){
+        return main != null?main.temp:0d;
+    }
+
+    public double getWindSpeed(){
+        return wind != null?wind.speed:0d;
+    }
+
 }

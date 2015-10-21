@@ -21,8 +21,9 @@ public class FetchCriteria {
         return fetchCriteriaEnum.isNewData();
     }
 
-    public void next() throws NoMoreCriteriaException {
+    public FetchCriteria next() throws NoMoreCriteriaException {
         fetchCriteriaEnum = fetchCriteriaEnum.next(fetchCriteriaEnum);
+        return this;
     }
 
     public enum FetchCriteriaEnum {

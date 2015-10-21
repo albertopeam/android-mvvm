@@ -8,7 +8,7 @@ import sw.es.model.repository.outdate.Outdate;
 /**
  * Created by alberto on 19/10/15.
  */
-public class AbsDataStoreFactory<Model> implements DataStoreFactory {
+public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
 
 
     private CloudDataStore<Model>cloudDataStore;

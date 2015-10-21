@@ -11,7 +11,6 @@ import sw.es.model.backend.WeatherCloud;
  */
 public interface WeatherBackendAPI {
 
-    //TODO: registrarse, necesario api key: esta es de prueba....
-    @GET("lat={latitude}&lon={longitude}&appid=bd82977b86bf27fb59a04b61b657fb6f")
-    Observable<WeatherCloud> fetchWeather(@Path("latitude") double latitude, @Path("longitude") double longitude);
+    @GET("q={name}&appid=9186b8e5715f961fed5d4482516bc296")
+    Observable<WeatherCloud> fetchWeather(@Path("name") String name);
 }

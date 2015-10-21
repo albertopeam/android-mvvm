@@ -16,8 +16,9 @@ public class WeatherOutdate implements Outdate<Long> {
 
     private static final String SHARED_PREFERENCES = "shared_preferences";
     private static final String KEY_WEATHER_ID = "key_weather_id:";
+    todo, descoplar las shared.... en un objeto más bonico
     private int minutesBeforeExpire;
-    private Context context;
+    private SharedPreferences context;
 
     public WeatherOutdate(Context context, int minutesBeforeExpire) {
         this.context = context;
