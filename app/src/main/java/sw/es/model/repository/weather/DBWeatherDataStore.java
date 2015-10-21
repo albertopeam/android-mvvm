@@ -16,6 +16,7 @@ public class DBWeatherDataStore implements DataStore<Weather, String> {
 
     todo: seguir aqui
     todo: traerme lib nueva de db
+    todo: meter en el app la init de db
 
     private Scheduler executionScheduler;
 
