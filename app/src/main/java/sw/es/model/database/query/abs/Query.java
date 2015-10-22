@@ -1,4 +1,4 @@
-package es.sw.activerecordapp.database.query.abs;
+package sw.es.model.database.query.abs;
 
 /**
  * Created by alberto on 12/10/15.

@@ -1,6 +1,7 @@
-package es.sw.activerecordapp.database.query.abs;
+package sw.es.model.database.query.abs;
 
-import es.sw.activerecordapp.database.core.DaoManager;
+
+import sw.es.model.database.core.DaoManager;
 
 /**
  * Created by alberto on 18/10/15.

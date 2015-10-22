@@ -1,4 +1,4 @@
-package es.sw.activerecordapp.database.exception;
+package sw.es.model.database.exception;
 
 /**
  * Created by alberto on 29/9/15.

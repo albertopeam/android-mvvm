@@ -1,10 +1,15 @@
 package sw.es.model.repository.weather;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Scheduler;
+import rx.functions.Func1;
+import sw.es.model.database.entity.WeatherEntity;
+import sw.es.model.database.rxquery.RxWhere;
 import sw.es.model.local.Weather;
 import sw.es.model.repository.datastore.DataStore;
 
@@ -15,8 +20,6 @@ import sw.es.model.repository.datastore.DataStore;
 public class DBWeatherDataStore implements DataStore<Weather, String> {
 
     todo: seguir aqui
-    todo: traerme lib nueva de db
-    todo: meter en el app la init de db
 
     private Scheduler executionScheduler;
 
@@ -28,7 +31,23 @@ public class DBWeatherDataStore implements DataStore<Weather, String> {
 
     @Override
     public Observable<Weather> fetch(String s) {
-        return null;
+        RxWhere<WeatherEntity>rxWhere = new RxWhere<>(WeatherEntity.class, WeatherEntity.COLUMN_NAME, s);
+        return rxWhere.run()
+                .flatMap(new Func1<List<WeatherEntity>, Observable<WeatherEntity>>() {
+                    @Override
+                    public Observable<WeatherEntity> call(List<WeatherEntity> weatherEntities) {
+                        todo
+                        return null;
+                    }
+                })
+                .flatMap(new Func1<WeatherEntity, Observable<Weather>>() {
+                    @Override
+                    public Observable<Weather> call(WeatherEntity weatherEntity) {
+                        todo
+                        return null;
+                    }
+                })
+                .subscribeOn(executionScheduler);
     }
 
     @Override

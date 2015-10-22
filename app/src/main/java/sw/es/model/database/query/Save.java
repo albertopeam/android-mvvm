@@ -1,11 +1,12 @@
-package es.sw.activerecordapp.database.query;
+package sw.es.model.database.query;
 
 import com.j256.ormlite.dao.Dao;
 
-import es.sw.activerecordapp.database.core.CreateOrUpdateHelper;
-import es.sw.activerecordapp.database.core.DaoManager;
-import es.sw.activerecordapp.database.model.Entity;
-import es.sw.activerecordapp.database.query.abs.AbstractQuery;
+import sw.es.model.database.core.CreateOrUpdateHelper;
+import sw.es.model.database.core.DaoManager;
+import sw.es.model.database.model.Entity;
+import sw.es.model.database.query.abs.AbstractQuery;
+
 
 /**
  * Created by alberto on 18/10/15.
