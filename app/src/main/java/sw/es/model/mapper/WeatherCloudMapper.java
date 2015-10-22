@@ -3,12 +3,12 @@ package sw.es.model.mapper;
 
 import sw.es.model.backend.WeatherCloud;
 import sw.es.model.local.Weather;
-import sw.es.model.mapper.interfaces.CloudMapper;
+import sw.es.model.mapper.interfaces.Mapper;
 
 /**
  * Created by albertopenasamor on 27/5/15.
  */
-public class WeatherCloudMapper implements CloudMapper<WeatherCloud, Weather> {
+public class WeatherCloudMapper implements Mapper<WeatherCloud, Weather> {
 
     public Weather map(WeatherCloud weatherCloud) {
         Weather weather = new Weather();
@@ -21,5 +21,10 @@ public class WeatherCloudMapper implements CloudMapper<WeatherCloud, Weather> {
         weather.setTemp(weatherCloud.getTemp());
         weather.setWindSpeed(weatherCloud.getWindSpeed());
         return weather;
+    }
+
+    @Override
+    public WeatherCloud remap(Weather weather) {
+        throw new UnsupportedOperationException();
     }
 }

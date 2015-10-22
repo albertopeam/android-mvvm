@@ -16,7 +16,7 @@ public class Weather {
 
     public Weather() {}
 
-    public long getId() {
+    public long getRemoteId() {
         return id;
     }
 

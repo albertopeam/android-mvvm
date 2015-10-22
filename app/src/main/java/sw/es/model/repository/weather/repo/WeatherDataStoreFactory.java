@@ -1,4 +1,4 @@
-package sw.es.model.repository.weather;
+package sw.es.model.repository.weather.repo;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package sw.es.model.repository.exceptions;
+package sw.es.model.repository.exception;
 
 /**
  * Created by albertopenasamor on 28/5/15.

@@ -1,4 +1,4 @@
-package sw.es.viewmodel;
+package sw.es.viewmodel.abs;
 
 /**
  * Interface that every ViewModel must implement

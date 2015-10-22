@@ -1,8 +1,8 @@
 package sw.es.model.repository.datastore;
 
-import sw.es.model.repository.criteria.FetchCriteria;
+import sw.es.model.repository.criteria.LoadCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
-import sw.es.model.repository.exceptions.NoMoreCriteriaException;
+import sw.es.model.repository.exception.NoMoreCriteriaException;
 import sw.es.model.repository.outdate.Outdate;
 
 /**
@@ -23,18 +23,19 @@ public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
     }
 
     @Override
-    public DataStore get(FetchCriteria fetchCriteria) {
-        if (fetchCriteria.getFetchCriteria().name().equals(FetchCriteria.FetchCriteriaEnum.GET.name())) {
+    public DataStore get(LoadCriteria loadCriteria) {
+        if (loadCriteria.getFetchCriteria().name().equals(LoadCriteria.FetchCriteriaEnum.GET.name())) {
             if (outdate.isExpired()) {
                 try {
-                    fetchCriteria.next();
+                    loadCriteria.next();
                 } catch (NoMoreCriteriaException e) {
                     e.printStackTrace();
+                    return dbDataStore;
                 }
                 return cloudDataStore;
             }
             return dbDataStore;
-        } else if (fetchCriteria.getFetchCriteria().name().equals(FetchCriteria.FetchCriteriaEnum.REFRESH.name())) {
+        } else if (loadCriteria.getFetchCriteria().name().equals(LoadCriteria.FetchCriteriaEnum.REFRESH.name())) {
             return cloudDataStore;
         } else {
             throw new IllegalArgumentException();

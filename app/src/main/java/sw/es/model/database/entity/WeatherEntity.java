@@ -71,6 +71,9 @@ public class WeatherEntity extends Entity {
         return windSpeed;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void setRemoteId(long remoteId) {
         this.remoteId = remoteId;
@@ -98,5 +101,9 @@ public class WeatherEntity extends Entity {
 
     public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
