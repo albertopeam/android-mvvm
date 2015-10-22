@@ -15,29 +15,24 @@
  */
 package sw.es.di.module;
 
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import sw.es.model.sharedprefs.AppShared;
+import sw.es.model.sharedprefs.SharedPrefs;
 
 @Module
-public class SchedulerModule {
+public class AppSharedModule {
 
-    public SchedulerModule() {}
-
-    @Provides
-    @Singleton
-    Scheduler provideSchedulerExecution() {
-        return Schedulers.io();
-    }
-
+    public AppSharedModule() {}
 
     @Provides
     @Singleton
-    Scheduler provideSchedulerPublish() {
-        return AndroidSchedulers.mainThread();
+    AppShared provideSharedPreferences(Context context) {
+        return new SharedPrefs(context);
     }
+
 }

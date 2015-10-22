@@ -8,7 +8,5 @@ import rx.Observable;
  */
 public interface DataStore<Model, Params> {
     Observable<Model> fetch(Params params);
-    Observable<Model> pull(Params params);
     Observable<Boolean> commit(Model model);
-    Observable<Boolean> push(Model model);
 }

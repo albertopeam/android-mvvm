@@ -15,6 +15,8 @@
  */
 package sw.es.di.component;
 
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -27,13 +29,6 @@ import sw.es.di.module.ApplicationModule;
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
-  void inject(AndroidApp androidApp);
-//
-//  //Exposed to sub-graphs.
-//  Context provideAppContext();
-//  Navigator provideNavigator();
-//  Executor provideThreadExecutor();
-//  MainThread provideMainThread();
-//  NetworkUtil provideNetworkUtil();
-//  OkHttp provideOkHttp();
+    void inject(AndroidApp androidApp);
+    Context provideAppContext();
 }

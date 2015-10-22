@@ -54,19 +54,9 @@ public class CloudWeatherDataStore implements DataStore<Weather, String> {
         return weatherObservable;
     }
 
-    @Override
-    public Observable<Weather> pull(String s) {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public Observable<Boolean> commit(Weather weather) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    @Override
-    public Observable<Boolean> push(Weather weather) {
         throw new UnsupportedOperationException();
     }
 }

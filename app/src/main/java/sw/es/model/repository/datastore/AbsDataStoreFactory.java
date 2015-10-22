@@ -8,15 +8,15 @@ import sw.es.model.repository.outdate.Outdate;
 /**
  * Created by alberto on 19/10/15.
  */
-public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
+public abstract class AbsDataStoreFactory implements DataStoreFactory {
 
 
-    private CloudDataStore<Model>cloudDataStore;
-    private DBDataStore<Model>dbDataStore;
-    private Outdate<Model> outdate;
+    private CloudDataStore cloudDataStore;
+    private DBDataStore dbDataStore;
+    private Outdate outdate;
 
 
-    public AbsDataStoreFactory(CloudDataStore<Model> cloudDataStore, DBDataStore<Model> dbDataStore, Outdate<Model>outdate) {
+    public AbsDataStoreFactory(CloudDataStore cloudDataStore, DBDataStore dbDataStore, Outdate outdate) {
         this.cloudDataStore = cloudDataStore;
         this.dbDataStore = dbDataStore;
         this.outdate = outdate;
@@ -24,7 +24,7 @@ public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
 
     @Override
     public DataStore get(LoadCriteria loadCriteria) {
-        if (loadCriteria.getFetchCriteria().name().equals(LoadCriteria.FetchCriteriaEnum.GET.name())) {
+        if (loadCriteria.isGet()) {
             if (outdate.isExpired()) {
                 try {
                     loadCriteria.next();
@@ -35,7 +35,7 @@ public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
                 return cloudDataStore;
             }
             return dbDataStore;
-        } else if (loadCriteria.getFetchCriteria().name().equals(LoadCriteria.FetchCriteriaEnum.REFRESH.name())) {
+        } else if (loadCriteria.isRefresh()) {
             return cloudDataStore;
         } else {
             throw new IllegalArgumentException();
@@ -44,7 +44,7 @@ public abstract class AbsDataStoreFactory<Model> implements DataStoreFactory {
 
     @Override
     public DataStore get(StoreCriteria storeCriteria) {
-        if (storeCriteria.name().equals(StoreCriteria.SAVE.name())) {
+        if (storeCriteria.isCommit()) {
             return cloudDataStore;
         } else {
             throw new IllegalArgumentException();

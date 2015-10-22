@@ -40,4 +40,14 @@ public class LoadCriteria {
             throw new NoMoreCriteriaException();
         }
     }
+
+
+    public boolean isGet(){
+        return type == GET;
+    }
+
+
+    public boolean isRefresh(){
+        return type == REFRESH;
+    }
 }

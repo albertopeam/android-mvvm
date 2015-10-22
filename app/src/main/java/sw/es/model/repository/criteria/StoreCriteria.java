@@ -36,4 +36,8 @@ public class StoreCriteria {
             throw new NoMoreCriteriaException();
         }
     }
+
+    public boolean isCommit(){
+        return type == COMMIT;
+    }
 }

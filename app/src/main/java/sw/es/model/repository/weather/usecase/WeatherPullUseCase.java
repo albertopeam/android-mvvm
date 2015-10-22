@@ -5,13 +5,13 @@ import javax.inject.Singleton;
 
 import sw.es.model.local.Weather;
 import sw.es.model.repository.repository.Repository;
-import sw.es.model.repository.usecase.FetchUseCase;
+import sw.es.model.repository.usecase.PullUseCase;
 
 /**
  * Created by albertopenasamor on 22/10/15.
  */
 @Singleton
-public class WeatherPullUseCase extends FetchUseCase<Weather, String> {
+public class WeatherPullUseCase extends PullUseCase<Weather, String> {
 
     @Inject
     public WeatherPullUseCase(Repository<Weather, String> repository) {

@@ -6,8 +6,8 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import sw.es.dagger2.BuildConfig;
-import sw.es.di.DaggerApplicationComponent;
 import sw.es.di.component.ApplicationComponent;
+import sw.es.di.component.DaggerApplicationComponent;
 import sw.es.di.module.ApplicationModule;
 import sw.es.model.database.DatabaseHelper;
 import sw.es.model.database.core.DatabaseManager;
@@ -48,7 +48,6 @@ public class AndroidApp extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         applicationComponent.inject(this);
-
     }
 
     public ApplicationComponent getApplicationComponent() {

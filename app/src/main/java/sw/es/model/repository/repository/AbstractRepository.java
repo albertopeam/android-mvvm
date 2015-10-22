@@ -14,7 +14,8 @@ import sw.es.model.repository.exception.NotFoundInDataStoreException;
 /**
  * Created by albertopenasamor on 22/10/15.
  */
-//TODO: gestionar la parada de los observables....Subscription....
+//TODO: gestionar la parada de los observables....Subscription.... OPCION: que lo gestione el caso de uso, y así se cancela desde afuera. sin guardar listas ni nada aquí dentro... QUIZA LA MEJOR
+//TODO: not implemented dataStore save for other than db
 public class AbstractRepository<Model, Params> implements Repository<Model, Params> {
 
 
@@ -32,7 +33,8 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
     public void fetch(final Params params,final LoadCriteria loadCriteria, final FetchCallback<Model, Params> callback) {
         DataStore dataStore = dataStoreFactory.get(loadCriteria);
         Observable<Model> fetchObservable = dataStore.fetch(params);
-        fetchObservable.subscribeOn(publishScheduler)
+        fetchObservable
+                .observeOn(publishScheduler)
                 .subscribe(new Action1<Model>() {
                     @Override
                     public void call(Model model) {
@@ -55,22 +57,23 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                 });
     }
 
-
     @Override
-    public Observable<Model> pull(Params params, LoadCriteria loadCriteria) {
-        throw new UnsupportedOperationException();
-        //TODO: 2 ops de nivel de abstracción repo, mejor eliminar
-    }
-
-    @Override
-    public void commit(Model model, StoreCriteria storeCriteria, CommitCallback<Model, Params>callback) {
-        //TODO: 1 op de nivel de abstracción datastore, (salva en los datastore locales....)
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Observable<Boolean> push(Model model, StoreCriteria storeCriteria) {
-        throw new UnsupportedOperationException();
+    public void commit(Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
+        DataStore dataStore = dataStoreFactory.get(storeCriteria);
+        Observable<Boolean> storeObservable = dataStore.commit(model);
+        storeObservable
+                .observeOn(publishScheduler)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean result) {
+                        callback.onCommit(storeCriteria, result);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onCommitError(storeCriteria, throwable);
+                    }
+                });
     }
 
 }

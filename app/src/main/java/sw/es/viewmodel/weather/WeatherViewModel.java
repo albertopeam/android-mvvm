@@ -43,7 +43,7 @@ public class WeatherViewModel implements AbsWeatherViewModel {
 
     @Override
     public void load() {
-
+        //TODO: buscar las habituales y tirar un pull!!!
     }
 
     @Override
@@ -58,7 +58,9 @@ public class WeatherViewModel implements AbsWeatherViewModel {
 
             @Override
             public void onResultError(String s, Throwable throwable) {
-
+                if (hasView()) {
+                    weatherListener.onWeatherError(throwable);
+                }
             }
         });
     }
