@@ -63,7 +63,7 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
     }
 
     @Override
-    public Observable<Boolean> commit(Model model, StoreCriteria storeCriteria) {
+    public void commit(Model model, StoreCriteria storeCriteria, CommitCallback<Model, Params>callback) {
         //TODO: 1 op de nivel de abstracción datastore, (salva en los datastore locales....)
         throw new UnsupportedOperationException();
     }

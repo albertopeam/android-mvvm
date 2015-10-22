@@ -23,7 +23,7 @@ public class FetchUseCase<Model, Params> implements UseCase<Params>{
 
     @Override
     public void run(Params params, final UseCaseCallback callback) {
-        repository.fetch(params, LoadCriteria.newFetch(), new FetchCallback<Model, Params>() {
+        repository.fetch(params, LoadCriteria.newGet(), new FetchCallback<Model, Params>() {
             @Override
             public void onFetch(Params params, LoadCriteria loadCriteria, Model model) {
                 callback.onResult(params, model);

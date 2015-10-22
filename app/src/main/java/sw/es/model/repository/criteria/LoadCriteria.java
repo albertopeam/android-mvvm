@@ -8,18 +8,18 @@ import sw.es.model.repository.exception.NoMoreCriteriaException;
 public class LoadCriteria {
 
 
-    private static final int FETCH = 0;
-    private static final int PULL = FETCH + 1;
+    private static final int GET = 0;
+    private static final int REFRESH = GET + 1;
     private int type;
 
 
-    public static LoadCriteria newFetch(){
-        return new LoadCriteria(FETCH);
+    public static LoadCriteria newGet(){
+        return new LoadCriteria(GET);
     }
 
 
-    public static LoadCriteria newPull(){
-        return new LoadCriteria(PULL);
+    public static LoadCriteria newRefresh(){
+        return new LoadCriteria(REFRESH);
     }
 
 
@@ -29,13 +29,13 @@ public class LoadCriteria {
 
 
     public boolean isNewData(){
-        return type == PULL;
+        return type == REFRESH;
     }
 
 
     public LoadCriteria next() throws NoMoreCriteriaException {
-        if (type == FETCH){
-            return newPull();
+        if (type == GET){
+            return newRefresh();
         }else{
             throw new NoMoreCriteriaException();
         }
