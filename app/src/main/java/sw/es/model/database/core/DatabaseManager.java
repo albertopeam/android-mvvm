@@ -9,7 +9,7 @@ import sw.es.model.database.exception.DatabaseNotInitializedException;
 /**
  * Created by alberto on 29/9/15.
  */
-todo: hacer modulo e inyectar. no hace falta.... por ahora
+//TODO: hacer modulo e inyectar. no hace falta.... por ahora
 public class DatabaseManager {
 
     private static DatabaseManager databaseManager;

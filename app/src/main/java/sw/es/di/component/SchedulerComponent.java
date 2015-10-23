@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import rx.Scheduler;
+import sw.es.di.common.Named;
 import sw.es.di.module.SchedulerModule;
 
 /**
@@ -16,6 +17,6 @@ import sw.es.di.module.SchedulerModule;
         }
 )
 public interface SchedulerComponent {
-    Scheduler provideSchedulerExecution();
-    Scheduler provideSchedulerPublish();
+    @Named(SchedulerModule.EXECUTION) Scheduler provideSchedulerExecution();
+    @Named(SchedulerModule.PUBLISH) Scheduler provideSchedulerPublish();
 }

@@ -17,7 +17,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import sw.es.dagger2.R;
 import sw.es.model.local.Weather;
-import sw.es.viewmodel.weather.AbsWeatherViewModel;
 import sw.es.viewmodel.weather.WeatherListener;
 import sw.es.viewmodel.weather.WeatherViewModel;
 
@@ -25,8 +24,9 @@ import sw.es.viewmodel.weather.WeatherViewModel;
 public class WeatherActivity extends AppCompatActivity implements WeatherListener, SearchView.OnQueryTextListener {
 
 
-    @Inject AbsWeatherViewModel viewModel;
+    @Inject WeatherViewModel viewModel;
     @Bind(R.id.toolbar) Toolbar toolbar;
+    //TODO: el search view quizas se puede redirigir al viewmodel, aunque está en el toolbar....en los menús....igual tiene que quedar aquí
     SearchView searchView;
 
 
@@ -42,6 +42,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherListene
         inject();
         initViewModel();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +67,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherListene
         //TODO: binding... comunication
     }
 
+
     @Override
     public void onWeatherError(Throwable throwable) {
         //TODO: error, si no hay nada...o snack...no se
@@ -78,11 +80,10 @@ public class WeatherActivity extends AppCompatActivity implements WeatherListene
 
 
     private void initViewModel() {
-        //TODO: temp, before make inyections
-        viewModel = new WeatherViewModel(null, null);
         viewModel.setup(this);
         viewModel.load();
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -94,6 +95,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherListene
         viewModel.fetch(query);
         return true;
     }
+
 
     @Override
     public boolean onQueryTextChange(String newText) {

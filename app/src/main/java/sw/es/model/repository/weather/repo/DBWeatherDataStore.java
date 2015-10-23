@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Scheduler;
@@ -13,15 +12,14 @@ import sw.es.model.database.entity.WeatherEntity;
 import sw.es.model.database.rxquery.RxWhere;
 import sw.es.model.local.Weather;
 import sw.es.model.mapper.WeatherEntityMapper;
-import sw.es.model.repository.datastore.DataStore;
+import sw.es.model.repository.datastore.DBDataStore;
 import sw.es.model.repository.exception.NotFoundInDBDataStoreException;
 import sw.es.model.rx.ObservableCreator;
 
 /**
  * Created by albertopenasamor on 27/5/15.
  */
-@Singleton
-public class DBWeatherDataStore implements DataStore<Weather, String> {
+public class DBWeatherDataStore extends DBDataStore<Weather, String> {
 
 
     private Scheduler executionScheduler;

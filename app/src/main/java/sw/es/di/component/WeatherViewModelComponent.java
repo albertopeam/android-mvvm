@@ -1,27 +1,28 @@
 package sw.es.di.component;
 
-import javax.inject.Singleton;
-
 import dagger.Component;
+import sw.es.di.common.PerActivity;
 import sw.es.di.module.AppSharedModule;
 import sw.es.di.module.NetworkModule;
 import sw.es.di.module.SchedulerModule;
-import sw.es.model.sharedprefs.AppShared;
+import sw.es.view.WeatherActivity;
+import sw.es.viewmodel.weather.WeatherViewModel;
 
 /**
  * Created by albertopenasamor on 22/10/15.
  */
-@Singleton
+@PerActivity
 @Component(
+        dependencies = {
+                ApplicationComponent.class
+        },
         modules = {
                 NetworkModule.class,
                 SchedulerModule.class,
                 AppSharedModule.class
-        },
-        dependencies = {
-                ApplicationComponent.class
         }
 )
-public interface WeatherRepositoryComponent {
-    AppShared provideAppShared();
+public interface WeatherViewModelComponent {
+    void inject(WeatherActivity weatherActivity);
+    WeatherViewModel provideWeatherViewModel();
 }

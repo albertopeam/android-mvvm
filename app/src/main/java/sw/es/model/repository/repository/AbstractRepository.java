@@ -9,6 +9,7 @@ import sw.es.model.repository.datastore.DataStore;
 import sw.es.model.repository.datastore.DataStoreFactory;
 import sw.es.model.repository.exception.NoMoreCriteriaException;
 import sw.es.model.repository.exception.NotFoundInDataStoreException;
+import sw.es.model.repository.outdate.Outdate;
 
 
 /**
@@ -19,19 +20,21 @@ import sw.es.model.repository.exception.NotFoundInDataStoreException;
 public class AbstractRepository<Model, Params> implements Repository<Model, Params> {
 
 
-    private DataStoreFactory dataStoreFactory;
+    private DataStoreFactory<Params> dataStoreFactory;
+    private Outdate<Params, Model>outdate;
     private Scheduler publishScheduler;
 
 
-    public AbstractRepository(DataStoreFactory dataStoreFactory, Scheduler publishScheduler) {
+    public AbstractRepository(DataStoreFactory<Params> dataStoreFactory, Outdate<Params, Model> outdate, Scheduler publishScheduler) {
         this.dataStoreFactory = dataStoreFactory;
+        this.outdate = outdate;
         this.publishScheduler = publishScheduler;
     }
 
 
     @Override
     public void fetch(final Params params,final LoadCriteria loadCriteria, final FetchCallback<Model, Params> callback) {
-        DataStore dataStore = dataStoreFactory.get(loadCriteria);
+        DataStore dataStore = dataStoreFactory.get(loadCriteria, params);
         Observable<Model> fetchObservable = dataStore.fetch(params);
         fetchObservable
                 .observeOn(publishScheduler)
@@ -58,7 +61,7 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
     }
 
     @Override
-    public void commit(Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
+    public void commit(final Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
         DataStore dataStore = dataStoreFactory.get(storeCriteria);
         Observable<Boolean> storeObservable = dataStore.commit(model);
         storeObservable
@@ -66,7 +69,11 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean result) {
+                        if (result){
+                            outdate.setLastUpdate(model);
+                        }
                         callback.onCommit(storeCriteria, result);
+
                     }
                 }, new Action1<Throwable>() {
                     @Override
