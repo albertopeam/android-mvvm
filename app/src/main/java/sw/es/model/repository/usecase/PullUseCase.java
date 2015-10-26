@@ -46,6 +46,8 @@ public class PullUseCase<Model, Params> implements UseCase<Params>{
                             callback.onResultError(params, throwable);
                         }
                     });
+                }else{
+                    callback.onResult(params, model);
                 }
             }
 

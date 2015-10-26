@@ -2,37 +2,31 @@ package sw.es.model.repository.datastore;
 
 import sw.es.model.repository.criteria.LoadCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
-import sw.es.model.repository.exception.NoMoreCriteriaException;
+import sw.es.model.repository.exception.CriteriaExpiredException;
 import sw.es.model.repository.outdate.Outdate;
 
 /**
  * Created by alberto on 19/10/15.
  */
-public abstract class AbsDataStoreFactory implements DataStoreFactory {
+public class AbsDataStoreFactory<Model, Params> implements DataStoreFactory<Params> {
 
 
-    private CloudDataStore cloudDataStore;
-    private DBDataStore dbDataStore;
-    private Outdate outdate;
+    private CloudDataStore<Model, Params> cloudDataStore;
+    private DBDataStore<Model, Params> dbDataStore;
+    private Outdate<Params, Model> outdate;
 
 
-    public AbsDataStoreFactory(CloudDataStore cloudDataStore, DBDataStore dbDataStore, Outdate outdate) {
+    public AbsDataStoreFactory(CloudDataStore<Model, Params> cloudDataStore, DBDataStore<Model, Params> dbDataStore, Outdate<Params, Model> outdate) {
         this.cloudDataStore = cloudDataStore;
         this.dbDataStore = dbDataStore;
         this.outdate = outdate;
     }
 
     @Override
-    public DataStore get(LoadCriteria loadCriteria) {
+    public DataStore get(LoadCriteria loadCriteria, Params params) throws CriteriaExpiredException{
         if (loadCriteria.isGet()) {
-            if (outdate.isExpired()) {
-                try {
-                    loadCriteria.next();
-                } catch (NoMoreCriteriaException e) {
-                    e.printStackTrace();
-                    return dbDataStore;
-                }
-                return cloudDataStore;
+            if (outdate.isExpired(params)) {
+                throw new CriteriaExpiredException(LoadCriteria.class);
             }
             return dbDataStore;
         } else if (loadCriteria.isRefresh()) {
@@ -44,7 +38,9 @@ public abstract class AbsDataStoreFactory implements DataStoreFactory {
 
     @Override
     public DataStore get(StoreCriteria storeCriteria) {
-        if (storeCriteria.isCommit()) {
+        if (storeCriteria.isCommit()){
+            return dbDataStore;
+        }else if(storeCriteria.isPush()) {
             return cloudDataStore;
         } else {
             throw new IllegalArgumentException();

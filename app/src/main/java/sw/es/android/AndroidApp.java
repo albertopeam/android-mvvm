@@ -44,11 +44,13 @@ public class AndroidApp extends Application {
             Log.d(TAG, "initializeInjector");
         }
 
+
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
         applicationComponent.inject(this);
     }
+
 
     public ApplicationComponent getApplicationComponent() {
         return this.applicationComponent;

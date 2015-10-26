@@ -40,4 +40,8 @@ public class StoreCriteria {
     public boolean isCommit(){
         return type == COMMIT;
     }
+
+    public boolean isPush(){
+        return type == PUSH;
+    }
 }

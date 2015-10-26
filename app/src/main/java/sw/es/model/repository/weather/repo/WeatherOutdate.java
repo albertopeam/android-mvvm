@@ -4,8 +4,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import sw.es.model.local.Weather;
 import sw.es.model.repository.outdate.Outdate;
 import sw.es.model.sharedprefs.AppShared;
 
@@ -13,26 +13,7 @@ import sw.es.model.sharedprefs.AppShared;
 /**
  * Created by Alberto Penas on 22/10/15.
  */
-//TODO: así no actualiza viejas entradas, aunque se cumpla la condición,
-/**
- * pej: con un outdate de n = 1h
- *
- * hora: 0
- * pides perillo => weather
- * outdate = ahora
- *
- * hora: 30m
- * pides Montrove => weather
- * outdate = 30
- *
- * hora: 65m
- * pides perillo => weather de base de datos, pq el último outdate solo tiene 35m!!!!!
- * outdate = 65
- *
- **/
-
-@Singleton
-public class WeatherOutdate implements Outdate<Long> {
+public class WeatherOutdate implements Outdate<String, Weather> {
 
 
     private static final String KEY_WEATHER_ID = "key_weather_last_update";
@@ -41,15 +22,19 @@ public class WeatherOutdate implements Outdate<Long> {
 
 
     @Inject
-    public WeatherOutdate(AppShared appShared, int minutesBetweenUpdates) {
+    public WeatherOutdate(AppShared appShared) {
         this.appShared = appShared;
-        this.minutsBetweenUpdates = minutesBetweenUpdates;
+    }
+
+
+    public void setTimeBetweenUpdates(int timeBetweenUpdates){
+        this.minutsBetweenUpdates = timeBetweenUpdates;
     }
 
 
     @Override
-    public boolean isExpired() {
-        String weatherDate = appShared.get(KEY_WEATHER_ID);
+    public boolean isExpired(String name) {
+        String weatherDate = appShared.get(key(name));
         if (weatherDate.isEmpty()) {
             return true;
         }
@@ -68,7 +53,12 @@ public class WeatherOutdate implements Outdate<Long> {
 
 
     @Override
-    public void setLastUpdate(Long id) {
-        appShared.put(KEY_WEATHER_ID, DateTime.now().toString());
+    public void setLastUpdate(Weather weather) {
+        appShared.put(key(weather.getName()), DateTime.now().toString());
+    }
+
+
+    private String key(String name){
+        return String.format("%s:%s",KEY_WEATHER_ID, name);
     }
 }

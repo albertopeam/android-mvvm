@@ -7,6 +7,6 @@ import rx.Observable;
  * Created by albertopenasamor on 27/5/15.
  */
 public interface DataStore<Model, Params> {
-    Observable<Model> fetch(Params params);
-    Observable<Boolean> commit(Model model);
+    Observable<Model> fetch(final Params params);
+    Observable<Boolean> commit(final Model model);
 }
