@@ -6,6 +6,9 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import sw.es.dagger2.BuildConfig;
+import sw.es.di.component.ApplicationComponent;
+import sw.es.di.component.DaggerApplicationComponent;
+import sw.es.di.module.ApplicationModule;
 import sw.es.model.database.DatabaseHelper;
 import sw.es.model.database.core.DatabaseManager;
 
@@ -15,7 +18,7 @@ import sw.es.model.database.core.DatabaseManager;
 public class AndroidApp extends Application {
 
     private static final String TAG = AndroidApp.class.getSimpleName();
-    //private ApplicationComponent applicationComponent;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -41,16 +44,15 @@ public class AndroidApp extends Application {
             Log.d(TAG, "initializeInjector");
         }
 
-        /*
+
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-        applicationComponent.inject(this);*/
+        applicationComponent.inject(this);
     }
 
-    /*
+
     public ApplicationComponent getApplicationComponent() {
         return this.applicationComponent;
     }
-    */
 }

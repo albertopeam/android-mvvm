@@ -12,7 +12,7 @@ public class WeatherCloud {
     public int cod;
     public long dt;
     public Coordinates coord;
-    public Weather weather;
+    public Weather[] weather;
     public Main main;
     public Wind wind;
     public Clouds clouds;

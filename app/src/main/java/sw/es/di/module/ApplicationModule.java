@@ -2,6 +2,8 @@ package sw.es.di.module;
 
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import sw.es.android.AndroidApp;
@@ -20,6 +22,7 @@ public class ApplicationModule {
     }
 
     @Provides
+    @Singleton
     @ForApplication
     Context provideApplicationContext() {
         return this.application;

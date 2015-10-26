@@ -22,9 +22,13 @@ public class WeatherOutdate implements Outdate<String, Weather> {
 
 
     @Inject
-    public WeatherOutdate(AppShared appShared, int minutesBetweenUpdates) {
+    public WeatherOutdate(AppShared appShared) {
         this.appShared = appShared;
-        this.minutsBetweenUpdates = minutesBetweenUpdates;
+    }
+
+
+    public void setTimeBetweenUpdates(int timeBetweenUpdates){
+        this.minutsBetweenUpdates = timeBetweenUpdates;
     }
 
 

@@ -2,7 +2,6 @@ package sw.es.viewmodel.weather;
 
 import javax.inject.Inject;
 
-import sw.es.di.common.PerActivity;
 import sw.es.model.local.Weather;
 import sw.es.model.repository.usecase.UseCaseCallback;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
@@ -10,12 +9,11 @@ import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
 /**
  * Created by alberto on 15/10/15.
  */
-@PerActivity
 public class WeatherViewModel implements AbsWeatherViewModel {
 
 
     private WeatherListener weatherListener;
-    WeatherPullUseCase weatherPullUseCase;
+    private WeatherPullUseCase weatherPullUseCase;
     //TODO: lista de localidades... por si busca otra igual y peta el save
 
 

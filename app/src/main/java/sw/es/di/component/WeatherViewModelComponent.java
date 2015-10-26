@@ -5,6 +5,7 @@ import sw.es.di.common.PerActivity;
 import sw.es.di.module.AppSharedModule;
 import sw.es.di.module.NetworkModule;
 import sw.es.di.module.SchedulerModule;
+import sw.es.di.module.WeatherViewModelModule;
 import sw.es.view.WeatherActivity;
 import sw.es.viewmodel.weather.WeatherViewModel;
 
@@ -17,6 +18,7 @@ import sw.es.viewmodel.weather.WeatherViewModel;
                 ApplicationComponent.class
         },
         modules = {
+                WeatherViewModelModule.class,
                 NetworkModule.class,
                 SchedulerModule.class,
                 AppSharedModule.class
@@ -24,5 +26,6 @@ import sw.es.viewmodel.weather.WeatherViewModel;
 )
 public interface WeatherViewModelComponent {
     void inject(WeatherActivity weatherActivity);
+
     WeatherViewModel provideWeatherViewModel();
 }

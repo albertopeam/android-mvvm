@@ -2,7 +2,7 @@ package sw.es.model.repository.datastore;
 
 import sw.es.model.repository.criteria.LoadCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
-import sw.es.model.repository.exception.NoMoreCriteriaException;
+import sw.es.model.repository.exception.CriteriaExpiredException;
 import sw.es.model.repository.outdate.Outdate;
 
 /**
@@ -23,16 +23,10 @@ public class AbsDataStoreFactory<Model, Params> implements DataStoreFactory<Para
     }
 
     @Override
-    public DataStore get(LoadCriteria loadCriteria, Params params) {
+    public DataStore get(LoadCriteria loadCriteria, Params params) throws CriteriaExpiredException{
         if (loadCriteria.isGet()) {
             if (outdate.isExpired(params)) {
-                try {
-                    loadCriteria.next();
-                } catch (NoMoreCriteriaException e) {
-                    e.printStackTrace();
-                    return dbDataStore;
-                }
-                return cloudDataStore;
+                throw new CriteriaExpiredException(LoadCriteria.class);
             }
             return dbDataStore;
         } else if (loadCriteria.isRefresh()) {

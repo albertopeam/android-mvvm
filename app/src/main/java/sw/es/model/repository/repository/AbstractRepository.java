@@ -7,6 +7,7 @@ import sw.es.model.repository.criteria.LoadCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
 import sw.es.model.repository.datastore.DataStore;
 import sw.es.model.repository.datastore.DataStoreFactory;
+import sw.es.model.repository.exception.CriteriaExpiredException;
 import sw.es.model.repository.exception.NoMoreCriteriaException;
 import sw.es.model.repository.exception.NotFoundInDataStoreException;
 import sw.es.model.repository.outdate.Outdate;
@@ -33,32 +34,43 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
 
 
     @Override
-    public void fetch(final Params params,final LoadCriteria loadCriteria, final FetchCallback<Model, Params> callback) {
-        DataStore dataStore = dataStoreFactory.get(loadCriteria, params);
-        Observable<Model> fetchObservable = dataStore.fetch(params);
-        fetchObservable
-                .observeOn(publishScheduler)
-                .subscribe(new Action1<Model>() {
-                    @Override
-                    public void call(Model model) {
-                        callback.onFetch(params, loadCriteria, model);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        if (throwable instanceof NotFoundInDataStoreException) {
-                            try {
-                                LoadCriteria newLoadCriteria = loadCriteria.next();
-                                fetch(params, newLoadCriteria, callback);
-                            } catch (NoMoreCriteriaException e) {
-                                callback.onFetchError(params, loadCriteria, e);
-                            }
-                        }else{
-                            callback.onFetchError(params, loadCriteria, throwable);
+    public void fetch(final Params params, final LoadCriteria loadCriteria, final FetchCallback<Model, Params> callback) {
+        try {
+            DataStore dataStore = dataStoreFactory.get(loadCriteria, params);
+            Observable<Model> fetchObservable = dataStore.fetch(params);
+            fetchObservable
+                    .observeOn(publishScheduler)
+                    .subscribe(new Action1<Model>() {
+                        @Override
+                        public void call(Model model) {
+                            callback.onFetch(params, loadCriteria, model);
                         }
-                    }
-                });
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            if (throwable instanceof NotFoundInDataStoreException) {
+                                try {
+                                    LoadCriteria newLoadCriteria = loadCriteria.next();
+                                    fetch(params, newLoadCriteria, callback);
+                                } catch (NoMoreCriteriaException e) {
+                                    callback.onFetchError(params, loadCriteria, e);
+                                }
+                            }else{
+                                callback.onFetchError(params, loadCriteria, throwable);
+                            }
+                        }
+                    });
+        }catch (CriteriaExpiredException e){
+            LoadCriteria newCriteria = null;
+            try {
+                newCriteria = loadCriteria.next();
+            } catch (NoMoreCriteriaException e1) {
+                callback.onFetchError(params, loadCriteria, e1);
+            }
+            fetch(params, newCriteria, callback);
+        }
     }
+
 
     @Override
     public void commit(final Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
