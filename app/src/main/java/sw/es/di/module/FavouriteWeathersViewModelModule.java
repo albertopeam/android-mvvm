@@ -2,8 +2,9 @@ package sw.es.di.module;
 
 import dagger.Module;
 import dagger.Provides;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import rx.Scheduler;
+import sw.es.di.common.ExecutionScheduler;
+import sw.es.di.common.ListenScheduler;
 import sw.es.di.common.PerActivity;
 import sw.es.model.repository.weather.repo.CloudWeatherDataStore;
 import sw.es.model.repository.weather.repo.DBWeatherDataStore;
@@ -12,22 +13,23 @@ import sw.es.model.repository.weather.repo.WeatherOutdate;
 import sw.es.model.repository.weather.repo.WeatherRepository;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
 import sw.es.model.sharedprefs.AppShared;
+import sw.es.model.usecase.FetchFavouritesLocationsUseCase;
 import sw.es.network.WeatherBackendAPI;
-import sw.es.viewmodel.weather.WeatherViewModel;
+import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 //TODO: usar el modulo de los scheduler, quedó relegado con los qualifiers por algún error a la hora de montar el modulo(me faltaba este MODULO en el componente!!!!)
 //TODO: meter al constructor de WeatherOutdate el param, está por un setter
 @Module
-public class WeatherViewModelModule {
+public class FavouriteWeathersViewModelModule {
 
 
-    public WeatherViewModelModule() {}
+    public FavouriteWeathersViewModelModule() {}
 
 
     @Provides
     @PerActivity
-    WeatherViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase){
-        return new WeatherViewModel(weatherPullUseCase);
+    FavouriteWeathersViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase){
+        return new FavouriteWeathersViewModel(weatherPullUseCase, fetchFavouritesLocationsUseCase);
     }
 
 
@@ -40,8 +42,8 @@ public class WeatherViewModelModule {
 
     @Provides
     @PerActivity
-    WeatherRepository provideWeatherRepository(WeatherDataStoreFactory weatherDataStoreFactory, WeatherOutdate weatherOutdate){
-        return new WeatherRepository(weatherDataStoreFactory, weatherOutdate, AndroidSchedulers.mainThread());
+    WeatherRepository provideWeatherRepository(WeatherDataStoreFactory weatherDataStoreFactory, WeatherOutdate weatherOutdate, @ListenScheduler Scheduler scheduler){
+        return new WeatherRepository(weatherDataStoreFactory, weatherOutdate, scheduler);
     }
 
 
@@ -53,15 +55,15 @@ public class WeatherViewModelModule {
 
 
     @Provides
-    CloudWeatherDataStore provideCloudWeatherDataStore(WeatherBackendAPI weatherBackendAPI){
-        return new CloudWeatherDataStore(weatherBackendAPI, Schedulers.io());
+    CloudWeatherDataStore provideCloudWeatherDataStore(WeatherBackendAPI weatherBackendAPI, @ExecutionScheduler Scheduler scheduler){
+        return new CloudWeatherDataStore(weatherBackendAPI, scheduler);
     }
 
 
     @Provides
     @PerActivity
-    DBWeatherDataStore provideDbWeatherDataStore(){
-        return new DBWeatherDataStore(Schedulers.io());
+    DBWeatherDataStore provideDbWeatherDataStore(@ExecutionScheduler Scheduler scheduler){
+        return new DBWeatherDataStore(scheduler);
     }
 
 
@@ -69,8 +71,14 @@ public class WeatherViewModelModule {
     @PerActivity
     WeatherOutdate provideWeatherOutdate(AppShared appShared){
         int minutesBetweenUpdates = 60;
-        WeatherOutdate weatherOutdate = new WeatherOutdate(appShared);
-        weatherOutdate.setTimeBetweenUpdates(minutesBetweenUpdates);
+        WeatherOutdate weatherOutdate = new WeatherOutdate(appShared, minutesBetweenUpdates);
         return weatherOutdate;
+    }
+
+
+    @Provides
+    @PerActivity
+    FetchFavouritesLocationsUseCase provideFetchFavouritesLocationsUseCase(AppShared appShared, @ExecutionScheduler Scheduler executionScheduler, @ListenScheduler Scheduler listenScheduler){
+        return new FetchFavouritesLocationsUseCase(appShared, executionScheduler, listenScheduler);
     }
 }

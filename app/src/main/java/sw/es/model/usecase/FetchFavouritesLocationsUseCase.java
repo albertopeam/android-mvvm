@@ -1,0 +1,110 @@
+package sw.es.model.usecase;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
+import rx.Observable;
+import rx.Observer;
+import rx.Scheduler;
+import sw.es.model.local.FavouriteLocation;
+import sw.es.model.rx.ObservableCreator;
+import sw.es.model.sharedprefs.AppShared;
+
+import static android.util.Log.e;
+import static sw.es.dagger2.BuildConfig.DEBUG;
+
+/**
+ * Created by albertopenasamor on 27/10/15.
+ */
+public class FetchFavouritesLocationsUseCase {
+
+
+    private static final String TAG = FetchFavouritesLocationsUseCase.class.getSimpleName();
+    private static final String KEY_FAVOURITES = "key_favourites";
+    private AppShared appShared;
+    private Scheduler executionScheduler;
+    private Scheduler listenScheduler;
+    private FetchFavouritesCallback fetchFavouritesCallback;
+
+
+    @Inject
+    public FetchFavouritesLocationsUseCase(AppShared appShared, Scheduler executionScheduler, Scheduler listenScheduler){
+        this.appShared = appShared;
+        this.executionScheduler = executionScheduler;
+        this.listenScheduler = listenScheduler;
+    }
+
+
+    public void run(final FetchFavouritesCallback fetchFavouritesCallback){
+        this.fetchFavouritesCallback = fetchFavouritesCallback;
+
+        ObservableCreator.create(new Callable<List<FavouriteLocation>>() {
+            @Override
+            public List<FavouriteLocation> call() throws Exception {
+                List<String>list = appShared.getStrings(KEY_FAVOURITES);
+                List<FavouriteLocation>favouriteLocationList = new ArrayList<>();
+                for (String string:list){
+                    favouriteLocationList.add(new FavouriteLocation(string));
+                }
+                return favouriteLocationList;
+            }
+        })
+                .subscribeOn(executionScheduler)
+                .observeOn(listenScheduler)
+                .subscribe(new Observer<List<FavouriteLocation>>() {
+                    @Override
+                    public void onCompleted() {
+                        if (DEBUG) {
+                            e(TAG, "onCompleted");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (DEBUG) {
+                            e(TAG, "onError");
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(List<FavouriteLocation> favouriteLocations) {
+                        emitFavoriteLocations(favouriteLocations);
+                    }
+                });
+
+    }
+
+
+    private void emitFavoriteLocations(List<FavouriteLocation>favouriteLocations){
+        Observable.from(favouriteLocations)
+                .delay(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(executionScheduler)
+                .observeOn(listenScheduler)
+                .subscribe(new Observer<FavouriteLocation>() {
+                    @Override
+                    public void onCompleted() {
+                        if (DEBUG) {
+                            e(TAG, "onCompleted");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (DEBUG) {
+                            e(TAG, "onError");
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(FavouriteLocation favouriteLocation) {
+                        fetchFavouritesCallback.onFavourite(favouriteLocation);
+                    }
+                });
+    }
+}

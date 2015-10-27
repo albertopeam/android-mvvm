@@ -12,6 +12,8 @@ import sw.es.model.repository.repository.Repository;
 /**
  * Created by albertopenasamor on 21/10/15.
  */
+//TODO: subscripciones al repo devolver?????
+//TODO: para poder cancelar
 public class PullUseCase<Model, Params> implements UseCase<Params>{
 
 

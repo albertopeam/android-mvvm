@@ -2,37 +2,44 @@ package sw.es.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sw.es.dagger2.R;
-import sw.es.di.component.DaggerWeatherViewModelComponent;
-import sw.es.di.component.WeatherViewModelComponent;
-import sw.es.di.module.WeatherViewModelModule;
+import sw.es.di.component.DaggerFavouriteWeathersViewModelComponent;
+import sw.es.di.component.FavouriteWeathersViewModelComponent;
+import sw.es.di.module.FavouriteWeathersViewModelModule;
+import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
-import sw.es.viewmodel.weather.WeatherListener;
-import sw.es.viewmodel.weather.WeatherViewModel;
+import sw.es.viewmodel.weather.FavouriteWeathersListener;
+import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: falta el databinding
-public class WeatherActivity extends BaseActivity implements WeatherListener, SearchView.OnQueryTextListener {
+public class FavouriteWeathersActivity extends BaseActivity implements FavouriteWeathersListener, SearchView.OnQueryTextListener {
 
 
-    private static final String TAG = WeatherActivity.class.getSimpleName();
-    @Inject WeatherViewModel viewModel;
+    private static final String TAG = FavouriteWeathersActivity.class.getSimpleName();
+    @Inject FavouriteWeathersViewModel viewModel;
     @Bind(R.id.toolbar) Toolbar toolbar;
-    //TODO: el search view quizas se puede redirigir al viewmodel, aunque está en el toolbar....en los menús....igual tiene que quedar aquí
-    SearchView searchView;
+    @Bind(R.id.recycler) RecyclerView recyclerView;
+    @Bind(R.id.progressbar) ProgressBar progressBar;
+    @Bind(R.id.view) View view;
+    private SearchView searchView;
 
 
     @Override
@@ -49,9 +56,9 @@ public class WeatherActivity extends BaseActivity implements WeatherListener, Se
 
     @Override
     protected void initializeInjector() {
-        WeatherViewModelComponent component = DaggerWeatherViewModelComponent.builder()
+        FavouriteWeathersViewModelComponent component = DaggerFavouriteWeathersViewModelComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .weatherViewModelModule(new WeatherViewModelModule())
+                .weatherViewModelModule(new FavouriteWeathersViewModelModule())
                 .build();
         component.inject(this);
     }
@@ -93,6 +100,11 @@ public class WeatherActivity extends BaseActivity implements WeatherListener, Se
         }
     }
 
+    @Override
+    public void alreadyHasFavouriteLocation(FavouriteLocation favouriteLocation) {
+        Snackbar.make(view, getResources().getString(R.string.text_already_added_location), Snackbar.LENGTH_LONG).show();
+    }
+
 
     private void initViewModel() {
         viewModel.setup(this);
@@ -107,7 +119,7 @@ public class WeatherActivity extends BaseActivity implements WeatherListener, Se
         if (imm != null){
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
         }
-        viewModel.fetch(query);
+        viewModel.pull(query);
         return true;
     }
 
