@@ -14,11 +14,10 @@ import sw.es.model.repository.weather.repo.WeatherRepository;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
 import sw.es.model.sharedprefs.AppShared;
 import sw.es.model.usecase.FetchFavouritesLocationsUseCase;
+import sw.es.model.usecase.StoreFavouriteLocationUseCase;
 import sw.es.network.WeatherBackendAPI;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
-//TODO: usar el modulo de los scheduler, quedó relegado con los qualifiers por algún error a la hora de montar el modulo(me faltaba este MODULO en el componente!!!!)
-//TODO: meter al constructor de WeatherOutdate el param, está por un setter
 @Module
 public class FavouriteWeathersViewModelModule {
 
@@ -28,8 +27,8 @@ public class FavouriteWeathersViewModelModule {
 
     @Provides
     @PerActivity
-    FavouriteWeathersViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase){
-        return new FavouriteWeathersViewModel(weatherPullUseCase, fetchFavouritesLocationsUseCase);
+    FavouriteWeathersViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase){
+        return new FavouriteWeathersViewModel(weatherPullUseCase, fetchFavouritesLocationsUseCase, storeFavouriteLocationUseCase);
     }
 
 
@@ -80,5 +79,12 @@ public class FavouriteWeathersViewModelModule {
     @PerActivity
     FetchFavouritesLocationsUseCase provideFetchFavouritesLocationsUseCase(AppShared appShared, @ExecutionScheduler Scheduler executionScheduler, @ListenScheduler Scheduler listenScheduler){
         return new FetchFavouritesLocationsUseCase(appShared, executionScheduler, listenScheduler);
+    }
+
+
+    @Provides
+    @PerActivity
+    StoreFavouriteLocationUseCase provideStoreFavouriteLocationUseCase(AppShared appShared){
+        return new StoreFavouriteLocationUseCase(appShared);
     }
 }

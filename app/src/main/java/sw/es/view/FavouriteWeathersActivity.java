@@ -1,8 +1,10 @@
 package sw.es.view;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sw.es.dagger2.R;
+import sw.es.dagger2.databinding.ActivityHomeBinding;
 import sw.es.di.component.DaggerFavouriteWeathersViewModelComponent;
 import sw.es.di.component.FavouriteWeathersViewModelComponent;
 import sw.es.di.module.FavouriteWeathersViewModelModule;
@@ -40,25 +43,29 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     @Bind(R.id.progressbar) ProgressBar progressBar;
     @Bind(R.id.view) View view;
     private SearchView searchView;
+    private ActivityHomeBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO: binding.... revisar como va
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
+        binding.setFavoriteVM(viewModel);
 
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        setupRecicler();
         initViewModel();
     }
 
+
     @Override
     protected void initializeInjector() {
+
         FavouriteWeathersViewModelComponent component = DaggerFavouriteWeathersViewModelComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .weatherViewModelModule(new FavouriteWeathersViewModelModule())
+                .favouriteWeathersViewModelModule(new FavouriteWeathersViewModelModule())
                 .build();
         component.inject(this);
     }
@@ -109,6 +116,11 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     private void initViewModel() {
         viewModel.setup(this);
         viewModel.load();
+    }
+
+
+    private void setupRecicler() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
     }
 
 

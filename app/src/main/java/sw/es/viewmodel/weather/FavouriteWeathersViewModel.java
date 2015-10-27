@@ -13,6 +13,7 @@ import sw.es.model.repository.usecase.UseCaseCallback;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
 import sw.es.model.usecase.FetchFavouritesCallback;
 import sw.es.model.usecase.FetchFavouritesLocationsUseCase;
+import sw.es.model.usecase.StoreFavouriteLocationUseCase;
 import sw.es.viewmodel.abs.AbsViewModel;
 
 /**
@@ -20,19 +21,20 @@ import sw.es.viewmodel.abs.AbsViewModel;
  */
 public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavouriteWeathersViewModel {
 
-no chula el binding
-    //TODO: falta el store de favoritos
+
     private FavouriteWeathersListener favouriteWeathersListener;
     private WeatherPullUseCase weatherPullUseCase;
     private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;
     private List<FavouriteLocation> favouriteLocationList;
+    private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;
     private int loading = View.VISIBLE;
 
 
     @Inject
-    public FavouriteWeathersViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase) {
+    public FavouriteWeathersViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase) {
         this.weatherPullUseCase = weatherPullUseCase;
         this.fetchFavouritesLocationsUseCase = fetchFavouritesLocationsUseCase;
+        this.storeFavouriteLocationUseCase = storeFavouriteLocationUseCase;
         this.favouriteLocationList = new ArrayList<>();
     }
 
@@ -61,9 +63,12 @@ no chula el binding
         });
     }
 
+
     @Override
     public void pull(String name) {
         if (hasNotFavouriteLocation(name)) {
+            storeFavouriteLocationUseCase.run(name);
+
             weatherPullUseCase.run(name, new UseCaseCallback<String, Weather>() {
                 @Override
                 public void onResult(String s, Weather weather) {

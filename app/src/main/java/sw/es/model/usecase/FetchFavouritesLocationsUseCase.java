@@ -20,11 +20,10 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 /**
  * Created by albertopenasamor on 27/10/15.
  */
-public class FetchFavouritesLocationsUseCase {
+public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesCallback> {
 
 
     private static final String TAG = FetchFavouritesLocationsUseCase.class.getSimpleName();
-    private static final String KEY_FAVOURITES = "key_favourites";
     private AppShared appShared;
     private Scheduler executionScheduler;
     private Scheduler listenScheduler;
@@ -39,13 +38,14 @@ public class FetchFavouritesLocationsUseCase {
     }
 
 
+    @Override
     public void run(final FetchFavouritesCallback fetchFavouritesCallback){
         this.fetchFavouritesCallback = fetchFavouritesCallback;
 
         ObservableCreator.create(new Callable<List<FavouriteLocation>>() {
             @Override
             public List<FavouriteLocation> call() throws Exception {
-                List<String>list = appShared.getStrings(KEY_FAVOURITES);
+                List<String>list = appShared.getStrings(FavoriteLocationKeys.KEY_FAVOURITES);
                 List<FavouriteLocation>favouriteLocationList = new ArrayList<>();
                 for (String string:list){
                     favouriteLocationList.add(new FavouriteLocation(string));

@@ -8,6 +8,8 @@ import java.util.List;
 public interface AppShared {
     void put(String key, String value);
     String get(String key);
+
+    void addString(String key, String value);
     void putStrings(String key, List<String> strings);
     List<String> getStrings(String key);
 }

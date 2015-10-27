@@ -45,15 +45,19 @@ public class SharedPrefs implements AppShared{
 
 
     @Override
-    public void putStrings(String key, List<String>strings){
-        List<String>previous = getStrings(key);
-        for (String string:strings){
-            previous.add(string);
-        }
-
-        Set<String>set = new HashSet<>(previous);
+    public void putStrings(String key, List<String>values){
+        Set<String>set = new HashSet<>(values);
         getEditor().putStringSet(key, set).apply();
     }
+
+
+    @Override
+    public void addString(String key, String value){
+        List<String>previous = getStrings(key);
+        previous.add(value);
+        putStrings(key, previous);
+    }
+
 
 
     @Override
