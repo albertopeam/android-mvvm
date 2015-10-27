@@ -27,7 +27,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;
     private List<FavouriteLocation> favouriteLocationList;
     private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;
-    private int loading = View.VISIBLE;
+    private int loading = View.VISIBLE;//TODO: que funcione el binding del loading y luego el adapter....
 
 
     @Inject
@@ -58,7 +58,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             @Override
             public void onFavourite(FavouriteLocation favouriteLocation) {
                 favouriteLocationList.add(favouriteLocation);
-                pull(favouriteLocation.getName());
+                pullWeather(favouriteLocation.getName());
             }
         });
     }
@@ -67,26 +67,37 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     @Override
     public void pull(String name) {
         if (hasNotFavouriteLocation(name)) {
-            storeFavouriteLocationUseCase.run(name);
-
-            weatherPullUseCase.run(name, new UseCaseCallback<String, Weather>() {
-                @Override
-                public void onResult(String s, Weather weather) {
-                    if (hasView()) {
-                        favouriteWeathersListener.onWeather(weather);
-                    }
-                }
-
-                @Override
-                public void onResultError(String s, Throwable throwable) {
-                    if (hasView()) {
-                        favouriteWeathersListener.onWeatherError(throwable);
-                    }
-                }
-            });
+            storeFavoriteLocation(name);
+            pullWeather(name);
         }else{
             favouriteWeathersListener.alreadyHasFavouriteLocation(new FavouriteLocation(name));
         }
+    }
+
+
+    private void pullWeather(String name){
+        weatherPullUseCase.run(name, new UseCaseCallback<String, Weather>() {
+            @Override
+            public void onResult(String s, Weather weather) {
+                if (hasView()) {
+                    favouriteWeathersListener.onWeather(weather);
+                }
+            }
+
+            @Override
+            public void onResultError(String s, Throwable throwable) {
+                if (hasView()) {
+                    favouriteWeathersListener.onWeatherError(throwable);
+                }
+            }
+        });
+    }
+
+
+    private void storeFavoriteLocation(String name){
+        FavouriteLocation favouriteLocation = new FavouriteLocation(name);
+        favouriteLocationList.add(favouriteLocation);
+        storeFavouriteLocationUseCase.run(name);
     }
 
 
@@ -99,9 +110,9 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
         FavouriteLocation newFavouriteLocation = new FavouriteLocation(name);
         for (FavouriteLocation favouriteLocation:favouriteLocationList){
             if (favouriteLocation.equals(newFavouriteLocation)){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
