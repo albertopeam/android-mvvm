@@ -28,6 +28,7 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
     private Scheduler executionScheduler;
     private Scheduler listenScheduler;
     private FetchFavouritesCallback fetchFavouritesCallback;
+    private boolean someFound = false;
 
 
     @Inject
@@ -61,6 +62,9 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
                         if (DEBUG) {
                             e(TAG, "onCompleted");
                         }
+                        if (!someFound){
+                            fetchFavouritesCallback.onEmptyFavourite();
+                        }
                     }
 
                     @Override
@@ -69,10 +73,12 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
                             e(TAG, "onError");
                             e.printStackTrace();
                         }
+                        fetchFavouritesCallback.onEmptyFavourite();
                     }
 
                     @Override
                     public void onNext(List<FavouriteLocation> favouriteLocations) {
+                        someFound = true;
                         emitFavoriteLocations(favouriteLocations);
                     }
                 });

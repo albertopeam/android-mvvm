@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityHomeBinding;
 import sw.es.di.component.DaggerFavouriteWeathersViewModelComponent;
@@ -22,18 +21,23 @@ import sw.es.di.component.FavouriteWeathersViewModelComponent;
 import sw.es.di.module.FavouriteWeathersViewModelModule;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
+import sw.es.view.adapter.WeatherAdapter;
 import sw.es.viewmodel.weather.FavouriteWeathersListener;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
+//TODO: completar row
+//TODO: fondo negro
+//TODO: revisar si funciona con 0 elementos(para el loading y deberia mostrar un mensaje..)
 public class FavouriteWeathersActivity extends BaseActivity implements FavouriteWeathersListener, SearchView.OnQueryTextListener {
 
 
     private static final String TAG = FavouriteWeathersActivity.class.getSimpleName();
     @Inject FavouriteWeathersViewModel viewModel;
     private SearchView searchView;
+    private WeatherAdapter adapter;
     private ActivityHomeBinding binding;
 
 
@@ -41,18 +45,17 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView();
-
-        ButterKnife.bind(this);
-
-
         initViewModel();
     }
 
+
     private void setView() {
+        adapter = new WeatherAdapter();
         binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
         binding.setFavoriteVM(viewModel);
         binding.recycler.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
         binding.recycler.setItemAnimator(new DefaultItemAnimator());
+        binding.recycler.setAdapter(adapter);
         setSupportActionBar(binding.toolbar);
     }
 
@@ -87,20 +90,20 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
 
     @Override
     public void onWeather(Weather weather) {
-        //TODO: binding... comunication
         if (DEBUG) {
             e(TAG, "onWeather");
         }
+        adapter.addWeather(weather);
     }
 
 
     @Override
     public void onWeatherError(Throwable throwable) {
-        //TODO: error, si no hay nada...o snack...no se
         if (DEBUG) {
             e(TAG, "onWeatherError: ");
             throwable.printStackTrace();
         }
+        Snackbar.make(binding.view, throwable.getMessage()!=null?throwable.getMessage():"Error", Snackbar.LENGTH_LONG).show();
     }
 
 
@@ -119,10 +122,7 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     @Override
     public boolean onQueryTextSubmit(String query) {
         e("onQueryTextChange", query);
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null){
-            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-        }
+        hideKeyboard();
         viewModel.pull(query);
         return true;
     }
@@ -131,5 +131,13 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null){
+            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        }
     }
 }
