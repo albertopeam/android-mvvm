@@ -1,12 +1,13 @@
 package sw.es.viewmodel.weather;
 
-import android.view.View;
+import android.databinding.Bindable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import sw.es.dagger2.BR;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
 import sw.es.model.repository.usecase.UseCaseCallback;
@@ -27,7 +28,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;
     private List<FavouriteLocation> favouriteLocationList;
     private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;
-    private int loading = View.VISIBLE;//TODO: que funcione el binding del loading y luego el adapter....
+    public boolean loading;
 
 
     @Inject
@@ -54,6 +55,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
 
     @Override
     public void load() {
+        setIsLoading(true);
         fetchFavouritesLocationsUseCase.run(new FetchFavouritesCallback() {
             @Override
             public void onFavourite(FavouriteLocation favouriteLocation) {
@@ -67,6 +69,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     @Override
     public void pull(String name) {
         if (hasNotFavouriteLocation(name)) {
+            setIsLoading(true);
             storeFavoriteLocation(name);
             pullWeather(name);
         }else{
@@ -80,6 +83,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             @Override
             public void onResult(String s, Weather weather) {
                 if (hasView()) {
+                    setIsLoading(false);
                     favouriteWeathersListener.onWeather(weather);
                 }
             }
@@ -87,6 +91,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             @Override
             public void onResultError(String s, Throwable throwable) {
                 if (hasView()) {
+                    setIsLoading(false);
                     favouriteWeathersListener.onWeatherError(throwable);
                 }
             }
@@ -114,5 +119,16 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             }
         }
         return true;
+    }
+
+
+    @Bindable
+    public boolean isLoading() {
+        return loading;
+    }
+
+    private void setIsLoading(boolean loading){
+        this.loading = loading;
+        notifyPropertyChanged(BR.loading);
     }
 }

@@ -4,20 +4,16 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityHomeBinding;
@@ -32,16 +28,11 @@ import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
-//TODO: falta el databinding
 public class FavouriteWeathersActivity extends BaseActivity implements FavouriteWeathersListener, SearchView.OnQueryTextListener {
 
 
     private static final String TAG = FavouriteWeathersActivity.class.getSimpleName();
     @Inject FavouriteWeathersViewModel viewModel;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.recycler) RecyclerView recyclerView;
-    @Bind(R.id.progressbar) ProgressBar progressBar;
-    @Bind(R.id.view) View view;
     private SearchView searchView;
     private ActivityHomeBinding binding;
 
@@ -49,20 +40,25 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
-        binding.setFavoriteVM(viewModel);
+        setView();
 
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        setupRecicler();
+
         initViewModel();
+    }
+
+    private void setView() {
+        binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
+        binding.setFavoriteVM(viewModel);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
+        binding.recycler.setItemAnimator(new DefaultItemAnimator());
+        setSupportActionBar(binding.toolbar);
     }
 
 
     @Override
     protected void initializeInjector() {
-
         FavouriteWeathersViewModelComponent component = DaggerFavouriteWeathersViewModelComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .favouriteWeathersViewModelModule(new FavouriteWeathersViewModelModule())
@@ -107,20 +103,16 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
         }
     }
 
+
     @Override
     public void alreadyHasFavouriteLocation(FavouriteLocation favouriteLocation) {
-        Snackbar.make(view, getResources().getString(R.string.text_already_added_location), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(binding.view, getResources().getString(R.string.text_already_added_location), Snackbar.LENGTH_LONG).show();
     }
 
 
     private void initViewModel() {
         viewModel.setup(this);
         viewModel.load();
-    }
-
-
-    private void setupRecicler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
     }
 
 
