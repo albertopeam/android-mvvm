@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="sw.es.viewmodel.weather.WeatherViewModel" />
+            type="sw.es.viewmodel.weather.FavouriteWeathersViewModel" />
     </data>
 
     <android.support.v7.widget.CardView

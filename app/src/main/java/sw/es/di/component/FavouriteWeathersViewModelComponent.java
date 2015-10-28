@@ -3,11 +3,11 @@ package sw.es.di.component;
 import dagger.Component;
 import sw.es.di.common.PerActivity;
 import sw.es.di.module.AppSharedModule;
+import sw.es.di.module.FavouriteWeathersViewModelModule;
 import sw.es.di.module.NetworkModule;
 import sw.es.di.module.SchedulerModule;
-import sw.es.di.module.WeatherViewModelModule;
-import sw.es.view.WeatherActivity;
-import sw.es.viewmodel.weather.WeatherViewModel;
+import sw.es.view.FavouriteWeathersActivity;
+import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 /**
  * Created by albertopenasamor on 22/10/15.
@@ -18,14 +18,14 @@ import sw.es.viewmodel.weather.WeatherViewModel;
                 ApplicationComponent.class
         },
         modules = {
-                WeatherViewModelModule.class,
+                FavouriteWeathersViewModelModule.class,
                 NetworkModule.class,
                 SchedulerModule.class,
                 AppSharedModule.class
         }
 )
-public interface WeatherViewModelComponent {
-    void inject(WeatherActivity weatherActivity);
+public interface FavouriteWeathersViewModelComponent {
+    void inject(FavouriteWeathersActivity weatherActivity);
 
-    WeatherViewModel provideWeatherViewModel();
+    FavouriteWeathersViewModel provideWeatherViewModel();
 }
