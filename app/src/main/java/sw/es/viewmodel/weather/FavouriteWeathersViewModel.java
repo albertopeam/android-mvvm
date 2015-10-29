@@ -62,6 +62,11 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
                 favouriteLocationList.add(favouriteLocation);
                 pullWeather(favouriteLocation.getName());
             }
+
+            @Override
+            public void onEmptyFavourite() {
+                setIsLoading(false);
+            }
         });
     }
 

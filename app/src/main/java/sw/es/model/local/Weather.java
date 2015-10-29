@@ -21,7 +21,7 @@ public class Weather {
     }
 
     public String getName() {
-        return name;
+        return name!=null?name:"";
     }
 
     public double getLatitude() {

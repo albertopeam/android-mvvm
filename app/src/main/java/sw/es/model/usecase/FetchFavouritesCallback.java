@@ -7,4 +7,5 @@ import sw.es.model.local.FavouriteLocation;
  */
 public interface FetchFavouritesCallback {
     void onFavourite(FavouriteLocation favouriteLocation);
+    void onEmptyFavourite();
 }
