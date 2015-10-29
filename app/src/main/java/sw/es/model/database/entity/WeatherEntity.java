@@ -23,6 +23,15 @@ public class WeatherEntity extends Entity {
     private String name;
 
     @DatabaseField
+    private String description;
+
+    @DatabaseField
+    private String icon;
+
+    @DatabaseField
+    private long datetime;
+
+    @DatabaseField
     private double latitude;
 
     @DatabaseField
@@ -30,6 +39,9 @@ public class WeatherEntity extends Entity {
 
     @DatabaseField
     private double temp;
+
+    @DatabaseField
+    private double cloudiness;
 
     @DatabaseField
     private double pressure;
@@ -75,6 +87,22 @@ public class WeatherEntity extends Entity {
         return name;
     }
 
+    public long getDatetime() {
+        return datetime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getCloudiness() {
+        return cloudiness;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
     public void setRemoteId(long remoteId) {
         this.remoteId = remoteId;
     }
@@ -105,5 +133,21 @@ public class WeatherEntity extends Entity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDatetime(long datetime) {
+        this.datetime = datetime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCloudiness(double cloudiness) {
+        this.cloudiness = cloudiness;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

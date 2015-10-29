@@ -20,6 +20,10 @@ public class WeatherEntityMapper implements Mapper<WeatherEntity, Weather> {
         weather.setTemp(weatherEntity.getTemp());
         weather.setWindSpeed(weatherEntity.getWindSpeed());
         weather.setName(weatherEntity.getName());
+        weather.setDatetime(weatherEntity.getDatetime());
+        weather.setCloudiness(weatherEntity.getCloudiness());
+        weather.setDescription(weatherEntity.getDescription());
+        weather.setIcon(weatherEntity.getIcon());
         return weather;
     }
 
@@ -34,6 +38,10 @@ public class WeatherEntityMapper implements Mapper<WeatherEntity, Weather> {
         weatherEntity.setHumidity(weather.getHumidity());
         weatherEntity.setRemoteId(weather.getRemoteId());
         weatherEntity.setName(weather.getName());
+        weatherEntity.setDatetime(weather.getDatetime());
+        weatherEntity.setDescription(weather.getDescription());
+        weatherEntity.setCloudiness(weather.getCloudiness());
+        weatherEntity.setIcon(weather.getIcon());
         return weatherEntity;
     }
 }

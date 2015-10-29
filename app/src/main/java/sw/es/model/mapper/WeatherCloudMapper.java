@@ -20,6 +20,10 @@ public class WeatherCloudMapper implements Mapper<WeatherCloud, Weather> {
         weather.setPressure(weatherCloud.getPressure());
         weather.setTemp(weatherCloud.getTemp());
         weather.setWindSpeed(weatherCloud.getWindSpeed());
+        weather.setDatetime(weatherCloud.getDateTime());
+        weather.setCloudiness(weatherCloud.getCloudiness());
+        weather.setDescription(weatherCloud.getDescription());
+        weather.setIcon(weatherCloud.getIcon());
         return weather;
     }
 

@@ -28,7 +28,9 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;
     private List<FavouriteLocation> favouriteLocationList;
     private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;
-    public boolean loading;
+    private boolean loading = false;
+    private boolean empty = false;
+
 
 
     @Inject
@@ -55,7 +57,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
 
     @Override
     public void load() {
-        setIsLoading(true);
+        setLoading(true);
         fetchFavouritesLocationsUseCase.run(new FetchFavouritesCallback() {
             @Override
             public void onFavourite(FavouriteLocation favouriteLocation) {
@@ -65,7 +67,8 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
 
             @Override
             public void onEmptyFavourite() {
-                setIsLoading(false);
+                setLoading(false);
+                setEmpty(true);
             }
         });
     }
@@ -74,7 +77,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     @Override
     public void pull(String name) {
         if (hasNotFavouriteLocation(name)) {
-            setIsLoading(true);
+            setLoading(true);
             storeFavoriteLocation(name);
             pullWeather(name);
         }else{
@@ -88,7 +91,8 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             @Override
             public void onResult(String s, Weather weather) {
                 if (hasView()) {
-                    setIsLoading(false);
+                    setEmpty(false);
+                    setLoading(false);
                     favouriteWeathersListener.onWeather(weather);
                 }
             }
@@ -96,7 +100,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             @Override
             public void onResultError(String s, Throwable throwable) {
                 if (hasView()) {
-                    setIsLoading(false);
+                    setLoading(false);
                     favouriteWeathersListener.onWeatherError(throwable);
                 }
             }
@@ -132,8 +136,19 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
         return loading;
     }
 
-    private void setIsLoading(boolean loading){
+    private void setLoading(boolean loading){
         this.loading = loading;
         notifyPropertyChanged(BR.loading);
+    }
+
+    @Bindable
+    public boolean isEmpty() {
+        return empty;
+    }
+
+
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
+        notifyPropertyChanged(BR.empty);
     }
 }

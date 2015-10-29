@@ -4,16 +4,18 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 
 import javax.inject.Inject;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityHomeBinding;
 import sw.es.di.component.DaggerFavouriteWeathersViewModelComponent;
@@ -22,6 +24,7 @@ import sw.es.di.module.FavouriteWeathersViewModelModule;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
 import sw.es.view.adapter.WeatherAdapter;
+import sw.es.view.decorator.SpaceItemDecoration;
 import sw.es.viewmodel.weather.FavouriteWeathersListener;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
@@ -29,8 +32,7 @@ import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: completar row
-//TODO: fondo negro
-//TODO: revisar si funciona con 0 elementos(para el loading y deberia mostrar un mensaje..)
+//TODO: subscripciones en viewmodel
 public class FavouriteWeathersActivity extends BaseActivity implements FavouriteWeathersListener, SearchView.OnQueryTextListener {
 
 
@@ -54,9 +56,23 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
         binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
         binding.setFavoriteVM(viewModel);
         binding.recycler.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
-        binding.recycler.setItemAnimator(new DefaultItemAnimator());
+        SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration((int) getResources().getDimension(R.dimen.divider_height));
+        binding.recycler.addItemDecoration(spaceItemDecoration);
+        binding.recycler.setItemAnimator(makeAnimator());
+        binding.recycler.setHasFixedSize(true);//for performance same height
         binding.recycler.setAdapter(adapter);
         setSupportActionBar(binding.toolbar);
+    }
+
+
+    private RecyclerView.ItemAnimator makeAnimator(){
+        RecyclerView.ItemAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
+        int animMS = 1000;
+        animator.setAddDuration(animMS);
+        animator.setRemoveDuration(animMS);
+        animator.setMoveDuration(animMS);
+        animator.setChangeDuration(animMS);
+        return animator;
     }
 
 

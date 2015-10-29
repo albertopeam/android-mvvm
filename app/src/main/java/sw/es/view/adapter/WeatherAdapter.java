@@ -29,7 +29,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
 
     public void addWeather(Weather weather) {
         weatherList.add(weather);
-        notifyDataSetChanged();
+        notifyItemInserted(weatherList.size()-1);
     }
 
 

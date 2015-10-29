@@ -28,7 +28,6 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
     private Scheduler executionScheduler;
     private Scheduler listenScheduler;
     private FetchFavouritesCallback fetchFavouritesCallback;
-    private boolean someFound = false;
 
 
     @Inject
@@ -62,9 +61,6 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
                         if (DEBUG) {
                             e(TAG, "onCompleted");
                         }
-                        if (!someFound){
-                            fetchFavouritesCallback.onEmptyFavourite();
-                        }
                     }
 
                     @Override
@@ -78,8 +74,11 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
 
                     @Override
                     public void onNext(List<FavouriteLocation> favouriteLocations) {
-                        someFound = true;
-                        emitFavoriteLocations(favouriteLocations);
+                        if (favouriteLocations.isEmpty()){
+                            fetchFavouritesCallback.onEmptyFavourite();
+                        }else{
+                            emitFavoriteLocations(favouriteLocations);
+                        }
                     }
                 });
 
@@ -88,7 +87,7 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
 
     private void emitFavoriteLocations(List<FavouriteLocation>favouriteLocations){
         Observable.from(favouriteLocations)
-                .delay(500, TimeUnit.MILLISECONDS)
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(executionScheduler)
                 .observeOn(listenScheduler)
                 .subscribe(new Observer<FavouriteLocation>() {

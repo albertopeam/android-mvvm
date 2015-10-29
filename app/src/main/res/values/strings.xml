@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">Android MVVM architecture</string>
+    <string name="app_name">Your Weather</string>
     <string name="action_search">Search</string>
     <string name="text_already_added_location">Already added location</string>
+    <string name="text_no_data_yet">Try to adding new locations</string>
+    <string name="humidity">Humidity:</string>
+    <string name="wind_speed">Wind Speed:</string>
+    <string name="cloudiness">Cloudiness:</string>
+    <string name="updated_at">Updated at:</string>
 </resources>

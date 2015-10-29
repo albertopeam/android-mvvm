@@ -63,7 +63,7 @@ public class WeatherCloud {
 
 
     public static class Clouds{
-        public int all;
+        public double all;
     }
 
 
@@ -108,4 +108,19 @@ public class WeatherCloud {
         return wind != null?wind.speed:0d;
     }
 
+    public long getDateTime() {
+        return dt;
+    }
+
+    public double getCloudiness(){
+        return clouds != null?clouds.all:0.0;
+    }
+
+    public String getDescription(){
+        return (weather != null && weather.length > 0)?weather[0].description:"";
+    }
+
+    public String getIcon(){
+        return (weather != null && weather.length > 0)?weather[0].icon:"";
+    }
 }
