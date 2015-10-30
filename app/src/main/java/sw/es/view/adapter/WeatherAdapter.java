@@ -22,9 +22,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
 
 
     private List<Weather> weatherList;
+    private AdapterEvent<String> callback;
 
 
-    public WeatherAdapter() {
+    public WeatherAdapter(AdapterEvent<String > adapterEvent) {
+        this.callback = adapterEvent;
         this.weatherList = new ArrayList<>();
     }
 
@@ -66,7 +68,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
 
     @Override
     public void onItemDismiss(int position) {
-        weatherList.remove(position);
+        Weather weather = weatherList.get(position);
+        weatherList.remove(weather);
+        callback.remove(weather.getName());
         notifyItemRemoved(position);
     }
 

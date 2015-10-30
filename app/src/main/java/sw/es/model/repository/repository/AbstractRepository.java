@@ -4,6 +4,7 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action1;
 import sw.es.model.repository.criteria.LoadCriteria;
+import sw.es.model.repository.criteria.RemoveCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
 import sw.es.model.repository.datastore.DataStore;
 import sw.es.model.repository.datastore.DataStoreFactory;
@@ -17,7 +18,6 @@ import sw.es.model.repository.outdate.Outdate;
  * Created by albertopenasamor on 22/10/15.
  */
 //TODO: gestionar la parada de los observables....Subscription.... OPCION: que lo gestione el caso de uso, y así se cancela desde afuera. sin guardar listas ni nada aquí dentro... QUIZA LA MEJOR
-//TODO: not implemented dataStore save for other than db
 public class AbstractRepository<Model, Params> implements Repository<Model, Params> {
 
 
@@ -34,7 +34,7 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
 
 
     @Override
-    public void fetch(final Params params, final LoadCriteria loadCriteria, final FetchCallback<Model, Params> callback) {
+    public void fetch(final Params params, final LoadCriteria loadCriteria, final LoadCallback<Model, Params> callback) {
         try {
             DataStore dataStore = dataStoreFactory.get(loadCriteria, params);
             Observable<Model> fetchObservable = dataStore.fetch(params);
@@ -91,6 +91,29 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                     @Override
                     public void call(Throwable throwable) {
                         callback.onCommitError(storeCriteria, throwable);
+                    }
+                });
+    }
+
+    @Override
+    public void remove(final Params params, final RemoveCriteria removeCriteria, final RemoveCallback callback) {
+        DataStore dataStore = dataStoreFactory.get(removeCriteria);
+        Observable<Boolean> storeObservable = dataStore.remove(params);
+        storeObservable
+                .observeOn(publishScheduler)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean result) {
+                        if (result){
+                            outdate.remove(params);
+                        }
+                        callback.onRemove(removeCriteria, result);
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        callback.onRemoveError(removeCriteria, throwable);
                     }
                 });
     }

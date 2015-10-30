@@ -1,19 +1,18 @@
 package sw.es.model.database.rxquery;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
 import sw.es.model.database.core.DaoManager;
 import sw.es.model.database.model.Entity;
-import sw.es.model.database.query.Where;
+import sw.es.model.database.query.DeleteWhere;
 import sw.es.model.database.rxquery.abs.RxAbstractQuery;
 import sw.es.model.rx.ObservableCreator;
 
 /**
  * Created by alberto on 18/10/15.
  */
-public class RxWhere<Result extends Entity> extends RxAbstractQuery<List<Result>> {
+public class RxDeleteWhere<Result extends Entity> extends RxAbstractQuery<Boolean> {
 
 
     private Class aClass;
@@ -21,7 +20,7 @@ public class RxWhere<Result extends Entity> extends RxAbstractQuery<List<Result>
     private Object value;
 
 
-    public RxWhere(Class aClass, String columnName, Object value) {
+    public RxDeleteWhere(Class aClass, String columnName, Object value) {
         this.aClass = aClass;
         this.columnName = columnName;
         this.value = value;
@@ -29,12 +28,12 @@ public class RxWhere<Result extends Entity> extends RxAbstractQuery<List<Result>
 
 
     @Override
-    protected Observable<List<Result>> query(DaoManager daoManager){
-        return ObservableCreator.create(new Callable<List<Result>>() {
+    protected Observable<Boolean> query(DaoManager daoManager){
+        return ObservableCreator.create(new Callable<Boolean>() {
             @Override
-            public List<Result> call() throws Exception {
-                Where<Result>where = new Where<>(aClass, columnName, value);
-                return where.run();
+            public Boolean call() throws Exception {
+                DeleteWhere<Result> deleteWhere = new DeleteWhere<>(aClass, columnName, value);
+                return deleteWhere.run();
             }
         });
     }

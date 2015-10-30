@@ -9,4 +9,5 @@ import rx.Observable;
 public interface DataStore<Model, Params> {
     Observable<Model> fetch(final Params params);
     Observable<Boolean> commit(final Model model);
+    Observable<Boolean> remove(final Params params);
 }

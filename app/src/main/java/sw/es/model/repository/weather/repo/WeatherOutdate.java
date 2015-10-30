@@ -53,6 +53,11 @@ public class WeatherOutdate implements Outdate<String, Weather> {
         appShared.put(key(weather.getName()), DateTime.now().toString());
     }
 
+    @Override
+    public void remove(String s) {
+        appShared.remove(s);
+    }
+
 
     private String key(String name){
         return String.format("%s:%s",KEY_WEATHER_ID, name);

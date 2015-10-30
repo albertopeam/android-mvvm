@@ -85,7 +85,7 @@ public class Weather {
     }
 
     public String getDatetimeFormatted() {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm, EEEE, dd MMMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm, EEE, dd/MM/yyyy");
         String outDate = formatter.print(datetime*1000L);
         return outDate;
     }

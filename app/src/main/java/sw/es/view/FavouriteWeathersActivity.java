@@ -24,25 +24,26 @@ import sw.es.di.component.FavouriteWeathersViewModelComponent;
 import sw.es.di.module.FavouriteWeathersViewModelModule;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
+import sw.es.view.adapter.AdapterEvent;
 import sw.es.view.adapter.WeatherAdapter;
 import sw.es.view.adapter.dragandswipe.SimpleItemTouchHelperCallback;
 import sw.es.view.decorator.SpaceItemDecoration;
-import sw.es.viewmodel.weather.FavouriteWeathersListener;
+import sw.es.viewmodel.weather.FavouriteWeathersCallback;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: completar row
-//TODO: remove weather cuando swipe
 //TODO: drag and drop => reorder en shared
 //TODO: entrada de weathers temporizados...revisar funcionamient
 //TODO: subscripciones en viewmodel
 //TODO: widget con forecast
 //TODO: repo de forecast? donde integrarlo? hacer solo widget
 public class FavouriteWeathersActivity extends BaseActivity implements
-        FavouriteWeathersListener,
-        SearchView.OnQueryTextListener {
+        FavouriteWeathersCallback,
+        SearchView.OnQueryTextListener,
+        AdapterEvent<String> {
 
 
     private static final String TAG = FavouriteWeathersActivity.class.getSimpleName();
@@ -61,7 +62,7 @@ public class FavouriteWeathersActivity extends BaseActivity implements
 
 
     private void setView() {
-        adapter = new WeatherAdapter();
+        adapter = new WeatherAdapter(this);
         binding = DataBindingUtil.setContentView(FavouriteWeathersActivity.this, R.layout.activity_home);
         binding.setFavoriteVM(viewModel);
         binding.recycler.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
@@ -122,6 +123,7 @@ public class FavouriteWeathersActivity extends BaseActivity implements
             e(TAG, "onWeather");
         }
         adapter.addWeather(weather);
+        hideKeyboard();
     }
 
 
@@ -131,13 +133,18 @@ public class FavouriteWeathersActivity extends BaseActivity implements
             e(TAG, "onWeatherError: ");
             throwable.printStackTrace();
         }
-        Snackbar.make(binding.view, throwable.getMessage()!=null?throwable.getMessage():"Error", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(binding.view, throwable.getMessage()!=null?throwable.getMessage():getResources().getString(R.string.undefined_error), Snackbar.LENGTH_LONG).show();
     }
 
 
     @Override
     public void alreadyHasFavouriteLocation(FavouriteLocation favouriteLocation) {
         Snackbar.make(binding.view, getResources().getString(R.string.text_already_added_location), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRemoveError(Throwable throwable) {
+        Snackbar.make(binding.view, throwable.getMessage()!=null?throwable.getMessage():getResources().getString(R.string.undefined_error), Snackbar.LENGTH_LONG).show();
     }
 
 
@@ -149,7 +156,6 @@ public class FavouriteWeathersActivity extends BaseActivity implements
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        e("onQueryTextChange", query);
         hideKeyboard();
         viewModel.pull(query);
         return true;
@@ -167,5 +173,10 @@ public class FavouriteWeathersActivity extends BaseActivity implements
         if (imm != null){
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void remove(String name) {
+        viewModel.remove(name);
     }
 }

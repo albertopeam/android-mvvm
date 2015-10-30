@@ -27,10 +27,10 @@ public class SharedPrefs implements AppShared{
     }
 
 
-    private SharedPreferences.Editor getEditor() {
-        return sharedPreferences.edit();
+    @Override
+    public void remove(String key) {
+        getEditor().remove(key).apply();
     }
-
 
     @Override
     public void put(String key, String value) {
@@ -40,36 +40,65 @@ public class SharedPrefs implements AppShared{
 
     @Override
     public String get(String key) {
-        return sharedPreferences.getString(key, "");
+        return getShared().getString(key, "");
     }
 
 
     @Override
-    public void putStrings(String key, List<String>values){
+    public void putStringsInSet(String key, List<String> values){
         Set<String>set = new HashSet<>(values);
         getEditor().putStringSet(key, set).apply();
     }
 
 
     @Override
-    public void addString(String key, String value){
-        List<String>previous = getStrings(key);
+    public void addStringToSet(String key, String value){
+        List<String>previous = getStringsFromSet(key);
         previous.add(value);
-        putStrings(key, previous);
+        putStringsInSet(key, previous);
+    }
+
+    @Override
+    public void removeStringFromSet(String key, String value) {
+        HashSet<String> set = getSet(key);
+
+        set.remove(value);
+        List<String>list = convertSetToList(set);
+        putStringsInSet(key, list);
     }
 
 
-
     @Override
-    public List<String> getStrings(String key){
-        HashSet<String> set = (HashSet<String>) sharedPreferences.getStringSet(key, new HashSet<String>());
+    public List<String> getStringsFromSet(String key){
+        HashSet<String> set = getSet(key);
+        return convertSetToList(set);
+    }
 
+
+    private HashSet<String> getSet(String key){
+        HashSet<String> set = (HashSet<String>) getShared().getStringSet(key, new HashSet<String>());
+        return set;
+    }
+
+
+    private List<String>convertSetToList(HashSet<String> set){
         Iterator<String> iterator = set.iterator();
         List<String>list = new ArrayList<>();
         while(iterator.hasNext()){
             list.add(iterator.next());
         }
-
         return list;
     }
+
+
+    private SharedPreferences.Editor getEditor() {
+        return sharedPreferences.edit();
+    }
+
+
+    private SharedPreferences getShared() {
+        return sharedPreferences;
+    }
+
+
 }

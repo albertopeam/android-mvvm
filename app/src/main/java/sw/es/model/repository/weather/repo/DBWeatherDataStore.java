@@ -9,6 +9,7 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Func1;
 import sw.es.model.database.entity.WeatherEntity;
+import sw.es.model.database.rxquery.RxDeleteWhere;
 import sw.es.model.database.rxquery.RxSave;
 import sw.es.model.database.rxquery.RxWhere;
 import sw.es.model.local.Weather;
@@ -33,8 +34,8 @@ public class DBWeatherDataStore extends DBDataStore<Weather, String> {
 
 
     @Override
-    public Observable<Weather> fetch(final String s) {
-        RxWhere<WeatherEntity>rxWhere = new RxWhere<>(WeatherEntity.class, WeatherEntity.COLUMN_NAME, s);
+    public Observable<Weather> fetch(final String name) {
+        RxWhere<WeatherEntity>rxWhere = new RxWhere<>(WeatherEntity.class, WeatherEntity.COLUMN_NAME, name);
         return rxWhere.run()
                 .flatMap(new Func1<List<WeatherEntity>, Observable<Weather>>() {
                     @Override
@@ -72,5 +73,13 @@ public class DBWeatherDataStore extends DBDataStore<Weather, String> {
             }
         }).subscribeOn(executionScheduler);
         return observable;
+    }
+
+    @Override
+    public Observable<Boolean> remove(String name) {
+        RxDeleteWhere<WeatherEntity> rxDeleteWhere = new RxDeleteWhere<>(WeatherEntity.class, WeatherEntity.COLUMN_NAME, name);
+        return rxDeleteWhere.run()
+                .subscribeOn(executionScheduler);
+
     }
 }

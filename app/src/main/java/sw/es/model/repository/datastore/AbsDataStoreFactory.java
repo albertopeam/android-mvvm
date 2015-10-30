@@ -1,6 +1,7 @@
 package sw.es.model.repository.datastore;
 
 import sw.es.model.repository.criteria.LoadCriteria;
+import sw.es.model.repository.criteria.RemoveCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
 import sw.es.model.repository.exception.CriteriaExpiredException;
 import sw.es.model.repository.outdate.Outdate;
@@ -41,9 +42,20 @@ public class AbsDataStoreFactory<Model, Params> implements DataStoreFactory<Para
         if (storeCriteria.isCommit()){
             return dbDataStore;
         }else if(storeCriteria.isPush()) {
-            return cloudDataStore;
+            throw new UnsupportedOperationException();
         } else {
-            throw new IllegalArgumentException();
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
+    public DataStore get(RemoveCriteria removeCriteria) {
+        if (removeCriteria.isCommit()){
+            return dbDataStore;
+        }else if(removeCriteria.isPush()) {
+            throw new UnsupportedOperationException();
+        } else {
+            throw new UnsupportedOperationException();
         }
     }
 }

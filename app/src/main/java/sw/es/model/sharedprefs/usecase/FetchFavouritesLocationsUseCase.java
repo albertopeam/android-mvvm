@@ -1,4 +1,4 @@
-package sw.es.model.usecase;
+package sw.es.model.sharedprefs.usecase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class FetchFavouritesLocationsUseCase implements UseCase<FetchFavouritesC
         ObservableCreator.create(new Callable<List<FavouriteLocation>>() {
             @Override
             public List<FavouriteLocation> call() throws Exception {
-                List<String>list = appShared.getStrings(FavoriteLocationKeys.KEY_FAVOURITES);
+                List<String>list = appShared.getStringsFromSet(FavoriteLocationKeys.KEY_FAVOURITES);
                 List<FavouriteLocation>favouriteLocationList = new ArrayList<>();
                 for (String string:list){
                     favouriteLocationList.add(new FavouriteLocation(string));

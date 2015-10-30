@@ -33,8 +33,8 @@ public class CloudWeatherDataStore extends CloudDataStore<Weather, String> {
     }
 
     @Override
-    public Observable<Weather> fetch(final String s) {
-        Observable<Weather> weatherObservable =  weatherBackendAPI.fetchWeather(s).flatMap(new Func1<WeatherCloud, Observable<Weather>>() {
+    public Observable<Weather> fetch(final String name) {
+        Observable<Weather> weatherObservable =  weatherBackendAPI.fetchWeather(name).flatMap(new Func1<WeatherCloud, Observable<Weather>>() {
             @Override
             public Observable<Weather> call(final WeatherCloud weatherCloud) {
                 return ObservableCreator.create(new Callable<Weather>() {
@@ -57,4 +57,10 @@ public class CloudWeatherDataStore extends CloudDataStore<Weather, String> {
     public Observable<Boolean> commit(final Weather weather) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Observable<Boolean> remove(String name) {
+        throw new UnsupportedOperationException();
+    }
+
 }

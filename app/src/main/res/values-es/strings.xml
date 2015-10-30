@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Tu Tiempo</string>
+    <string name="undefined_error">Error indefinido</string>
     <string name="action_search">Buscar</string>
     <string name="text_already_added_location">Esta localización ya fue añadida</string>
     <string name="text_no_data_yet">Puedes empezar añadiendo nuevas localizaciones</string>
     <string name="humidity">Humedad:</string>
     <string name="wind_speed">Vel. viento:</string>
     <string name="cloudiness">Nubosidad:</string>
-    <string name="updated_at">Act. a:</string>
+    <string name="updated_at">Act.:</string>
 </resources>

@@ -1,4 +1,4 @@
-package sw.es.model.usecase;
+package sw.es.model.sharedprefs.usecase;
 
 import sw.es.model.local.FavouriteLocation;
 

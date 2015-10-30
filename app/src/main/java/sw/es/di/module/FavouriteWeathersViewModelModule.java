@@ -12,9 +12,11 @@ import sw.es.model.repository.weather.repo.WeatherDataStoreFactory;
 import sw.es.model.repository.weather.repo.WeatherOutdate;
 import sw.es.model.repository.weather.repo.WeatherRepository;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
+import sw.es.model.repository.weather.usecase.WeatherRemoveUseCase;
 import sw.es.model.sharedprefs.AppShared;
-import sw.es.model.usecase.FetchFavouritesLocationsUseCase;
-import sw.es.model.usecase.StoreFavouriteLocationUseCase;
+import sw.es.model.sharedprefs.usecase.FetchFavouritesLocationsUseCase;
+import sw.es.model.sharedprefs.usecase.RemoveFavouriteLocationUseCase;
+import sw.es.model.sharedprefs.usecase.StoreFavouriteLocationUseCase;
 import sw.es.network.WeatherBackendAPI;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
@@ -27,8 +29,15 @@ public class FavouriteWeathersViewModelModule {
 
     @Provides
     @PerActivity
-    FavouriteWeathersViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase){
-        return new FavouriteWeathersViewModel(weatherPullUseCase, fetchFavouritesLocationsUseCase, storeFavouriteLocationUseCase);
+    FavouriteWeathersViewModel provideWeatherViewModel(WeatherPullUseCase weatherPullUseCase, WeatherRemoveUseCase weatherRemoveUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase, RemoveFavouriteLocationUseCase removeFavouriteLocationUseCase){
+        return new FavouriteWeathersViewModel(weatherPullUseCase, weatherRemoveUseCase, fetchFavouritesLocationsUseCase, storeFavouriteLocationUseCase, removeFavouriteLocationUseCase);
+    }
+
+
+    @Provides
+    @PerActivity
+    WeatherRemoveUseCase provideRemoveUseCase(WeatherRepository weatherRepository){
+        return new WeatherRemoveUseCase(weatherRepository);
     }
 
 
@@ -86,5 +95,12 @@ public class FavouriteWeathersViewModelModule {
     @PerActivity
     StoreFavouriteLocationUseCase provideStoreFavouriteLocationUseCase(AppShared appShared){
         return new StoreFavouriteLocationUseCase(appShared);
+    }
+
+
+    @Provides
+    @PerActivity
+    RemoveFavouriteLocationUseCase provideRemoveFavouriteLocationUseCase(AppShared appShared){
+        return new RemoveFavouriteLocationUseCase(appShared);
     }
 }

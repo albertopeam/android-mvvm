@@ -1,4 +1,4 @@
-package sw.es.model.usecase;
+package sw.es.model.sharedprefs.usecase;
 
 /**
  * Created by albertopenasamor on 27/10/15.

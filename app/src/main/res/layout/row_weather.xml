@@ -96,6 +96,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:textSize="16sp"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="ºC"/>
 
@@ -212,28 +213,31 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="96dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/text_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:gravity="center_horizontal"
+                        android:text="@{weather.getDescription()}"
+                        tools:text="Short Description" />
+
                     <ImageView
                         app:imageUrl="@{weather.getIcon()}"
+                        android:layout_marginTop="@dimen/ms"
                         android:scaleType="centerCrop"
                         android:layout_width="64dp"
                         android:layout_height="64dp"/>
 
-                    <TextView
-                        android:id="@+id/text_description"
-                        android:layout_marginTop="@dimen/ms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{weather.getDescription()}"
-                        tools:text="Short Description" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sw.es.model.database.core.DaoManager;
+import sw.es.model.database.model.Entity;
 import sw.es.model.database.query.abs.AbstractQuery;
 
 /**
  * Created by alberto on 18/10/15.
  */
-public class Where<Result> extends AbstractQuery<List<Result>> {
+public class Where<Result extends Entity> extends AbstractQuery<List<Result>> {
 
 
     private Class aClass;
@@ -30,7 +31,7 @@ public class Where<Result> extends AbstractQuery<List<Result>> {
 
     @Override
     protected List<Result> query(DaoManager daoManager) throws Exception{
-        Dao<Result, Integer> dao = (Dao<Result, Integer>) daoManager.getDaoFor(aClass);
+        Dao<Result, Integer> dao = daoManager.getDaoFor(aClass);
         QueryBuilder<Result, Integer> queryBuilder = dao.queryBuilder();
         queryBuilder.where().eq(columnName, value);
         PreparedQuery<Result> preparedQuery = queryBuilder.prepare();

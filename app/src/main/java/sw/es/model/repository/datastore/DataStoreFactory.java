@@ -1,6 +1,7 @@
 package sw.es.model.repository.datastore;
 
 import sw.es.model.repository.criteria.LoadCriteria;
+import sw.es.model.repository.criteria.RemoveCriteria;
 import sw.es.model.repository.criteria.StoreCriteria;
 import sw.es.model.repository.exception.CriteriaExpiredException;
 
@@ -10,4 +11,5 @@ import sw.es.model.repository.exception.CriteriaExpiredException;
 public interface DataStoreFactory<Params> {
     DataStore get(LoadCriteria loadCriteria, Params params) throws CriteriaExpiredException;
     DataStore get(StoreCriteria storeCriteria);
+    DataStore get(RemoveCriteria removeCriteria);
 }

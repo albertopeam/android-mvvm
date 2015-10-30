@@ -2,19 +2,19 @@ package sw.es.viewmodel.weather;
 
 import android.databinding.Bindable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import sw.es.dagger2.BR;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
+import sw.es.model.memory.FavouriteLocations;
 import sw.es.model.repository.usecase.UseCaseCallback;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
-import sw.es.model.usecase.FetchFavouritesCallback;
-import sw.es.model.usecase.FetchFavouritesLocationsUseCase;
-import sw.es.model.usecase.StoreFavouriteLocationUseCase;
+import sw.es.model.repository.weather.usecase.WeatherRemoveUseCase;
+import sw.es.model.sharedprefs.usecase.FetchFavouritesCallback;
+import sw.es.model.sharedprefs.usecase.FetchFavouritesLocationsUseCase;
+import sw.es.model.sharedprefs.usecase.RemoveFavouriteLocationUseCase;
+import sw.es.model.sharedprefs.usecase.StoreFavouriteLocationUseCase;
 import sw.es.viewmodel.abs.AbsViewModel;
 
 /**
@@ -23,35 +23,40 @@ import sw.es.viewmodel.abs.AbsViewModel;
 public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavouriteWeathersViewModel {
 
 
-    private FavouriteWeathersListener favouriteWeathersListener;
-    private WeatherPullUseCase weatherPullUseCase;
-    private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;
-    private List<FavouriteLocation> favouriteLocationList;
-    private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;
+    private FavouriteWeathersCallback viewCallback;//view callback
+    private WeatherPullUseCase weatherPullUseCase;//repo pull case
+    private WeatherRemoveUseCase weatherRemoveUseCase;//repo remove case
+    private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;//shared fetch locations
+    private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;//shared store locations
+    private RemoveFavouriteLocationUseCase removeFavouriteLocationUseCase;
+    private FavouriteLocations favouriteLocations;//mem fav locations
     private boolean loading = false;
     private boolean empty = false;
 
 
 
     @Inject
-    public FavouriteWeathersViewModel(WeatherPullUseCase weatherPullUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase) {
+    public FavouriteWeathersViewModel(WeatherPullUseCase weatherPullUseCase, WeatherRemoveUseCase weatherRemoveUseCase, FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase, StoreFavouriteLocationUseCase storeFavouriteLocationUseCase, RemoveFavouriteLocationUseCase removeFavouriteLocationUseCase) {
         this.weatherPullUseCase = weatherPullUseCase;
+        this.weatherRemoveUseCase = weatherRemoveUseCase;
         this.fetchFavouritesLocationsUseCase = fetchFavouritesLocationsUseCase;
         this.storeFavouriteLocationUseCase = storeFavouriteLocationUseCase;
-        this.favouriteLocationList = new ArrayList<>();
+        this.removeFavouriteLocationUseCase = removeFavouriteLocationUseCase;
+        this.favouriteLocations = new FavouriteLocations();
     }
 
 
     @Override
-    public void setup(FavouriteWeathersListener favouriteWeathersListener) {
-        this.favouriteWeathersListener = favouriteWeathersListener;
+    public void setup(FavouriteWeathersCallback favouriteWeathersCallback) {
+        this.viewCallback = favouriteWeathersCallback;
     }
 
 
     @Override
     public void destroy() {
         //TODO: cancelar las posibles peticiones.... subscriptions.... booleanos....
-        favouriteWeathersListener = null;
+        //TODO: isRunning
+        viewCallback = null;
     }
 
 
@@ -61,7 +66,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
         fetchFavouritesLocationsUseCase.run(new FetchFavouritesCallback() {
             @Override
             public void onFavourite(FavouriteLocation favouriteLocation) {
-                favouriteLocationList.add(favouriteLocation);
+                favouriteLocations.add(favouriteLocation);
                 pullWeather(favouriteLocation.getName());
             }
 
@@ -76,13 +81,31 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
 
     @Override
     public void pull(String name) {
-        if (hasNotFavouriteLocation(name)) {
+        if (favouriteLocations.hasNot(name)) {
             setLoading(true);
-            storeFavoriteLocation(name);
             pullWeather(name);
         }else{
-            favouriteWeathersListener.alreadyHasFavouriteLocation(new FavouriteLocation(name));
+            viewCallback.alreadyHasFavouriteLocation(new FavouriteLocation(name));
         }
+    }
+
+    @Override
+    public void remove(String name) {
+        setLoading(true);
+        favouriteLocations.remove(name);
+        removeFavouriteLocationUseCase.run(name);
+        weatherRemoveUseCase.run(name, new UseCaseCallback<String, Boolean>() {
+            @Override
+            public void onResult(String s, Boolean aBoolean) {
+                setLoading(false);
+            }
+
+            @Override
+            public void onResultError(String s, Throwable throwable) {
+                setLoading(false);
+                viewCallback.onRemoveError(throwable);
+            }
+        });
     }
 
 
@@ -93,7 +116,10 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
                 if (hasView()) {
                     setEmpty(false);
                     setLoading(false);
-                    favouriteWeathersListener.onWeather(weather);
+                    String key = weather.getName();
+                    favouriteLocations.add(key);
+                    storeFavouriteLocationUseCase.run(key);
+                    viewCallback.onWeather(weather);
                 }
             }
 
@@ -101,33 +127,15 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
             public void onResultError(String s, Throwable throwable) {
                 if (hasView()) {
                     setLoading(false);
-                    favouriteWeathersListener.onWeatherError(throwable);
+                    viewCallback.onWeatherError(throwable);
                 }
             }
         });
     }
 
 
-    private void storeFavoriteLocation(String name){
-        FavouriteLocation favouriteLocation = new FavouriteLocation(name);
-        favouriteLocationList.add(favouriteLocation);
-        storeFavouriteLocationUseCase.run(name);
-    }
-
-
     private boolean hasView(){
-        return favouriteWeathersListener != null;
-    }
-
-
-    private boolean hasNotFavouriteLocation(String name){
-        FavouriteLocation newFavouriteLocation = new FavouriteLocation(name);
-        for (FavouriteLocation favouriteLocation:favouriteLocationList){
-            if (favouriteLocation.equals(newFavouriteLocation)){
-                return false;
-            }
-        }
-        return true;
+        return viewCallback != null;
     }
 
 

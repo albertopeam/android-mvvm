@@ -6,4 +6,5 @@ package sw.es.model.repository.outdate;
 public interface Outdate<Params, Model> {
     boolean isExpired(Params params);
     void setLastUpdate(Model model);
+    void remove(Params params);
 }
