@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import sw.es.di.module.FavouriteWeathersViewModelModule;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
 import sw.es.view.adapter.WeatherAdapter;
+import sw.es.view.adapter.dragandswipe.SimpleItemTouchHelperCallback;
 import sw.es.view.decorator.SpaceItemDecoration;
 import sw.es.viewmodel.weather.FavouriteWeathersListener;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
@@ -32,8 +34,15 @@ import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: completar row
+//TODO: remove weather cuando swipe
+//TODO: drag and drop => reorder en shared
+//TODO: entrada de weathers temporizados...revisar funcionamient
 //TODO: subscripciones en viewmodel
-public class FavouriteWeathersActivity extends BaseActivity implements FavouriteWeathersListener, SearchView.OnQueryTextListener {
+//TODO: widget con forecast
+//TODO: repo de forecast? donde integrarlo? hacer solo widget
+public class FavouriteWeathersActivity extends BaseActivity implements
+        FavouriteWeathersListener,
+        SearchView.OnQueryTextListener {
 
 
     private static final String TAG = FavouriteWeathersActivity.class.getSimpleName();
@@ -61,6 +70,9 @@ public class FavouriteWeathersActivity extends BaseActivity implements Favourite
         binding.recycler.setItemAnimator(makeAnimator());
         binding.recycler.setHasFixedSize(true);//for performance same height
         binding.recycler.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(binding.recycler);
         setSupportActionBar(binding.toolbar);
     }
 

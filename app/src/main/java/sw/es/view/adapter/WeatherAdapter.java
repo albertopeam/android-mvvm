@@ -7,16 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.RowWeatherBinding;
 import sw.es.model.local.Weather;
+import sw.es.view.adapter.dragandswipe.ItemTouchHelperAdapter;
 
 /**
  * Created by albertopenasamor on 15/10/15.
  */
-public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder> {
+public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder> implements ItemTouchHelperAdapter {
 
 
     private List<Weather> weatherList;
@@ -52,6 +54,20 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
     @Override
     public int getItemCount() {
         return weatherList.size();
+    }
+
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(weatherList, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        weatherList.remove(position);
+        notifyItemRemoved(position);
     }
 
 
