@@ -21,4 +21,60 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+
+    <style name="text">
+
+    </style>
+
+    <style name="text.small">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="text.small.single">
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="text.xsmall.single">
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="text.xxsmall.single">
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="text.xxsmall">
+        <item name="android:textSize">6sp</item>
+    </style>
+
+    <style name="text.xsmall">
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="text.xsmall.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.small.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.small.single.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.xxsmall.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.xxsmall.single.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.xsmall.single.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>
