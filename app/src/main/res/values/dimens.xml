@@ -8,6 +8,7 @@
     <dimen name="divider_height">10dp</dimen>
 
     <dimen name="app_widget_width">326dp</dimen>
-    <dimen name="app_widget_width_column">81dp</dimen>
+    <dimen name="app_widget_width_column">76.5dp</dimen>
+    <dimen name="app_widget_height_column">150dp</dimen>
     <dimen name="app_widget_height">158dp</dimen>
 </resources>

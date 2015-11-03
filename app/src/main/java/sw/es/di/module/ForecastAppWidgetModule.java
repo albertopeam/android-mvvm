@@ -4,8 +4,8 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import sw.es.appwidget.ForecastAppWidgetView;
-import sw.es.appwidget.ForecastView;
+import sw.es.appwidget.view.ForecastAppWidgetView;
+import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
 
 /**

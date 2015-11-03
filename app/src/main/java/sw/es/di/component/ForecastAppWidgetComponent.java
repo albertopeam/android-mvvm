@@ -3,7 +3,7 @@ package sw.es.di.component;
 import dagger.Component;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.ForecastAppWidgetService;
-import sw.es.appwidget.ForecastView;
+import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
 import sw.es.di.module.ForecastAppWidgetModule;
 

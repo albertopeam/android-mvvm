@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/widget"
     android:orientation="horizontal"
-    android:padding="@dimen/ms"
+    android:paddingTop="@dimen/ms"
+    android:paddingBottom="@dimen/ms"
     android:layout_width="@dimen/app_widget_width"
     android:layout_height="@dimen/app_widget_height">
 
@@ -14,6 +15,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            style="@style/column.leftside"
             android:id="@+id/appwidget.first"
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -26,128 +28,12 @@
         </LinearLayout>
 
         <LinearLayout
+            style="@style/column.inside"
+            android:id="@+id/appwidget.second"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <TextView
-                    style="@style/text.small.white"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lun, 21h" />
-
-                <LinearLayout
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:background="@drawable/triangle"
-                    android:layout_width="9dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="8">
-                </LinearLayout>
-
-                <LinearLayout
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp">
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2.3">
-
-                <TextView
-                    style="@style/text.xsmall.white"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="2"
-                    android:ellipsize="end"
-                    android:text="heavy shower" />
-
-                <ImageView
-                    android:id="@+id/appwidget.icon"
-                    android:layerType="software"
-                    android:layout_gravity="center_horizontal"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/weather"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.7">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.5"
-                        android:layout_height="match_parent"/>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:gravity="center_vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            style="@style/text.xsmall.single.white"
-                            android:gravity="center_horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="21ºc" />
-
-                        <TextView
-                            style="@style/text.small.single.white"
-                            android:gravity="center_horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="15ºc" />
-
-                        <TextView
-                            style="@style/text.xsmall.single.white"
-                            android:gravity="center_horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="-5ºc" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        style="@style/text.xsmall.single.white"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="10m/s" />
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -155,6 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
+            style="@style/column.inside"
             android:id="@+id/appwidget.third"
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -163,6 +50,12 @@
         </LinearLayout>
 
         <LinearLayout
+            style="@style/divider.horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/column.rightside"
+            android:id="@+id/appwidget.fourth"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_weight="1"

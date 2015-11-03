@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/red"
     android:layout_width="@dimen/app_widget_width_column"
     android:layout_height="@dimen/app_widget_height">
 
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lun, 21h" />
-
+<!--
         <LinearLayout
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
@@ -33,7 +32,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="1dp">
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 
     <LinearLayout

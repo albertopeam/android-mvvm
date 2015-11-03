@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 
 import javax.inject.Inject;
 
+import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
@@ -20,7 +21,8 @@ import sw.es.model.local.Forecast;
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
-    @Inject ForecastAppWidgetView forecastAppWidgetView;
+    @Inject
+    ForecastAppWidgetView forecastAppWidgetView;
 
 
     @Override
@@ -48,7 +50,7 @@ public class ForecastAppWidget extends AppWidgetProvider {
         initializeInjections(context);
         super.onReceive(context, intent);
 
-        //TODO: custom action...
+        //TODO: custom action...si lo lleva
         if (ForecastAppWidgetView.RELOAD_ACTION.equals(intent.getAction())){
             /*
             RemoteViews remoteViews = forecastAppWidgetView.buildAppWidgetsLoading();
@@ -65,6 +67,7 @@ public class ForecastAppWidget extends AppWidgetProvider {
     }
 
 
+    //TODO: debe publicar el remoteView...
     public static void publishAppWidgetUpdate(Context context, RemoteViews views){
         ComponentName thisWidget = new ComponentName(context, ForecastAppWidget.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);

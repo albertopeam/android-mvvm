@@ -4,12 +4,12 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
+import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.dagger2.BuildConfig;
 
 //TODO: repo
@@ -148,7 +148,6 @@ public class ForecastAppWidgetService extends Service {
     }
     */
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;

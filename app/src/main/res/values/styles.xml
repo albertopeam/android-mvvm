@@ -21,6 +21,26 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="column">
+
+    </style>
+
+    <style name="column.inside">
+        <item name="android:layout_marginLeft">@dimen/mxs</item>
+        <item name="android:layout_marginRight">@dimen/mxs</item>
+    </style>
+
+
+    <style name="column.leftside">
+        <item name="android:layout_marginLeft">@dimen/ms</item>
+        <item name="android:layout_marginRight">@dimen/mxs</item>
+    </style>
+
+    <style name="column.rightside">
+        <item name="android:layout_marginLeft">@dimen/mxs</item>
+        <item name="android:layout_marginRight">@dimen/ms</item>
+    </style>
+
     <style name="divider">
 
     </style>
@@ -29,6 +49,8 @@
         <item name="android:background">@color/white</item>
         <item name="android:layout_width">0.5dp</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/l</item>
+        <item name="android:layout_marginBottom">@dimen/l</item>
     </style>
 
 

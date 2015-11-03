@@ -1,14 +1,16 @@
-package sw.es.appwidget;
+package sw.es.appwidget.view;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import sw.es.dagger2.R;
 import sw.es.model.local.Forecast;
+import sw.es.model.local.ForecastWeather;
 
 
 /**
@@ -19,15 +21,14 @@ public class ForecastAppWidgetView implements ForecastView{
 
     private static final String TAG = ForecastAppWidgetView.class.getSimpleName();
     public static final String RELOAD_ACTION = "reload_btn";
+    private static int NUM_COLUMNS = 4;
     private Context context;
-    private Resources resources;
     private RemoteViews remoteView;
 
 
     @Inject
     public ForecastAppWidgetView(Context context) {
         this.context = context;
-        this.resources = context.getResources();
         this.remoteView = new RemoteViews(context.getPackageName(), R.layout.app_widget);
     }
 
@@ -47,13 +48,15 @@ public class ForecastAppWidgetView implements ForecastView{
         //TODO: imagenes... recortar las imagenes de la lib meteocons
         //TODO: https://www.iconfinder.com/icons/110802/fog_sun_icon#size=128 o convertir a blanco o aplicar filtro, recoratar...
 
-        for(int i = 0; i < 4; i++) {
-            RemoteViews remote = new RemoteViews(context.getPackageName(), R.layout.app_widget_column);
-            remote.setTextViewText(R.id.appwidget_date, "TextView number" + String.valueOf(i));
-            if (i == 0) {
-                remoteView.addView(R.id.appwidget_first, remote);
-            }else if(i == 2){
-                remoteView.addView(R.id.appwidget_third, remote);
+        List<ForecastWeather> forecastWeatherList = forecast.getForecastWeatherList();
+        for(int i = 0; i < NUM_COLUMNS; i++) {
+            if (forecastWeatherList.size() >= NUM_COLUMNS) {
+                ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context);
+                RemoteViews remoteViews = forecastColumnView.build(i, forecast, forecastWeatherList.get(i));
+                int viewId = forecastColumnView.viewId(i);
+                remoteView.addView(viewId, remoteViews);
+            }else{
+                //TODO: no creo que se de...
             }
         }
 

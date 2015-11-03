@@ -1,4 +1,4 @@
-package sw.es.appwidget;
+package sw.es.appwidget.view;
 
 import android.widget.RemoteViews;
 
