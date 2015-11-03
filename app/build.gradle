@@ -55,4 +55,6 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp-integration:1.3.1@aar'
     //recycler
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
+    //icons
+    compile 'com.joanzapata.iconify:android-iconify-weathericons:2.1.0'
 }

@@ -59,9 +59,8 @@
                 android:text="@string/text_no_data_yet"
                 android:id="@+id/emptytextview"
                 android:layout_centerInParent="true"/>
-
-
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
+
 

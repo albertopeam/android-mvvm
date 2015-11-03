@@ -169,5 +169,6 @@
     <color name="Black">#000000</color>
     <color name="bg_gray">#dddddd</color>
 
-    <color name="blackmask">#dd000000</color>
+    <color name="blackmask">#8f000000</color>
+    <color name="icon_color">@color/white</color>
 </resources>

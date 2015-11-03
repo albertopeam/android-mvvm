@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.WeathericonsModule;
 
 import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.ApplicationComponent;
@@ -30,6 +32,11 @@ public class AndroidApp extends Application {
 
         initDatabase();
         initializeInjector();
+        initIcons();
+    }
+
+    private void initIcons() {
+        Iconify.with(new WeathericonsModule());
     }
 
 
