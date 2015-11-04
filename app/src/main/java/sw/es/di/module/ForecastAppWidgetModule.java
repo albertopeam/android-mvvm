@@ -4,6 +4,8 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import sw.es.appwidget.AppWidgetPublisher;
+import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
@@ -34,5 +36,13 @@ public class ForecastAppWidgetModule {
     @PerService
     Context provideContext(){
         return context;
+    }
+
+
+    @Provides
+    @PerService
+    AppWidgetPublisher<ForecastAppWidget>providePublisher(){
+        AppWidgetPublisher<ForecastAppWidget>publisher = new AppWidgetPublisher<>(context, ForecastAppWidget.class);
+        return publisher;
     }
 }

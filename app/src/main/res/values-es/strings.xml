@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Tu Tiempo</string>
     <string name="undefined_error">Error indefinido</string>
+    <string name="net_error">Error de red</string>
     <string name="action_search">Buscar</string>
     <string name="text_already_added_location">Esta localización ya fue añadida</string>
     <string name="text_no_data_yet">Puedes empezar añadiendo nuevas localizaciones</string>

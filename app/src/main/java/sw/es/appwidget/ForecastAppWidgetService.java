@@ -11,15 +11,20 @@ import javax.inject.Inject;
 import rx.subscriptions.CompositeSubscription;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.dagger2.BuildConfig;
+import sw.es.di.component.DaggerForecastAppWidgetComponent;
+import sw.es.di.component.ForecastAppWidgetComponent;
+import sw.es.di.module.ForecastAppWidgetModule;
+import sw.es.model.local.Forecast;
 
-//TODO: repo
+//TODO: repo: crear, probar e inyectar
 public class ForecastAppWidgetService extends Service {
 
     private static final String TAG = ForecastAppWidgetService.class.getSimpleName();
     private CompositeSubscription mCompositeSubscription = null;
 
-    @Inject
-    ForecastAppWidgetView forecastAppWidgetView;
+
+    @Inject ForecastAppWidgetView forecastAppWidgetView;
+    @Inject AppWidgetPublisher<ForecastAppWidget>publisher;
 
 
     public static Intent newInstance(Context context) {
@@ -31,12 +36,7 @@ public class ForecastAppWidgetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        /*
-        WeatherAppWidgetComponent component = DaggerWeatherAppWidgetComponent.builder()
-                .weatherAppWidgetModule(new WeatherAppWidgetModule(this))
-                .build();
-        component.inject(this);
-        */
+        initializeInjections(getApplicationContext());
     }
 
     @Override
@@ -45,7 +45,8 @@ public class ForecastAppWidgetService extends Service {
             Log.d(TAG, "onStartCommand");
         }
         if (!isRunning()){
-            fetchWeatherData();
+            showLoading();
+            fetchForecast();
         }else{
             if (BuildConfig.DEBUG){
                 Log.d(TAG, "service already running");
@@ -59,71 +60,34 @@ public class ForecastAppWidgetService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (!mCompositeSubscription.isUnsubscribed()) {
+        /*if (!mCompositeSubscription.isUnsubscribed()) {
             mCompositeSubscription.unsubscribe();
         }
         mCompositeSubscription = null;
+        */
     }
 
 
-    private void fetchWeatherData(){
+    private void showLoading(){
+        publisher.update(forecastAppWidgetView.setLoading());
+    }
+
+    private void fetchForecast(){
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "fetchWeatherData");
         }
-        //TODO:
-        /*
-        mCompositeSubscription = new CompositeSubscription();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Forecast forecast = new Forecast();
+        publisher.update(forecastAppWidgetView.setForecast(forecast));
+    }
 
-        LocationService locationService = new LocationService(this);
-        final Observable locationObservable = locationService.getLocation()
-                .timeout(LOCATION_UPDATE_TIMEOUT, TimeUnit.SECONDS)
-                .flatMap(new Func1<Location, Observable<CurrentWeather>>() {
-                    @Override
-                    public Observable<CurrentWeather> call(Location location) {
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "locationService call");
-                        }
-                        return new WeatherService().fetchCurrentWeather(location.getLongitude(), location.getLatitude())
-                                .map(new Func1<CurrentWeather, CurrentWeather>() {
-                                    @Override
-                                    public CurrentWeather call(CurrentWeather currentWeather) {
-                                        return currentWeather;
-                                    }
-                                });
-                    }
-                });
 
-        mCompositeSubscription.add(locationObservable
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CurrentWeather>() {
-                    @Override
-                    public void onCompleted() {
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onCompleted");
-                        }
-                        stopSelf();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onErrors");
-                        }
-                        updateAppWidgetsWithError(e);
-                        stopSelf();
-                    }
-
-                    @Override
-                    public void onNext(CurrentWeather currentWeather) {
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onNext");
-                        }
-                        updateAppWidgets(currentWeather);
-                    }
-                }));
-                */
-
+    private void showError(){
+        publisher.update(forecastAppWidgetView.setError(null));
     }
 
 
@@ -147,6 +111,11 @@ public class ForecastAppWidgetService extends Service {
         CurrentWeatherAppWidget.publishAppWidgetUpdate(ForecastAppWidgetService.this, updateViews);
     }
     */
+
+    private void initializeInjections(Context context){
+        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
+        component.inject(this);
+    }
 
     @Override
     public IBinder onBind(Intent intent) {

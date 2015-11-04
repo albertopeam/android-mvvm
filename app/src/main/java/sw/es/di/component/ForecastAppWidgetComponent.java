@@ -1,6 +1,7 @@
 package sw.es.di.component;
 
 import dagger.Component;
+import sw.es.appwidget.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.appwidget.view.ForecastView;
@@ -13,8 +14,9 @@ import sw.es.di.module.ForecastAppWidgetModule;
 @PerService
 @Component(modules = ForecastAppWidgetModule.class)
 public interface ForecastAppWidgetComponent {
-    void inject(ForecastAppWidgetService updateWeatherAppWidgetService);
+    void inject(ForecastAppWidgetService forecastAppWidgetService);
     void inject(ForecastAppWidget currentWeatherAppWidget);
 
     ForecastView provideForecastView();
+    AppWidgetPublisher<ForecastAppWidget> providePublisher();
 }

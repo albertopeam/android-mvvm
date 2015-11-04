@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Your Weather</string>
     <string name="undefined_error">Undefined error</string>
+    <string name="net_error">Network error</string>
     <string name="action_search">Search</string>
     <string name="text_already_added_location">Already added location</string>
     <string name="text_no_data_yet">Try to adding new locations</string>
