@@ -40,6 +40,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 //TODO: subscripciones en viewmodel
 //TODO: widget con forecast
 //TODO: repo de forecast? donde integrarlo? hacer solo widget
+//TODO: se atraganto la app al borrar varios weather a la vez
 public class FavouriteWeathersActivity extends BaseActivity implements
         FavouriteWeathersCallback,
         SearchView.OnQueryTextListener,
