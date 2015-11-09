@@ -1,0 +1,8 @@
+package sw.es.model.backend.aux;
+
+public class Weather{
+        public int id;
+        public String main;
+        public String description;
+        public String icon;
+    }

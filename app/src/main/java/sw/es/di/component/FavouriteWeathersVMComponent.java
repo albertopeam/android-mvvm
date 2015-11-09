@@ -6,7 +6,7 @@ import sw.es.di.module.AppSharedModule;
 import sw.es.di.module.FavouriteWeathersVMModule;
 import sw.es.di.module.NetworkModule;
 import sw.es.di.module.SchedulerModule;
-import sw.es.view.FavouriteWeathersActivity;
+import sw.es.view.activity.FavouriteWeathersActivity;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 /**
