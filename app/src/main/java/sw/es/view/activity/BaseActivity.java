@@ -1,4 +1,4 @@
-package sw.es.view;
+package sw.es.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

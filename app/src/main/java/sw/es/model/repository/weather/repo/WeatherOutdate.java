@@ -16,7 +16,8 @@ import sw.es.model.sharedprefs.AppShared;
 public class WeatherOutdate implements Outdate<String, Weather> {
 
 
-    private static final String KEY_WEATHER_ID = "key_weather_last_update";
+    public static final String KEY_WEATHER_ID = "key_weather_last_update";
+    public static final String SEPARATOR = ":";
     private int minutsBetweenUpdates;
     private AppShared appShared;
 
@@ -60,6 +61,6 @@ public class WeatherOutdate implements Outdate<String, Weather> {
 
 
     private String key(String name){
-        return String.format("%s:%s",KEY_WEATHER_ID, name);
+        return String.format("%s%s%s",KEY_WEATHER_ID, SEPARATOR, name);
     }
 }

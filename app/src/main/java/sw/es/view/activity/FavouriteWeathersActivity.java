@@ -1,6 +1,5 @@
-package sw.es.view;
+package sw.es.view.activity;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -34,12 +33,11 @@ import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
-//TODO: completar row
 //TODO: drag and drop => reorder en shared
 //TODO: entrada de weathers temporizados...revisar funcionamient
-//TODO: subscripciones en viewmodel
+//TODO: subscripciones en usecase o por ahí y cancelar desde el viewmodel!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //TODO: widget con forecast
-//TODO: repo de forecast? donde integrarlo? hacer solo widget
+//TODO: repo de forecast, REPO CON LISTA, hacer solo widget
 //TODO: se atraganto la app al borrar varios weather a la vez
 public class FavouriteWeathersActivity extends BaseActivity implements
         FavouriteWeathersCallback,
@@ -170,7 +168,7 @@ public class FavouriteWeathersActivity extends BaseActivity implements
 
 
     private void hideKeyboard(){
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         if (imm != null){
             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
         }
