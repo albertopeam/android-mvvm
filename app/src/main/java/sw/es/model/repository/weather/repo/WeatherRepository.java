@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import rx.Scheduler;
 import sw.es.model.local.Weather;
-import sw.es.model.repository.repository.AbstractRepository;
+import sw.es.model.repository.repo.repository.AbstractRepository;
 
 
 /**

@@ -6,7 +6,7 @@ import org.joda.time.Period;
 import javax.inject.Inject;
 
 import sw.es.model.local.Weather;
-import sw.es.model.repository.outdate.Outdate;
+import sw.es.model.repository.repo.outdate.Outdate;
 import sw.es.model.sharedprefs.AppShared;
 
 

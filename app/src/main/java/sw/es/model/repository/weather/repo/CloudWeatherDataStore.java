@@ -9,9 +9,9 @@ import rx.Scheduler;
 import rx.functions.Func1;
 import sw.es.model.backend.WeatherCloud;
 import sw.es.model.local.Weather;
-import sw.es.model.mapper.WeatherCloudMapper;
-import sw.es.model.repository.datastore.CloudDataStore;
-import sw.es.model.repository.exception.NotFoundInCloudDataStoreException;
+import sw.es.model.mapper.weather.WeatherCloudMapper;
+import sw.es.model.repository.repo.datastore.CloudDataStore;
+import sw.es.model.repository.repo.exception.NotFoundInCloudDataStoreException;
 import sw.es.model.rx.ObservableCreator;
 import sw.es.network.WeatherBackendAPI;
 

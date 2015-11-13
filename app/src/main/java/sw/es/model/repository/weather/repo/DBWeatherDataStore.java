@@ -13,9 +13,9 @@ import sw.es.model.database.rxquery.RxDeleteWhere;
 import sw.es.model.database.rxquery.RxSave;
 import sw.es.model.database.rxquery.RxWhere;
 import sw.es.model.local.Weather;
-import sw.es.model.mapper.WeatherEntityMapper;
-import sw.es.model.repository.datastore.DBDataStore;
-import sw.es.model.repository.exception.NotFoundInDBDataStoreException;
+import sw.es.model.mapper.weather.WeatherEntityMapper;
+import sw.es.model.repository.repo.datastore.DBDataStore;
+import sw.es.model.repository.repo.exception.NotFoundInDBDataStoreException;
 import sw.es.model.rx.ObservableCreator;
 
 /**

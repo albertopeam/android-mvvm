@@ -8,7 +8,7 @@ import sw.es.dagger2.BR;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
 import sw.es.model.memory.FavouriteLocations;
-import sw.es.model.repository.usecase.UseCaseCallback;
+import sw.es.model.repository.repo.usecase.UseCaseCallback;
 import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
 import sw.es.model.repository.weather.usecase.WeatherRemoveUseCase;
 import sw.es.model.sharedprefs.usecase.FetchFavouritesCallback;

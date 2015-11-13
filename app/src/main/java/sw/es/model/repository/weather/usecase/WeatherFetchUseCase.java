@@ -4,8 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import sw.es.model.local.Weather;
-import sw.es.model.repository.repository.Repository;
-import sw.es.model.repository.usecase.FetchUseCase;
+import sw.es.model.repository.repo.repository.Repository;
+import sw.es.model.repository.repo.usecase.FetchUseCase;
 
 /**
  * Created by albertopenasamor on 22/10/15.

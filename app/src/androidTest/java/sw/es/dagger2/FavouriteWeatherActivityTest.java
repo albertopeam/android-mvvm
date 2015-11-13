@@ -22,6 +22,10 @@ public class FavouriteWeatherActivityTest {
     @Rule
     public ActivityTestRule<FavouriteWeathersActivity> mActivityRule = new ActivityTestRule(FavouriteWeathersActivity.class);
 
+    //TODO: explicacion de como mockear con dagger...
+    //https://speakerdeck.com/jakewharton/dependency-injection-with-dagger-2-devoxx-2014
+    //https://engineering.circle.com/instrumentation-testing-with-dagger-mockito-and-espresso/
+
     @Test
     public void testEmpty() {
         //TODO: mockear un viewmodel de palo....peta en la visibilidad....pq va demasiado rápido.

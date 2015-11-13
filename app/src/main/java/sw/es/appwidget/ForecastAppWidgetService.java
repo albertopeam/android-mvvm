@@ -15,6 +15,7 @@ import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
 import sw.es.model.local.Forecast;
+import sw.es.model.repository.forecast.CloudForecastCityDataStore;
 
 //TODO: repo: crear, probar e inyectar
 public class ForecastAppWidgetService extends Service {
@@ -78,6 +79,8 @@ public class ForecastAppWidgetService extends Service {
         }
         try {
             Thread.sleep(5000);
+            Todo: impl
+            CloudForecastCityDataStore
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
