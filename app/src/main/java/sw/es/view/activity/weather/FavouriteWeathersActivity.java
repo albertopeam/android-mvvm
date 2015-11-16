@@ -1,28 +1,27 @@
-package sw.es.view.activity;
+package sw.es.view.activity.weather;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 
 import javax.inject.Inject;
 
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityHomeBinding;
 import sw.es.di.component.DaggerFavouriteWeathersVMComponent;
 import sw.es.di.component.FavouriteWeathersVMComponent;
 import sw.es.di.module.FavouriteWeathersVMModule;
+import sw.es.domain.RecyclerSlideInUpAnimator;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
+import sw.es.view.activity.BaseActivity;
 import sw.es.view.adapter.AdapterEvent;
 import sw.es.view.adapter.WeatherAdapter;
 import sw.es.view.adapter.dragandswipe.SimpleItemTouchHelperCallback;
@@ -67,24 +66,13 @@ public class FavouriteWeathersActivity extends BaseActivity implements
         binding.recycler.setLayoutManager(new LinearLayoutManager(FavouriteWeathersActivity.this));
         SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration((int) getResources().getDimension(R.dimen.divider_height));
         binding.recycler.addItemDecoration(spaceItemDecoration);
-        binding.recycler.setItemAnimator(makeAnimator());
+        binding.recycler.setItemAnimator(new RecyclerSlideInUpAnimator().build());
         binding.recycler.setHasFixedSize(true);//for performance same height
         binding.recycler.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(binding.recycler);
         setSupportActionBar(binding.toolbar);
-    }
-
-
-    private RecyclerView.ItemAnimator makeAnimator(){
-        RecyclerView.ItemAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-        int animMS = 1000;
-        animator.setAddDuration(animMS);
-        animator.setRemoveDuration(animMS);
-        animator.setMoveDuration(animMS);
-        animator.setChangeDuration(animMS);
-        return animator;
     }
 
 

@@ -5,6 +5,7 @@
     <string name="action_search">Buscar</string>
     <string name="text_already_added_location">Esta localización ya fue añadida</string>
     <string name="text_no_data_yet">Puedes empezar añadiendo nuevas localizaciones</string>
+    <string name="text_no_fav_location">No tienes lozalizaciones favoritas</string>
     <string name="humidity">Humedad:</string>
     <string name="wind_speed">Vel. viento:</string>
     <string name="cloudiness">Nubosidad:</string>

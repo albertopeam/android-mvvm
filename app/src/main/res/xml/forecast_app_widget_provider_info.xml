@@ -5,5 +5,6 @@
                     android:updatePeriodMillis="3600000"
                     android:initialLayout="@layout/app_widget"
                     android:resizeMode="none"
+                    android:configure="sw.es.view.activity.widgetconfig.AppWidgetConfigActivity"
                     android:widgetCategory="home_screen">
 </appwidget-provider>

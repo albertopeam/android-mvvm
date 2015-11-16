@@ -16,9 +16,11 @@ import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
 import sw.es.model.local.Forecast;
 import sw.es.model.repository.forecast.CloudForecastCityDataStore;
+import sw.es.model.sharedprefs.AppShared;
 
 //TODO: repo: crear, probar e inyectar
 public class ForecastAppWidgetService extends Service {
+
 
     private static final String TAG = ForecastAppWidgetService.class.getSimpleName();
     private CompositeSubscription mCompositeSubscription = null;
@@ -26,10 +28,13 @@ public class ForecastAppWidgetService extends Service {
 
     @Inject ForecastAppWidgetView forecastAppWidgetView;
     @Inject AppWidgetPublisher<ForecastAppWidget>publisher;
+    @Inject CloudForecastCityDataStore cloudForecastCityDataStore;
+    @Inject AppShared appShared;
 
 
-    public static Intent newInstance(Context context) {
+    public static Intent newInstance(Context context, int appWidgetId) {
         Intent intent = new Intent(context, ForecastAppWidgetService.class);
+        intent.putExtra("appWidgetId", appWidgetId);
         return intent;
     }
 
@@ -40,6 +45,7 @@ public class ForecastAppWidgetService extends Service {
         initializeInjections(getApplicationContext());
     }
 
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (BuildConfig.DEBUG){
@@ -47,7 +53,7 @@ public class ForecastAppWidgetService extends Service {
         }
         if (!isRunning()){
             showLoading();
-            fetchForecast();
+            fetchForecast(getAppWidgetId(intent));
         }else{
             if (BuildConfig.DEBUG){
                 Log.d(TAG, "service already running");
@@ -55,7 +61,6 @@ public class ForecastAppWidgetService extends Service {
         }
         return Service.START_STICKY;
     }
-
 
 
     @Override
@@ -69,19 +74,24 @@ public class ForecastAppWidgetService extends Service {
     }
 
 
+    private int getAppWidgetId(Intent intent){
+        return intent.getIntExtra("appWidgetId", -1);
+    }
+
     private void showLoading(){
         publisher.update(forecastAppWidgetView.setLoading());
     }
 
-    private void fetchForecast(){
+    private void fetchForecast(int appWidgetId){
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "fetchWeatherData");
         }
         try {
-            Thread.sleep(5000);
-            tirar del datastore de forecast...o mejor meter un caso de uso, pa esconder el observable
-            recordar parar el servicio cuando responda....o al menos intentarlo
-            CloudForecastCityDataStore
+            String locationName = appShared.get(String.valueOf(appWidgetId));
+            cloudForecastCityDataStore.fetch();
+            //TODO: tirar del datastore de forecast...o mejor meter un caso de uso, pa esconder el observable
+            //TODO: recordar parar el servicio cuando responda....o al menos intentarlo
+            //CloudForecastCityDataStore
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -117,7 +127,7 @@ public class ForecastAppWidgetService extends Service {
     */
 
     private void initializeInjections(Context context){
-        proveer el datastore de forecast
+        //TODO: proveer el datastore de forecast
         ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
         component.inject(this);
     }

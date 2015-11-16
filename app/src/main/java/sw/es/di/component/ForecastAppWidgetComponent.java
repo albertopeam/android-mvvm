@@ -7,12 +7,19 @@ import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
 import sw.es.di.module.ForecastAppWidgetModule;
+import sw.es.di.module.NetworkModule;
+import sw.es.di.module.SchedulerModule;
 
 /**
  * Created by albertopenasamor on 2/11/15.
  */
 @PerService
-@Component(modules = ForecastAppWidgetModule.class)
+@Component(
+        modules = {
+                ForecastAppWidgetModule.class,
+                NetworkModule.class,
+                SchedulerModule.class}
+)
 public interface ForecastAppWidgetComponent {
     void inject(ForecastAppWidgetService forecastAppWidgetService);
     void inject(ForecastAppWidget currentWeatherAppWidget);
