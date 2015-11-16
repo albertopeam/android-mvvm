@@ -46,6 +46,7 @@ public class WeatherCloud extends AbstractCloud {
     }
 
 
+
     public double getHumidity(){
         return main != null?main.humidity:0d;
     }

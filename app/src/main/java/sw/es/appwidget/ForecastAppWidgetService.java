@@ -79,7 +79,8 @@ public class ForecastAppWidgetService extends Service {
         }
         try {
             Thread.sleep(5000);
-            Todo: impl
+            tirar del datastore de forecast...o mejor meter un caso de uso, pa esconder el observable
+            recordar parar el servicio cuando responda....o al menos intentarlo
             CloudForecastCityDataStore
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -116,6 +117,7 @@ public class ForecastAppWidgetService extends Service {
     */
 
     private void initializeInjections(Context context){
+        proveer el datastore de forecast
         ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
         component.inject(this);
     }

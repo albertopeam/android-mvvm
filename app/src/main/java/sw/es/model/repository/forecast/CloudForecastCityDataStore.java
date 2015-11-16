@@ -9,8 +9,7 @@ import rx.Scheduler;
 import rx.functions.Func1;
 import sw.es.model.backend.ForecastCityCloud;
 import sw.es.model.local.Forecast;
-import sw.es.model.local.Weather;
-import sw.es.model.mapper.weather.WeatherCloudMapper;
+import sw.es.model.mapper.forecast.ForecastCityCloudMapper;
 import sw.es.model.repository.repo.datastore.CloudDataStore;
 import sw.es.model.repository.repo.exception.NotFoundInCloudDataStoreException;
 import sw.es.model.rx.ObservableCreator;
@@ -35,16 +34,16 @@ public class CloudForecastCityDataStore extends CloudDataStore<Forecast, String>
 
     @Override
     public Observable<Forecast> fetch(final String name) {
-        Observable<Forecast> forecastObservable = weatherBackendAPI.fetchForecast(name).flatMap(new Func1<ForecastCityCloud, Observable<?>>() {
+        Observable<Forecast> forecastObservable = weatherBackendAPI.fetchForecast(name).flatMap(new Func1<ForecastCityCloud, Observable<Forecast>>() {
             @Override
-            public Observable<?> call(final ForecastCityCloud forecastCityCloud) {
-                return ObservableCreator.create(new Callable<Weather>() {
+            public Observable<Forecast> call(final ForecastCityCloud forecastCityCloud) {
+                return ObservableCreator.create(new Callable<Forecast>() {
                     @Override
-                    public Weather call() throws Exception {
+                    public Forecast call() throws Exception {
                         if (forecastCityCloud.isSuccess()) {
-                            todo: mapper, ya creado el paquete...
-                            WeatherCloudMapper mapper = new WeatherCloudMapper();
-                            return mapper.map(forecastCityCloud);
+                            ForecastCityCloudMapper mapper = new ForecastCityCloudMapper();
+                            Forecast forecast = mapper.map(forecastCityCloud);
+                            return forecast;
                         }
                         throw new NotFoundInCloudDataStoreException(CloudForecastCityDataStore.class);
                     }

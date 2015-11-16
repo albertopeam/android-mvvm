@@ -11,9 +11,7 @@ public class Forecast {
     private String name;
     private List<ForecastWeather> forecastWeatherList;
 
-    public Forecast() {
-        todo...
-    }
+    public Forecast() {}
 
     public long getId() {
         return id;
@@ -25,5 +23,17 @@ public class Forecast {
 
     public List<ForecastWeather> getForecastWeatherList() {
         return forecastWeatherList;
+    }
+
+    public void setForecastWeatherList(List<ForecastWeather> forecastWeatherList) {
+        this.forecastWeatherList = forecastWeatherList;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
