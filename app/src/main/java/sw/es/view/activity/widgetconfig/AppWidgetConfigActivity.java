@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -16,7 +15,7 @@ import javax.inject.Inject;
 import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityAppwidgetConfigBinding;
-import sw.es.domain.RecyclerSlideInUpAnimator;
+import sw.es.domain.recycler.RecyclerSlideInUpAnimator;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.view.adapter.AppWidgetConfigAdapter;
 import sw.es.view.adapter.event.RecyclerItemClickListener;
@@ -39,6 +38,7 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
     private AppWidgetConfigAdapter adapter;
     private int mAppWidgetId;
 
+    todo: modulo con inyección!!!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,8 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
             }
 
             @Override
-            public void onItemLongPress(View childView, int position) {}
+            public void onItemLongPress(View childView, int position) {
+            }
         }));
         setSupportActionBar(binding.toolbar);
     }
@@ -123,18 +124,10 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
 
 
     @Override
-    public void onLocationsError(Throwable throwable) {
-        if (DEBUG) {
-            e(TAG, "onLocationsError: ");
-            if (throwable != null) {
-                throwable.printStackTrace();
-            }
-        }
-        Snackbar.make(binding.view, throwable.getMessage() != null ? throwable.getMessage() : getResources().getString(R.string.undefined_error), Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void close() {
+        if (DEBUG) {
+            e(TAG, "close");
+        }
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(RESULT_OK, resultValue);
@@ -143,7 +136,10 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
 
     @Override
     public void fetchForecast() {
-        Intent intent = ForecastAppWidgetService.newInstance(AppWidgetConfigActivity.this);
+        if (DEBUG) {
+            e(TAG, "fetchForecast");
+        }
+        Intent intent = ForecastAppWidgetService.newInstance(AppWidgetConfigActivity.this, mAppWidgetId);
         startService(intent);
     }
 }

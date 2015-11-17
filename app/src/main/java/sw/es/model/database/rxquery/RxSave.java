@@ -7,7 +7,7 @@ import sw.es.model.database.core.DaoManager;
 import sw.es.model.database.model.Entity;
 import sw.es.model.database.query.Save;
 import sw.es.model.database.rxquery.abs.RxAbstractQuery;
-import sw.es.model.rx.ObservableCreator;
+import sw.es.domain.rx.ObservableCreator;
 
 
 /**

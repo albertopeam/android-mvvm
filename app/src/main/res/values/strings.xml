@@ -5,7 +5,7 @@
     <string name="action_search">Search</string>
     <string name="text_already_added_location">Already added location</string>
     <string name="text_no_data_yet">Try to adding new locations</string>
-    <string name="text_no_fav_location">You haven't favourite locations</string>
+    <string name="text_no_fav_location">You have not favourite locations</string>
     <string name="humidity">Humidity:</string>
     <string name="wind_speed">Wind Speed:</string>
     <string name="cloudiness">Cloudiness:</string>

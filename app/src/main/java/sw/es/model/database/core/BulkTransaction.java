@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
-import sw.es.model.rx.ObservableCreator;
+import sw.es.domain.rx.ObservableCreator;
 
 /**
  * Created by alberto on 29/9/15.

@@ -18,7 +18,7 @@ import sw.es.dagger2.databinding.ActivityHomeBinding;
 import sw.es.di.component.DaggerFavouriteWeathersVMComponent;
 import sw.es.di.component.FavouriteWeathersVMComponent;
 import sw.es.di.module.FavouriteWeathersVMModule;
-import sw.es.domain.RecyclerSlideInUpAnimator;
+import sw.es.domain.recycler.RecyclerSlideInUpAnimator;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
 import sw.es.view.activity.BaseActivity;

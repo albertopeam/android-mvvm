@@ -11,17 +11,26 @@ import android.widget.RemoteViews;
  */
 public class AppWidgetPublisher<T extends AppWidgetProvider> {
 
+
     private Context context;
     private Class<T>aClass;
+
 
     public AppWidgetPublisher(Context context, Class<T> t) {
         this.context = context;
         this.aClass = t;
     }
 
+
     public void update(RemoteViews views){
         ComponentName thisWidget = new ComponentName(context, aClass);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         manager.updateAppWidget(thisWidget, views);
+    }
+
+
+    public void update(int appWidgetId, RemoteViews remoteViews){
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        manager.updateAppWidget(appWidgetId, remoteViews);
     }
 }

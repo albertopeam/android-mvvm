@@ -11,9 +11,10 @@ import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.ListenScheduler;
 import sw.es.di.common.PerService;
-import sw.es.model.repository.forecast.CloudForecastCityDataStore;
-import sw.es.model.sharedprefs.AppShared;
-import sw.es.model.sharedprefs.SharedPrefs;
+import sw.es.domain.repository.forecast.datastore.CloudForecastCityDataStore;
+import sw.es.domain.repository.forecast.usecase.ForecastFetchUseCase;
+import sw.es.domain.sharedprefs.AppShared;
+import sw.es.domain.sharedprefs.SharedPrefs;
 import sw.es.network.WeatherBackendAPI;
 
 /**
@@ -63,5 +64,11 @@ public class ForecastAppWidgetModule {
     @PerService
     CloudForecastCityDataStore provideCloudForecastCityDataStore(WeatherBackendAPI weatherBackendAPI, @ListenScheduler Scheduler scheduler){
         return new CloudForecastCityDataStore(weatherBackendAPI, scheduler);
+    }
+
+    @Provides
+    @PerService
+    ForecastFetchUseCase provideForecastFetchUseCase(CloudForecastCityDataStore cloudForecastCityDataStore){
+        return new ForecastFetchUseCase(cloudForecastCityDataStore);
     }
 }

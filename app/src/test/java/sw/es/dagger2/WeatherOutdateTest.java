@@ -5,8 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sw.es.model.repository.weather.repo.WeatherOutdate;
-import sw.es.model.sharedprefs.AppShared;
+import sw.es.domain.repository.weather.repo.WeatherOutdate;
+import sw.es.domain.sharedprefs.AppShared;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

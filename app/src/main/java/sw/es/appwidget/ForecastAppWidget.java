@@ -35,7 +35,7 @@ public class ForecastAppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         printAppWidgetIds(appWidgetIds);
-        refreshWidget(context);
+        refreshWidgets(context, appWidgetIds);
     }
 
 
@@ -88,8 +88,11 @@ public class ForecastAppWidget extends AppWidgetProvider {
      * Print widget
      * @param context
      */
-    private void refreshWidget(Context context){
-        context.startService(ForecastAppWidgetService.newInstance(context));
+    private void refreshWidgets(Context context, int[]appWidgetIds){
+        for (Integer appWidgetId:appWidgetIds){
+            context.startService(ForecastAppWidgetService.newInstance(context, appWidgetId));
+        }
+
     }
 
 }

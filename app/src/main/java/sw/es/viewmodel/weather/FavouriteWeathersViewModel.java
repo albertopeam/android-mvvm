@@ -7,14 +7,14 @@ import javax.inject.Inject;
 import sw.es.dagger2.BR;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
-import sw.es.model.memory.FavouriteLocations;
-import sw.es.model.repository.repo.usecase.UseCaseCallback;
-import sw.es.model.repository.weather.usecase.WeatherPullUseCase;
-import sw.es.model.repository.weather.usecase.WeatherRemoveUseCase;
-import sw.es.model.sharedprefs.usecase.FetchFavouritesCallback;
-import sw.es.model.sharedprefs.usecase.FetchFavouritesLocationsUseCase;
-import sw.es.model.sharedprefs.usecase.RemoveFavouriteLocationUseCase;
-import sw.es.model.sharedprefs.usecase.StoreFavouriteLocationUseCase;
+import sw.es.model.local.FavouriteLocations;
+import sw.es.domain.repository.repo.usecase.UseCaseCallback;
+import sw.es.domain.repository.weather.usecase.WeatherPullUseCase;
+import sw.es.domain.repository.weather.usecase.WeatherRemoveUseCase;
+import sw.es.domain.sharedprefs.usecase.FetchFavouritesCallback;
+import sw.es.domain.sharedprefs.usecase.FetchFavouritesLocationsUseCase;
+import sw.es.domain.sharedprefs.usecase.RemoveFavouriteLocationUseCase;
+import sw.es.domain.sharedprefs.usecase.StoreFavouriteLocationUseCase;
 import sw.es.viewmodel.abs.AbsViewModel;
 
 /**

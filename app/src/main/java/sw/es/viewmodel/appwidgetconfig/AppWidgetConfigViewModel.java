@@ -2,7 +2,6 @@ package sw.es.viewmodel.appwidgetconfig;
 
 import android.databinding.Bindable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,16 +10,16 @@ import sw.es.appwidget.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.dagger2.BR;
-import sw.es.dagger2.BuildConfig;
 import sw.es.model.local.FavouriteLocation;
-import sw.es.model.sharedprefs.AppShared;
-import sw.es.model.sharedprefs.usecase.FetchFavLocationsUseCase;
+import sw.es.domain.sharedprefs.AppShared;
+import sw.es.domain.sharedprefs.usecase.FetchFavCallback;
+import sw.es.domain.sharedprefs.usecase.FetchFavLocationsUseCase;
 import sw.es.viewmodel.abs.AbsViewModel;
 
 /**
  * Created by albertopenasamor on 16/11/15.
  */
-public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidgetConfigViewModel{
+public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidgetConfigViewModel, FetchFavCallback{
 
 
     //TODO; falta por meter y modificar este obj fetchFavLocationsUseCase!!!!
@@ -49,15 +48,8 @@ public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidg
 
     @Override
     public void load() {
-        if (BuildConfig.DEBUG){
-            FavouriteLocation favouriteLocation = new FavouriteLocation("perillo");
-            List<FavouriteLocation>favouriteLocationList = new ArrayList<>();
-            favouriteLocationList.add(favouriteLocation);
-            viewCallback.onLocations(favouriteLocationList);
-        }else{
-            //TODO; load from shared.... y reenviar a traves del callback
-            throw new UnsupportedOperationException("Oh oh, not implemented yet!!!");
-        }
+        setLoading(true);
+        fetchFavLocationsUseCase.run(this);
     }
 
     @Override
@@ -66,6 +58,18 @@ public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidg
         widgetPublisher.update(forecastAppWidgetView.setLoading());
         viewCallback.fetchForecast();
         viewCallback.close();
+    }
+
+    @Override
+    public void onFavourites(List<FavouriteLocation> favouriteLocations) {
+        setLoading(false);
+        viewCallback.onLocations(favouriteLocations);
+    }
+
+    @Override
+    public void onEmptyFavourites() {
+        setLoading(false);
+        setEmpty(true);
     }
 
     @Override
@@ -88,10 +92,11 @@ public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidg
         return empty;
     }
 
-
     public void setEmpty(boolean empty) {
         this.empty = empty;
         notifyPropertyChanged(BR.empty);
     }
+
+
 }
 

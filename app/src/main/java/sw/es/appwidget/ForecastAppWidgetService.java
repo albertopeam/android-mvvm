@@ -8,28 +8,31 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import rx.subscriptions.CompositeSubscription;
 import sw.es.appwidget.view.ForecastAppWidgetView;
-import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
+import sw.es.domain.repository.forecast.usecase.ForecastFetchUseCase;
+import sw.es.domain.repository.forecast.usecase.UseCaseCallback;
+import sw.es.domain.sharedprefs.AppShared;
 import sw.es.model.local.Forecast;
-import sw.es.model.repository.forecast.CloudForecastCityDataStore;
-import sw.es.model.sharedprefs.AppShared;
+
+import static android.util.Log.e;
+import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: repo: crear, probar e inyectar
-public class ForecastAppWidgetService extends Service {
+//TODO: migrar de los putos services infernales....¿pueden correr varios a la vez?
+public class ForecastAppWidgetService extends Service implements UseCaseCallback<String, Forecast> {
 
 
     private static final String TAG = ForecastAppWidgetService.class.getSimpleName();
-    private CompositeSubscription mCompositeSubscription = null;
-
-
+    private int startId;
+    private int appWidgetId;
     @Inject ForecastAppWidgetView forecastAppWidgetView;
     @Inject AppWidgetPublisher<ForecastAppWidget>publisher;
-    @Inject CloudForecastCityDataStore cloudForecastCityDataStore;
+    @Inject ForecastFetchUseCase forecastFetchUseCase;
     @Inject AppShared appShared;
+
 
 
     public static Intent newInstance(Context context, int appWidgetId) {
@@ -48,92 +51,106 @@ public class ForecastAppWidgetService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (BuildConfig.DEBUG){
+        if (DEBUG){
             Log.d(TAG, "onStartCommand");
         }
-        if (!isRunning()){
-            showLoading();
-            fetchForecast(getAppWidgetId(intent));
-        }else{
-            if (BuildConfig.DEBUG){
-                Log.d(TAG, "service already running");
-            }
-        }
+
+        showLoading();
+        fetchForecast(getAppWidgetId(intent));
+
         return Service.START_STICKY;
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        /*if (!mCompositeSubscription.isUnsubscribed()) {
-            mCompositeSubscription.unsubscribe();
+    private void setStartId(int startId){
+        if (DEBUG) {
+            e(TAG, "startId: " + startId);
         }
-        mCompositeSubscription = null;
-        */
+        this.startId = startId;
     }
 
 
     private int getAppWidgetId(Intent intent){
-        return intent.getIntExtra("appWidgetId", -1);
+        if (DEBUG) {
+            e(TAG, "getAppWidgetId");
+        }
+
+        appWidgetId = intent.getIntExtra("appWidgetId", -1);
+        if (DEBUG) {
+            e(TAG, "appWidgetId: " + appWidgetId);
+        }
+        return appWidgetId;
     }
 
+
+    private String getLocationName(int appWidgetId){
+        if (DEBUG) {
+            e(TAG, "getLocationName");
+        }
+        String locationName = appShared.get(String.valueOf(appWidgetId));
+        if (DEBUG) {
+            e(TAG, "locationName: " + locationName);
+        }
+        return locationName;
+    }
+
+
     private void showLoading(){
+        if (DEBUG) {
+            e(TAG, "showLoading");
+        }
         publisher.update(forecastAppWidgetView.setLoading());
     }
 
+
     private void fetchForecast(int appWidgetId){
-        if (BuildConfig.DEBUG) {
+        if (DEBUG) {
             Log.d(TAG, "fetchWeatherData");
         }
-        try {
-            String locationName = appShared.get(String.valueOf(appWidgetId));
-            cloudForecastCityDataStore.fetch();
-            //TODO: tirar del datastore de forecast...o mejor meter un caso de uso, pa esconder el observable
-            //TODO: recordar parar el servicio cuando responda....o al menos intentarlo
-            //CloudForecastCityDataStore
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Forecast forecast = new Forecast();
-        publisher.update(forecastAppWidgetView.setForecast(forecast));
+
+        String locationName = getLocationName(appWidgetId);
+        forecastFetchUseCase.run(locationName, this);
     }
 
-
-    private void showError(){
-        publisher.update(forecastAppWidgetView.setError(null));
-    }
-
-
-    private boolean isRunning(){
-        return mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed();
-    }
-
-    /*
-
-    private void updateAppWidgets(CurrentWeather currentWeather){
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "build app widget update");
-        }
-        RemoteViews updateViews = forecastAppWidgetView.buildAppWidgetsUpdate(currentWeather);
-        CurrentWeatherAppWidget.publishAppWidgetUpdate(ForecastAppWidgetService.this, updateViews);
-    }
-
-
-    private void updateAppWidgetsWithError(Throwable error){
-        RemoteViews updateViews = forecastAppWidgetView.buildAppWidgetsError(error);
-        CurrentWeatherAppWidget.publishAppWidgetUpdate(ForecastAppWidgetService.this, updateViews);
-    }
-    */
 
     private void initializeInjections(Context context){
-        //TODO: proveer el datastore de forecast
         ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
         component.inject(this);
     }
 
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+
+    @Override
+    public void onResult(String params, Forecast forecast) {
+        if (DEBUG) {
+            e(TAG, "onResult");
+        }
+        publisher.update(appWidgetId, forecastAppWidgetView.setForecast(forecast));
+        stop();
+    }
+
+
+    @Override
+    public void onResultError(String params, Throwable throwable) {
+        if (DEBUG) {
+            e(TAG, "onResultError");
+            if (throwable != null){
+                throwable.printStackTrace();
+            }
+        }
+        publisher.update(appWidgetId, forecastAppWidgetView.setError(throwable));
+        stop();
+    }
+
+    private void stop(){
+        if (DEBUG) {
+            e(TAG, "stop");
+        }
+        this.stopSelf(startId);
     }
 }
