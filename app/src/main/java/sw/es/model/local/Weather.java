@@ -3,6 +3,8 @@ package sw.es.model.local;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import sw.es.domain.units.TemperatureMetrics;
+
 /**
  * Created by albertopenasamor on 27/5/15.
  */
@@ -67,8 +69,13 @@ public class Weather {
         return cloudiness;
     }
 
-    public String getTempFormatted() {
-        return String.format("%.0f", temp - 273.15d);
+
+    public String getTempInCelsiusC() {
+        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(temp));
+    }
+
+    public String getTempInCelsius() {
+        return String.format("%.0f", TemperatureMetrics.tempInCelsius(temp));
     }
 
     public String getPressureFormatted() {

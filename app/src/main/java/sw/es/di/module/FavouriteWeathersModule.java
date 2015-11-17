@@ -21,10 +21,10 @@ import sw.es.network.WeatherBackendAPI;
 import sw.es.viewmodel.weather.FavouriteWeathersViewModel;
 
 @Module
-public class FavouriteWeathersVMModule {
+public class FavouriteWeathersModule {
 
 
-    public FavouriteWeathersVMModule() {}
+    public FavouriteWeathersModule() {}
 
 
     @Provides

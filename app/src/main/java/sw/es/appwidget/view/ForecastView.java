@@ -10,5 +10,6 @@ import sw.es.model.local.Forecast;
 public interface ForecastView {
     RemoteViews setLoading();
     RemoteViews setForecast(Forecast forecast);
+    RemoteViews setConfig();
     RemoteViews setError(Throwable throwable);
 }

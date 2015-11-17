@@ -86,7 +86,7 @@
                             android:maxLines="1"
                             android:textSize="40sp"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@{weather.getTempFormatted()}"
+                            android:text="@{weather.getTempInCelsius()}"
                             tools:text="16" />
 
                         <TextView

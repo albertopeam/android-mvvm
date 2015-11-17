@@ -15,9 +15,9 @@ import javax.inject.Inject;
 
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityHomeBinding;
-import sw.es.di.component.DaggerFavouriteWeathersVMComponent;
-import sw.es.di.component.FavouriteWeathersVMComponent;
-import sw.es.di.module.FavouriteWeathersVMModule;
+import sw.es.di.component.DaggerFavouriteWeathersComponent;
+import sw.es.di.component.FavouriteWeathersComponent;
+import sw.es.di.module.FavouriteWeathersModule;
 import sw.es.domain.recycler.RecyclerSlideInUpAnimator;
 import sw.es.model.local.FavouriteLocation;
 import sw.es.model.local.Weather;
@@ -78,9 +78,9 @@ public class FavouriteWeathersActivity extends BaseActivity implements
 
     @Override
     protected void initializeInjector() {
-        FavouriteWeathersVMComponent component = DaggerFavouriteWeathersVMComponent.builder()
+        FavouriteWeathersComponent component = DaggerFavouriteWeathersComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .favouriteWeathersVMModule(new FavouriteWeathersVMModule())
+                .favouriteWeathersModule(new FavouriteWeathersModule())
                 .build();
         component.inject(this);
     }

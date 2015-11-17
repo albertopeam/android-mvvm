@@ -1,4 +1,4 @@
-package sw.es.appwidget;
+package sw.es.appwidget.publisher;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

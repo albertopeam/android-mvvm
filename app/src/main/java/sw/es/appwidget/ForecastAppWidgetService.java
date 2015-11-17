@@ -8,7 +8,9 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.view.ForecastAppWidgetView;
+import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
@@ -29,7 +31,8 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
     private int startId;
     private int appWidgetId;
     @Inject ForecastAppWidgetView forecastAppWidgetView;
-    @Inject AppWidgetPublisher<ForecastAppWidget>publisher;
+    @Inject
+    AppWidgetPublisher<ForecastAppWidget> publisher;
     @Inject ForecastFetchUseCase forecastFetchUseCase;
     @Inject AppShared appShared;
 
@@ -55,8 +58,16 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
             Log.d(TAG, "onStartCommand");
         }
 
-        showLoading();
-        fetchForecast(getAppWidgetId(intent));
+        appWidgetId = getAppWidgetId(intent);
+        String locationName = getLocationName(appWidgetId);
+        if (locationName.isEmpty()){
+            showConfig();
+            stop();
+        }else{
+            showLoading();
+            fetchForecast(appWidgetId, locationName);
+        }
+
 
         return Service.START_STICKY;
     }
@@ -75,11 +86,11 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
             e(TAG, "getAppWidgetId");
         }
 
-        appWidgetId = intent.getIntExtra("appWidgetId", -1);
+        int mAppWidgetId = intent.getIntExtra("appWidgetId", -1);
         if (DEBUG) {
-            e(TAG, "appWidgetId: " + appWidgetId);
+            e(TAG, "appWidgetId: " + mAppWidgetId);
         }
-        return appWidgetId;
+        return mAppWidgetId;
     }
 
 
@@ -99,16 +110,22 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
         if (DEBUG) {
             e(TAG, "showLoading");
         }
-        publisher.update(forecastAppWidgetView.setLoading());
+        publisher.update(appWidgetId, forecastAppWidgetView.setLoading());
     }
 
 
-    private void fetchForecast(int appWidgetId){
+    private void showConfig(){
+        if (BuildConfig.DEBUG) {
+            e(TAG, "showConfig");
+        }
+        publisher.update(appWidgetId, forecastAppWidgetView.setConfig());
+    }
+
+
+    private void fetchForecast(int appWidgetId, String locationName){
         if (DEBUG) {
             Log.d(TAG, "fetchWeatherData");
         }
-
-        String locationName = getLocationName(appWidgetId);
         forecastFetchUseCase.run(locationName, this);
     }
 
@@ -146,6 +163,7 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
         publisher.update(appWidgetId, forecastAppWidgetView.setError(throwable));
         stop();
     }
+
 
     private void stop(){
         if (DEBUG) {

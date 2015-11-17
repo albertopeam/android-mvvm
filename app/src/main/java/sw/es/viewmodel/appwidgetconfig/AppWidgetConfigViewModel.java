@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import sw.es.appwidget.AppWidgetPublisher;
+import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.dagger2.BR;

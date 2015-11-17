@@ -1,14 +1,14 @@
 package sw.es.di.component;
 
 import dagger.Component;
-import sw.es.appwidget.AppWidgetPublisher;
+import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
 import sw.es.di.module.ForecastAppWidgetModule;
-import sw.es.di.module.NetworkModule;
-import sw.es.di.module.SchedulerModule;
+import sw.es.di.module.shared.NetworkModule;
+import sw.es.di.module.shared.SchedulerModule;
 
 /**
  * Created by albertopenasamor on 2/11/15.

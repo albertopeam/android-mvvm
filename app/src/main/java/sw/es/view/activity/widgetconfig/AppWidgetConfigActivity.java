@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -15,8 +14,12 @@ import javax.inject.Inject;
 import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.dagger2.R;
 import sw.es.dagger2.databinding.ActivityAppwidgetConfigBinding;
+import sw.es.di.component.AppWidgetConfigComponent;
+import sw.es.di.component.DaggerAppWidgetConfigComponent;
+import sw.es.di.module.AppWidgetConfigModule;
 import sw.es.domain.recycler.RecyclerSlideInUpAnimator;
 import sw.es.model.local.FavouriteLocation;
+import sw.es.view.activity.BaseActivity;
 import sw.es.view.adapter.AppWidgetConfigAdapter;
 import sw.es.view.adapter.event.RecyclerItemClickListener;
 import sw.es.view.decorator.SpaceItemDecoration;
@@ -29,7 +32,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 /**
  * Created by albertopenasamor on 16/11/15.
  */
-public class AppWidgetConfigActivity extends AppCompatActivity implements FavouriteLocationsCallback {
+public class AppWidgetConfigActivity extends BaseActivity implements FavouriteLocationsCallback {
 
 
     private static final String TAG = AppWidgetConfigActivity.class.getSimpleName();
@@ -38,7 +41,7 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
     private AppWidgetConfigAdapter adapter;
     private int mAppWidgetId;
 
-    todo: modulo con inyección!!!
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,15 @@ public class AppWidgetConfigActivity extends AppCompatActivity implements Favour
 
         setView();
         initViewModel();
+    }
+
+    @Override
+    protected void initializeInjector() {
+        AppWidgetConfigComponent component = DaggerAppWidgetConfigComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .appWidgetConfigModule(new AppWidgetConfigModule())
+                .build();
+        component.inject(AppWidgetConfigActivity.this);
     }
 
 

@@ -7,6 +7,12 @@ import org.junit.Test;
 import java.util.Calendar;
 
 import sw.es.model.backend.WeatherCloud;
+import sw.es.model.backend.aux.Clouds;
+import sw.es.model.backend.aux.Coordinates;
+import sw.es.model.backend.aux.Main;
+import sw.es.model.backend.aux.Sys;
+import sw.es.model.backend.aux.Weather;
+import sw.es.model.backend.aux.Wind;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -32,20 +38,20 @@ public class WeatherCloudTest {
         emptyWeatherCloud = new WeatherCloud();
 
         //cloud with data
-        WeatherCloud.Clouds clouds = new WeatherCloud.Clouds();
+        Clouds clouds = new Clouds();
         clouds.all = 92.0d;
 
         weatherCloud = new WeatherCloud();
         weatherCloud.name = "Perillo";
         weatherCloud.cod = 200;
         weatherCloud.clouds = clouds;
-        weatherCloud.coord = new WeatherCloud.Coordinates();
+        weatherCloud.coord = new Coordinates();
         weatherCloud.dt = Calendar.getInstance().getTime().getTime();
-        weatherCloud.sys = new WeatherCloud.Sys();
-        weatherCloud.wind = new WeatherCloud.Wind();
-        weatherCloud.main = new WeatherCloud.Main();
-        WeatherCloud.Weather[] innerWeather = new WeatherCloud.Weather[1];
-        innerWeather[0] = new WeatherCloud.Weather();
+        weatherCloud.sys = new Sys();
+        weatherCloud.wind = new Wind();
+        weatherCloud.main = new Main();
+        Weather[] innerWeather = new Weather[1];
+        innerWeather[0] = new Weather();
         innerWeather[0].icon = "10d";
         innerWeather[0].description = "rain";
         weatherCloud.weather = innerWeather;

@@ -5,6 +5,7 @@
     <dimen name="ms">4dp</dimen>
     <dimen name="m">6dp</dimen>
     <dimen name="l">8dp</dimen>
+    <dimen name="xl">16dp</dimen>
     <dimen name="divider_height">10dp</dimen>
 
     <dimen name="app_widget_width">326dp</dimen>

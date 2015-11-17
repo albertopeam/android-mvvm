@@ -5,7 +5,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import rx.Scheduler;
-import sw.es.appwidget.AppWidgetPublisher;
+import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.appwidget.view.ForecastView;

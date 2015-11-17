@@ -9,7 +9,16 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:gravity="center_vertical"
         android:layout_weight="1">
+
+        <TextView
+            style="@style/text.small.white"
+            android:id="@+id/appwidget.location"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Perillo" />
 
         <TextView
             style="@style/text.small.white"
@@ -17,22 +26,7 @@
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lun, 21h" />
-<!--
-        <LinearLayout
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:background="@drawable/triangle"
-            android:layout_width="9dp"
-            android:layout_height="0dp"
-            android:layout_weight="8">
-        </LinearLayout>
-
-        <LinearLayout
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp">
-        </LinearLayout>-->
+            android:text="18:00 jue" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,6 +37,7 @@
 
         <TextView
             style="@style/text.xsmall.white"
+            android:id="@+id/appwidget.description"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,6 +67,8 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:src="@drawable/icon_thermometer"
+                android:scaleType="centerCrop"
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
                 android:layout_height="match_parent"/>
@@ -85,6 +82,7 @@
 
                 <TextView
                     style="@style/text.xsmall.single.white"
+                    android:id="@+id/appwidget.maxtemp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,13 +90,15 @@
 
                 <TextView
                     style="@style/text.small.single.white"
+                    android:id="@+id/appwidget.temp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="15ºc" />
+                    android:text="15" />
 
                 <TextView
                     style="@style/text.xsmall.single.white"
+                    android:id="@+id/appwidget.mintemp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,17 +108,26 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
 
             <TextView
                 style="@style/text.xsmall.single.white"
+                android:id="@+id/appwidget.windspeed"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="10m/s" />
+
+            <TextView
+                style="@style/text.xsmall.single.white"
+                android:id="@+id/appwidget.windspeeddegree"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NE" />
 
         </LinearLayout>
     </LinearLayout>

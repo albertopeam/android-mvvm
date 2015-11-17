@@ -1,4 +1,4 @@
-package sw.es.di.module;
+package sw.es.di.module.shared;
 
 import android.content.Context;
 

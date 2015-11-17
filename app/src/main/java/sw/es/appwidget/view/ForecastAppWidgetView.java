@@ -19,6 +19,7 @@ import sw.es.model.local.ForecastWeather;
  * Created by albertopenasamor on 30/6/15.
  */
 //TODO: add error cases.... segun aparezcan
+//TODO: boton si devuelve una castaña para que recarge!!! y de donde saco el id del widget, its magic!!!
 public class ForecastAppWidgetView implements ForecastView{
 
 
@@ -40,6 +41,7 @@ public class ForecastAppWidgetView implements ForecastView{
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.VISIBLE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
         return remoteView;
     }
 
@@ -47,25 +49,26 @@ public class ForecastAppWidgetView implements ForecastView{
     public RemoteViews setForecast(Forecast forecast) {
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.VISIBLE);
-        //TODO: fill with data
-
-        //TODO: imagenes... recortar las imagenes de la lib meteocons
-        //TODO: https://www.iconfinder.com/icons/110802/fog_sun_icon#size=128 o convertir a blanco o aplicar filtro, recoratar...
 
         List<ForecastWeather> forecastWeatherList = forecast.getForecastWeatherList();
         for(int i = 0; i < NUM_COLUMNS; i++) {
-            if (forecastWeatherList.size() >= NUM_COLUMNS) {
-                ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context);
-                RemoteViews remoteViews = forecastColumnView.build(i, forecast, forecastWeatherList.get(i));
-                int viewId = forecastColumnView.viewId(i);
-                remoteView.addView(viewId, remoteViews);
-            }else{
-                //TODO: no creo que se de...
-            }
+            ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context);
+            RemoteViews remoteViews = forecastColumnView.build(i, forecast, forecastWeatherList.get(i));
+            int viewId = forecastColumnView.viewId(i);
+            remoteView.addView(viewId, remoteViews);
         }
 
+        return remoteView;
+    }
 
+    @Override
+    public RemoteViews setConfig() {
+        remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_configtv, View.VISIBLE);
         return remoteView;
     }
 
@@ -74,7 +77,7 @@ public class ForecastAppWidgetView implements ForecastView{
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_errortv, View.VISIBLE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
-
+        remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
 
         if (throwable instanceof HttpException){
             remoteView.setTextViewText(R.id.appwidget_errortv, getRes().getString(R.string.net_error));

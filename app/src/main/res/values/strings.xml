@@ -10,4 +10,5 @@
     <string name="wind_speed">Wind Speed:</string>
     <string name="cloudiness">Cloudiness:</string>
     <string name="updated_at">Updated at:</string>
+    <string name="app_widget_config_process">App widget configuration in process...</string>
 </resources>

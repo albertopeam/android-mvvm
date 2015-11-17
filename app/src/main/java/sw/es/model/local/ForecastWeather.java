@@ -1,5 +1,12 @@
 package sw.es.model.local;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import sw.es.domain.units.CompassRoseMetrics;
+import sw.es.domain.units.DistanceMetrics;
+import sw.es.domain.units.TemperatureMetrics;
+
 /**
  * Created by albertopenasamor on 3/11/15.
  */
@@ -43,12 +50,24 @@ public class ForecastWeather {
         return temp;
     }
 
+    public String getTempInCelsiusC() {
+        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(temp));
+    }
+
     public double getTempMin() {
         return tempMin;
     }
 
+    public String getTempMinInCelsius() {
+        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(tempMin));
+    }
+
     public double getTempMax() {
         return tempMax;
+    }
+
+    public String getTempmaxInCelsius() {
+        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(tempMax));
     }
 
     public double getPressure() {
@@ -59,12 +78,16 @@ public class ForecastWeather {
         return humidity;
     }
 
-    public double getWindSpeed() {
-        return windSpeed;
+    public String getWindSpeedInKM() {
+        return String.format("%.0fKm/h", DistanceMetrics.kmPerHour(windSpeed));
     }
 
     public double getWindDegree() {
         return windDegree;
+    }
+
+    public String getWindDegrees() {
+        return String.format("%s", CompassRoseMetrics.direction(windDegree));
     }
 
 
@@ -114,5 +137,12 @@ public class ForecastWeather {
 
     public void setWindDegree(double windDegree) {
         this.windDegree = windDegree;
+    }
+
+
+    public String getDatetimeFormatted() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm, EEE");
+        String outDate = formatter.print(datetime*1000L);
+        return outDate;
     }
 }
