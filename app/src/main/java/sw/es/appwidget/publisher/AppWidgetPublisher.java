@@ -2,7 +2,6 @@ package sw.es.appwidget.publisher;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -19,13 +18,6 @@ public class AppWidgetPublisher<T extends AppWidgetProvider> {
     public AppWidgetPublisher(Context context, Class<T> t) {
         this.context = context;
         this.aClass = t;
-    }
-
-
-    public void update(RemoteViews views){
-        ComponentName thisWidget = new ComponentName(context, aClass);
-        AppWidgetManager manager = AppWidgetManager.getInstance(context);
-        manager.updateAppWidget(thisWidget, views);
     }
 
 

@@ -42,6 +42,11 @@ public class ForecastWeather {
         return cloudiness;
     }
 
+    public String getCloudinessFormat() {
+        return String.valueOf(cloudiness);
+    }
+
+
     public long getDatetime() {
         return datetime;
     }
@@ -51,7 +56,7 @@ public class ForecastWeather {
     }
 
     public String getTempInCelsiusC() {
-        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(temp));
+        return String.format("%.0f", TemperatureMetrics.tempInCelsius(temp));
     }
 
     public double getTempMin() {
@@ -59,7 +64,7 @@ public class ForecastWeather {
     }
 
     public String getTempMinInCelsius() {
-        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(tempMin));
+        return String.format("%.0f", TemperatureMetrics.tempInCelsius(tempMin));
     }
 
     public double getTempMax() {
@@ -67,7 +72,7 @@ public class ForecastWeather {
     }
 
     public String getTempmaxInCelsius() {
-        return String.format("%.0fºC", TemperatureMetrics.tempInCelsius(tempMax));
+        return String.format("%.0f", TemperatureMetrics.tempInCelsius(tempMax));
     }
 
     public double getPressure() {
@@ -76,6 +81,11 @@ public class ForecastWeather {
 
     public double getHumidity() {
         return humidity;
+    }
+
+
+    public String getHumidityPercent() {
+        return String.format("%.0f%s", humidity, "%");
     }
 
     public String getWindSpeedInKM() {

@@ -4,10 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
-import javax.inject.Inject;
-
-import sw.es.appwidget.view.ForecastAppWidgetView;
+import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
@@ -18,12 +17,11 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 /**
  * Implementation of App Widget functionality.
  */
-//TODO: gestionar múltiples servicios... no se... por si hay más de un widget. Sinó tiro objetos normales....??? ni paja udea
+//TODO: gestionar llegada de multiples widgetIds
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
     private static final String TAG = ForecastAppWidget.class.getSimpleName();
-    @Inject ForecastAppWidgetView forecastAppWidgetView;
 
 
     /**
@@ -37,6 +35,7 @@ public class ForecastAppWidget extends AppWidgetProvider {
         if (DEBUG) {
             e(TAG, "onUpdate");
         }
+        initializeInjections(context);
         printAppWidgetIds(appWidgetIds);
         refreshWidgets(context, appWidgetIds);
     }
@@ -61,7 +60,6 @@ public class ForecastAppWidget extends AppWidgetProvider {
             e(TAG, "onReceive");
         }
         super.onReceive(context, intent);
-        initializeInjections(context);
     }
 
 
@@ -70,10 +68,11 @@ public class ForecastAppWidget extends AppWidgetProvider {
      * @param context
      */
     private void initializeInjections(Context context){
-        if (forecastAppWidgetView == null) {
-            ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
-            component.inject(this);
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "initializeInjections");
         }
+        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
+        component.inject(this);
     }
 
 

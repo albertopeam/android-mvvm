@@ -1,15 +1,22 @@
 package sw.es.appwidget.view;
 
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import retrofit.HttpException;
+import sw.es.appwidget.ForecastAppWidget;
+import sw.es.dagger2.BuildConfig;
 import sw.es.dagger2.R;
 import sw.es.model.local.Forecast;
 import sw.es.model.local.ForecastWeather;
@@ -19,12 +26,10 @@ import sw.es.model.local.ForecastWeather;
  * Created by albertopenasamor on 30/6/15.
  */
 //TODO: add error cases.... segun aparezcan
-//TODO: boton si devuelve una castaña para que recarge!!! y de donde saco el id del widget, its magic!!!
 public class ForecastAppWidgetView implements ForecastView{
 
 
     private static final String TAG = ForecastAppWidgetView.class.getSimpleName();
-    public static final String RELOAD_ACTION = "reload_btn";
     private static int NUM_COLUMNS = 4;
     private Context context;
     private RemoteViews remoteView;
@@ -36,19 +41,21 @@ public class ForecastAppWidgetView implements ForecastView{
         this.remoteView = new RemoteViews(context.getPackageName(), R.layout.app_widget);
     }
 
+
     @Override
     public RemoteViews setLoading() {
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.VISIBLE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
-        remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_errorview, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
         return remoteView;
     }
 
+
     @Override
     public RemoteViews setForecast(Forecast forecast) {
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
-        remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_errorview, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.VISIBLE);
 
@@ -67,24 +74,28 @@ public class ForecastAppWidgetView implements ForecastView{
     public RemoteViews setConfig() {
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
-        remoteView.setViewVisibility(R.id.appwidget_errortv, View.GONE);
+        remoteView.setViewVisibility(R.id.appwidget_errorview, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_configtv, View.VISIBLE);
         return remoteView;
     }
 
+
     @Override
-    public RemoteViews setError(Throwable throwable) {
+    public RemoteViews setError(int appWidgetId, Throwable throwable) {
         remoteView.setViewVisibility(R.id.appwidget_pbar, View.GONE);
-        remoteView.setViewVisibility(R.id.appwidget_errortv, View.VISIBLE);
+        remoteView.setViewVisibility(R.id.appwidget_errorview, View.VISIBLE);
         remoteView.setViewVisibility(R.id.appwidget_forecastlayout, View.GONE);
         remoteView.setViewVisibility(R.id.appwidget_configtv, View.GONE);
 
-        if (throwable instanceof HttpException){
+        if (throwable instanceof UnknownHostException){
+            remoteView.setTextViewText(R.id.appwidget_errortv, getRes().getString(R.string.no_net_error));
+        } else if (throwable instanceof HttpException){
             remoteView.setTextViewText(R.id.appwidget_errortv, getRes().getString(R.string.net_error));
         }else{
             remoteView.setTextViewText(R.id.appwidget_errortv, getRes().getString(R.string.undefined_error));
         }
 
+        setEvents(appWidgetId, remoteView);
         return remoteView;
     }
 
@@ -93,22 +104,20 @@ public class ForecastAppWidgetView implements ForecastView{
         return context.getResources();
     }
 
-    /*
-    private void setEvents(RemoteViews views){
-        views.setOnClickPendingIntent(R.id.widget_ll, makePendingIntent());
-        views.setOnClickPendingIntent(R.id.reload_btn, getPendingSelfIntent(RELOAD_ACTION));
+
+    private void setEvents(int appWidgetId, RemoteViews views){
+        views.setOnClickPendingIntent(R.id.appwidget_reloadbtn, getPendingIntentUpdate(appWidgetId));
     }
 
-    private PendingIntent makePendingIntent(){
-        Intent intent = new Intent(context, CurrentLocationWeatherActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        return pendingIntent;
-    }
 
-    private PendingIntent getPendingSelfIntent(String action) {
-        Intent intent = new Intent(context, CurrentWeatherAppWidget.class);
-        intent.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    private PendingIntent getPendingIntentUpdate(int appWidgetId) {
+        Intent intent = new Intent(context, ForecastAppWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = {appWidgetId};
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "getPendingIntentUpdate widgetId: " + appWidgetId);
+        }
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
     }
-    */
 }

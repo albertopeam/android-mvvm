@@ -3,10 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
-
     <color name="divider">#FF4081</color>
-
+    <color name="btn_whitepressed_mask">#44ffffff</color>
+    <color name="white_alpha_mid">#7fFFFFFF</color>
 
 
 

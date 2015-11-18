@@ -149,7 +149,7 @@ public class AppWidgetConfigActivity extends BaseActivity implements FavouriteLo
     @Override
     public void fetchForecast() {
         if (DEBUG) {
-            e(TAG, "fetchForecast");
+            e(TAG, "fetchForecast: " + mAppWidgetId);
         }
         Intent intent = ForecastAppWidgetService.newInstance(AppWidgetConfigActivity.this, mAppWidgetId);
         startService(intent);

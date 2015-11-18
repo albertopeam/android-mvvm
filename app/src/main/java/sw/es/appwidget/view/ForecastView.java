@@ -11,5 +11,5 @@ public interface ForecastView {
     RemoteViews setLoading();
     RemoteViews setForecast(Forecast forecast);
     RemoteViews setConfig();
-    RemoteViews setError(Throwable throwable);
+    RemoteViews setError(int appWidgetId, Throwable throwable);
 }

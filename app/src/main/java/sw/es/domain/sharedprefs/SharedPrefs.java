@@ -29,12 +29,12 @@ public class SharedPrefs implements AppShared{
 
     @Override
     public void remove(String key) {
-        getEditor().remove(key).apply();
+        getEditor().remove(key).commit();
     }
 
     @Override
     public void put(String key, String value) {
-        getEditor().putString(key, value).apply();
+        getEditor().putString(key, value).commit();
     }
 
 
@@ -47,7 +47,7 @@ public class SharedPrefs implements AppShared{
     @Override
     public void putStringsInSet(String key, List<String> values){
         Set<String>set = new HashSet<>(values);
-        getEditor().putStringSet(key, set).apply();
+        getEditor().putStringSet(key, set).commit();
     }
 
 

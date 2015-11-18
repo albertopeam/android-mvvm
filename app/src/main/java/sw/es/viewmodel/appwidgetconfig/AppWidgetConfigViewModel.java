@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.ForecastAppWidget;
+import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.dagger2.BR;
-import sw.es.model.local.FavouriteLocation;
 import sw.es.domain.sharedprefs.AppShared;
 import sw.es.domain.sharedprefs.usecase.FetchFavCallback;
 import sw.es.domain.sharedprefs.usecase.FetchFavLocationsUseCase;
+import sw.es.model.local.FavouriteLocation;
 import sw.es.viewmodel.abs.AbsViewModel;
 
 /**
@@ -55,7 +55,6 @@ public class AppWidgetConfigViewModel extends AbsViewModel implements AbsAppWidg
     @Override
     public void configure(int appWidgetId, FavouriteLocation favouriteLocation) {
         appShared.put(String.valueOf(appWidgetId), favouriteLocation.getName());
-        widgetPublisher.update(forecastAppWidgetView.setLoading());
         viewCallback.fetchForecast();
         viewCallback.close();
     }

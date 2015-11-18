@@ -35,8 +35,8 @@ public class ForecastAppWidgetColumnView implements ForecastColumnView {
         remote.setTextViewText(R.id.appwidget_location, forecast.getName());
         remote.setTextViewText(R.id.appwidget_date, forecastWeather.getDatetimeFormatted());
         remote.setTextViewText(R.id.appwidget_description, forecastWeather.getDescription());
-        remote.setTextViewText(R.id.appwidget_maxtemp, forecastWeather.getTempmaxInCelsius());
-        remote.setTextViewText(R.id.appwidget_mintemp, forecastWeather.getTempMinInCelsius());
+        remote.setTextViewText(R.id.appwidget_humidity, forecastWeather.getHumidityPercent());
+        remote.setTextViewText(R.id.appwidget_cloudiness, forecastWeather.getCloudinessFormat());
         remote.setTextViewText(R.id.appwidget_temp, forecastWeather.getTempInCelsiusC());
         remote.setTextViewText(R.id.appwidget_windspeed, forecastWeather.getWindSpeedInKM());
         remote.setTextViewText(R.id.appwidget_windspeeddegree, forecastWeather.getWindDegrees());

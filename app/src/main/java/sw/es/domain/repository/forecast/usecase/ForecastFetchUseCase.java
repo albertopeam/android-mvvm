@@ -48,6 +48,7 @@ public class ForecastFetchUseCase implements UseCase<String, Forecast> {
                                 e.printStackTrace();
                             }
                         }
+                        callback.onResultError(params, e);
                     }
 
                     @Override

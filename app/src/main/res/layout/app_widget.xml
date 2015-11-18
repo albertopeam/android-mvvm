@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/appwidget.forecastlayout"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -71,15 +71,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/appwidget.pbar"/>
 
-    <TextView
-        style="@style/text.medium.white"
-        android:id="@+id/appwidget.errortv"
+    <LinearLayout
+        android:id="@+id/appwidget.errorview"
         android:visibility="gone"
         android:layout_centerInParent="true"
+        android:layout_margin="@dimen/m"
         android:gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:orientation="vertical">
+        <TextView
+            style="@style/text.medium.white"
+            android:id="@+id/appwidget.errortv"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/appwidget.reloadbtn"
+            android:layout_marginTop="@dimen/m"
+            android:src="@android:drawable/ic_popup_sync"
+            android:background="@drawable/btn_transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
     <TextView
         style="@style/text.medium.white"

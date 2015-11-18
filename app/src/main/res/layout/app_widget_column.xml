@@ -9,16 +9,17 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:layout_weight="1">
+        android:layout_weight="0.9"
+        android:gravity="center_vertical">
 
         <TextView
             style="@style/text.small.white"
+            android:visibility="visible"
+            android:text="Sample"
             android:id="@+id/appwidget.location"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Perillo" />
+            android:layout_height="wrap_content" />
 
         <TextView
             style="@style/text.small.white"
@@ -26,14 +27,14 @@
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="18:00 jue" />
+            android:text="18:00 jue." />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.3">
+        android:layout_weight="2">
 
         <TextView
             style="@style/text.xsmall.white"
@@ -43,15 +44,40 @@
             android:layout_height="wrap_content"
             android:lines="2"
             android:ellipsize="end"
-            android:text="heavy shower" />
+            android:text="heavy shower inside a cloud" />
 
-        <ImageView
-            android:id="@+id/appwidget.icon"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
-            android:src="@drawable/weather"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/appwidget.icon"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/sun"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text.large.single.white"
+                android:layout_marginLeft="2dp"
+                android:id="@+id/appwidget.temp"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:text="-88" />
+
+            <TextView
+                style="@style/text.xsmall.single.white"
+                android:layout_marginTop="-8dp"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="match_parent"
+                android:text="ºC" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -61,57 +87,18 @@
         android:layout_weight="1.7">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:src="@drawable/icon_thermometer"
-                android:scaleType="centerCrop"
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    style="@style/text.xsmall.single.white"
-                    android:id="@+id/appwidget.maxtemp"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="21ºc" />
-
-                <TextView
-                    style="@style/text.small.single.white"
-                    android:id="@+id/appwidget.temp"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="15" />
-
-                <TextView
-                    style="@style/text.xsmall.single.white"
-                    android:id="@+id/appwidget.mintemp"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="-5ºc" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
             android:orientation="vertical"
             android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/rosecompass"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:layout_width="16dp"
+                android:layout_height="16dp"/>
 
             <TextView
                 style="@style/text.xsmall.single.white"
@@ -127,8 +114,58 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NE" />
+                android:text="WNW" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@drawable/cloudiness"
+                    android:scaleType="fitCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"/>
+
+                <TextView
+                    style="@style/text.xxsmall.single.white"
+                    android:id="@+id/appwidget.humidity"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100%" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@drawable/cloudiness"
+                    android:scaleType="fitCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"/>
+
+                <TextView
+                    style="@style/text.xsmall.single.white"
+                    android:id="@+id/appwidget.cloudiness"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-5" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

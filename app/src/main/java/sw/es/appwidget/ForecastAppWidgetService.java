@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.view.ForecastAppWidgetView;
-import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
 import sw.es.di.module.ForecastAppWidgetModule;
@@ -22,8 +21,9 @@ import sw.es.model.local.Forecast;
 import static android.util.Log.e;
 import static sw.es.dagger2.BuildConfig.DEBUG;
 
-//TODO: repo: crear, probar e inyectar
-//TODO: migrar de los putos services infernales....¿pueden correr varios a la vez?
+//TODO: migrar de los putos services infernales....¿pueden correr varios a la vez? malo sera que por tiempo se lanzen a la vez...
+//TODO: se petan al arrancar la app con dos a la vez(dos widgets)
+//TODO: se intercambian los widgets cuando hay dos por ejemplo. Se mezclan una vez uno es una ciudad y la siguiente el otro
 public class ForecastAppWidgetService extends Service implements UseCaseCallback<String, Forecast> {
 
 
@@ -31,8 +31,7 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
     private int startId;
     private int appWidgetId;
     @Inject ForecastAppWidgetView forecastAppWidgetView;
-    @Inject
-    AppWidgetPublisher<ForecastAppWidget> publisher;
+    @Inject AppWidgetPublisher<ForecastAppWidget> publisher;
     @Inject ForecastFetchUseCase forecastFetchUseCase;
     @Inject AppShared appShared;
 
@@ -47,6 +46,9 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
 
     @Override
     public void onCreate() {
+        if (DEBUG) {
+            e(TAG, "onCreate");
+        }
         super.onCreate();
         initializeInjections(getApplicationContext());
     }
@@ -58,18 +60,19 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
             Log.d(TAG, "onStartCommand");
         }
 
-        appWidgetId = getAppWidgetId(intent);
-        String locationName = getLocationName(appWidgetId);
+        setStartId(startId);
+
+        String locationName = getLocationName(getAppWidgetId(intent));
         if (locationName.isEmpty()){
             showConfig();
             stop();
         }else{
             showLoading();
-            fetchForecast(appWidgetId, locationName);
+            fetchForecast(locationName);
         }
 
 
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY;
     }
 
 
@@ -86,11 +89,11 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
             e(TAG, "getAppWidgetId");
         }
 
-        int mAppWidgetId = intent.getIntExtra("appWidgetId", -1);
+        appWidgetId = intent.getIntExtra("appWidgetId", -1);
         if (DEBUG) {
-            e(TAG, "appWidgetId: " + mAppWidgetId);
+            e(TAG, "appWidgetId: " + appWidgetId);
         }
-        return mAppWidgetId;
+        return appWidgetId;
     }
 
 
@@ -100,7 +103,7 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
         }
         String locationName = appShared.get(String.valueOf(appWidgetId));
         if (DEBUG) {
-            e(TAG, "locationName: " + locationName);
+            e(TAG, "appwidgetid: "  + appWidgetId +", locationName: " + locationName);
         }
         return locationName;
     }
@@ -115,14 +118,14 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
 
 
     private void showConfig(){
-        if (BuildConfig.DEBUG) {
+        if (DEBUG) {
             e(TAG, "showConfig");
         }
         publisher.update(appWidgetId, forecastAppWidgetView.setConfig());
     }
 
 
-    private void fetchForecast(int appWidgetId, String locationName){
+    private void fetchForecast(String locationName){
         if (DEBUG) {
             Log.d(TAG, "fetchWeatherData");
         }
@@ -133,6 +136,9 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
     private void initializeInjections(Context context){
         ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
         component.inject(this);
+        if (DEBUG) {
+            e(TAG, "forecastAppWidgetView memory address: " + forecastAppWidgetView.toString());
+        }
     }
 
 
@@ -160,14 +166,14 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
                 throwable.printStackTrace();
             }
         }
-        publisher.update(appWidgetId, forecastAppWidgetView.setError(throwable));
+        publisher.update(appWidgetId, forecastAppWidgetView.setError(appWidgetId, throwable));
         stop();
     }
 
 
     private void stop(){
         if (DEBUG) {
-            e(TAG, "stop");
+            e(TAG, "stop:" + startId);
         }
         this.stopSelf(startId);
     }
