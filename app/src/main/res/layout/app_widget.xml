@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/widget"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/ms"
-    android:paddingBottom="@dimen/ms"
+    android:paddingTop="@dimen/mxs"
+    android:paddingBottom="@dimen/mxs"
     android:layout_width="@dimen/app_widget_width"
     android:layout_height="@dimen/app_widget_height">
 

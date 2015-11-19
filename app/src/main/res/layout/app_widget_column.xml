@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="@dimen/app_widget_width_column"
-    android:layout_height="@dimen/app_widget_height">
+    android:layout_height="@dimen/app_widget_height_column">
 
     <LinearLayout
         android:orientation="vertical"
@@ -34,7 +34,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="1.5">
 
         <TextView
             style="@style/text.xsmall.white"
@@ -54,7 +54,7 @@
                 android:id="@+id/appwidget.icon"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sun"
+                android:src="@drawable/icon_weather_cloudy"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"/>
 
@@ -63,15 +63,16 @@
                 android:layout_marginLeft="2dp"
                 android:id="@+id/appwidget.temp"
                 android:gravity="center"
+                android:layout_gravity="right"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:text="-88" />
+                android:text="88" />
 
             <TextView
                 style="@style/text.xsmall.single.white"
-                android:layout_marginTop="-8dp"
-                android:gravity="center"
+                android:layout_marginTop="-6dp"
+                android:gravity="center|left"
                 android:layout_width="0dp"
                 android:layout_weight="1.2"
                 android:layout_height="match_parent"
@@ -90,81 +91,87 @@
             android:orientation="vertical"
             android:gravity="center_vertical"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:src="@drawable/rosecompass"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                android:layout_width="16dp"
-                android:layout_height="16dp"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:src="@drawable/rosecompass"
+                    android:scaleType="centerInside"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"/>
+
+                <TextView
+                    style="@style/text.xsmall.single.white"
+                    android:id="@+id/appwidget.windspeeddegree"
+                    android:layout_marginLeft="@dimen/mxs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WNW" />
+            </LinearLayout>
 
             <TextView
                 style="@style/text.xsmall.single.white"
                 android:id="@+id/appwidget.windspeed"
+                android:layout_marginTop="@dimen/mxs"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10m/s" />
-
-            <TextView
-                style="@style/text.xsmall.single.white"
-                android:id="@+id/appwidget.windspeeddegree"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="WNW" />
+                android:text="100Km/h" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_weight="2.2"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/cloudiness"
-                    android:scaleType="fitCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"/>
-
-                <TextView
-                    style="@style/text.xxsmall.single.white"
-                    android:id="@+id/appwidget.humidity"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="100%" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:src="@drawable/cloudiness"
+                    android:src="@drawable/icon_water_percent"
                     android:scaleType="fitCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"/>
 
                 <TextView
                     style="@style/text.xsmall.single.white"
-                    android:id="@+id/appwidget.cloudiness"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/appwidget.humidity"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="-5" />
+                    android:text="75%" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/icon_cloudiness"
+                    android:scaleType="fitCenter"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"/>
+
+                <TextView
+                    style="@style/text.xsmall.single.white"
+                    android:id="@+id/appwidget.cloudiness"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0%" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -84,7 +84,7 @@ public class WeatherCloudTest {
         assertNotNull("description is NULL", emptyWeatherCloud.getDescription());
         assertNotNull("name is NULL", emptyWeatherCloud.getName());
         assertNotNull("icon is NULL", emptyWeatherCloud.getIcon());
-        assertEquals("diferent cloudiness", emptyWeatherCloud.getCloudiness(), 0d, 0d);
+        assertEquals("diferent icon_cloudiness", emptyWeatherCloud.getCloudiness(), 0d, 0d);
         assertEquals("diferent datetime", emptyWeatherCloud.getDateTime(), 0d, 0d);
     }
 

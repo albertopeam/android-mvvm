@@ -42,8 +42,9 @@ public class ForecastWeather {
         return cloudiness;
     }
 
-    public String getCloudinessFormat() {
-        return String.valueOf(cloudiness);
+    public String getCloudinessPercent() {
+
+        return String.format("%.0f%s", cloudiness, "%");
     }
 
 
