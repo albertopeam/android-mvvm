@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import sw.es.android.AndroidApp;
 import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
 import sw.es.di.component.ForecastAppWidgetComponent;
@@ -71,7 +72,11 @@ public class ForecastAppWidget extends AppWidgetProvider {
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "initializeInjections");
         }
-        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
+        AndroidApp androidApp = (AndroidApp) context.getApplicationContext();
+        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder()
+                .applicationComponent(androidApp.getApplicationComponent())
+                .forecastAppWidgetModule(new ForecastAppWidgetModule())
+                .build();
         component.inject(this);
     }
 

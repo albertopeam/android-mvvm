@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import sw.es.dagger2.R;
+import sw.es.domain.mapper.IconMapper;
 import sw.es.model.local.Forecast;
 import sw.es.model.local.ForecastWeather;
 
@@ -17,10 +18,12 @@ public class ForecastAppWidgetColumnView implements ForecastColumnView {
 
 
     private Context context;
+    private IconMapper iconMapper;
 
 
-    public ForecastAppWidgetColumnView(Context context) {
+    public ForecastAppWidgetColumnView(Context context, IconMapper iconMapper) {
         this.context = context;
+        this.iconMapper = iconMapper;
     }
 
 
@@ -32,6 +35,7 @@ public class ForecastAppWidgetColumnView implements ForecastColumnView {
         }else{
             remote.setViewVisibility(R.id.appwidget_location, View.GONE);
         }
+        remote.setImageViewResource(R.id.appwidget_icon, iconMapper.resourceFor(forecastWeather.getIcon()));
         remote.setTextViewText(R.id.appwidget_location, forecast.getName());
         remote.setTextViewText(R.id.appwidget_date, forecastWeather.getDatetimeFormatted());
         remote.setTextViewText(R.id.appwidget_description, forecastWeather.getDescription());

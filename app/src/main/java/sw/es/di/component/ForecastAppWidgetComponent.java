@@ -7,6 +7,7 @@ import sw.es.appwidget.ForecastAppWidgetService;
 import sw.es.appwidget.view.ForecastView;
 import sw.es.di.common.PerService;
 import sw.es.di.module.ForecastAppWidgetModule;
+import sw.es.di.module.shared.IconModule;
 import sw.es.di.module.shared.NetworkModule;
 import sw.es.di.module.shared.SchedulerModule;
 
@@ -15,10 +16,15 @@ import sw.es.di.module.shared.SchedulerModule;
  */
 @PerService
 @Component(
+        dependencies = {
+                ApplicationComponent.class
+        },
         modules = {
                 ForecastAppWidgetModule.class,
                 NetworkModule.class,
-                SchedulerModule.class}
+                SchedulerModule.class,
+                IconModule.class
+        }
 )
 public interface ForecastAppWidgetComponent {
     void inject(ForecastAppWidgetService forecastAppWidgetService);

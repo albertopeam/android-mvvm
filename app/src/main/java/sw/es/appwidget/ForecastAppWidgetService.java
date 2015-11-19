@@ -8,6 +8,7 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import sw.es.android.AndroidApp;
 import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
@@ -134,7 +135,11 @@ public class ForecastAppWidgetService extends Service implements UseCaseCallback
 
 
     private void initializeInjections(Context context){
-        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder().forecastAppWidgetModule(new ForecastAppWidgetModule(context)).build();
+        AndroidApp androidApp = (AndroidApp) context.getApplicationContext();
+        ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder()
+                .applicationComponent(androidApp.getApplicationComponent())
+                .forecastAppWidgetModule(new ForecastAppWidgetModule())
+                .build();
         component.inject(this);
         if (DEBUG) {
             e(TAG, "forecastAppWidgetView memory address: " + forecastAppWidgetView.toString());

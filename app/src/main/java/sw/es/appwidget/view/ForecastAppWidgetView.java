@@ -18,6 +18,7 @@ import retrofit.HttpException;
 import sw.es.appwidget.ForecastAppWidget;
 import sw.es.dagger2.BuildConfig;
 import sw.es.dagger2.R;
+import sw.es.domain.mapper.IconMapper;
 import sw.es.model.local.Forecast;
 import sw.es.model.local.ForecastWeather;
 
@@ -33,11 +34,13 @@ public class ForecastAppWidgetView implements ForecastView{
     private static int NUM_COLUMNS = 4;
     private Context context;
     private RemoteViews remoteView;
+    private IconMapper iconMapper;
 
 
     @Inject
-    public ForecastAppWidgetView(Context context) {
+    public ForecastAppWidgetView(Context context, IconMapper iconMapper) {
         this.context = context;
+        this.iconMapper = iconMapper;
         this.remoteView = new RemoteViews(context.getPackageName(), R.layout.app_widget);
     }
 
@@ -61,7 +64,7 @@ public class ForecastAppWidgetView implements ForecastView{
 
         List<ForecastWeather> forecastWeatherList = forecast.getForecastWeatherList();
         for(int i = 0; i < NUM_COLUMNS; i++) {
-            ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context);
+            ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context, iconMapper);
             RemoteViews remoteViews = forecastColumnView.build(i, forecast, forecastWeatherList.get(i));
             int viewId = forecastColumnView.viewId(i);
             remoteView.addView(viewId, remoteViews);

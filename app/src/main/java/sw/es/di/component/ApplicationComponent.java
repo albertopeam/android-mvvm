@@ -2,6 +2,7 @@
 package sw.es.di.component;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import javax.inject.Singleton;
 
@@ -17,5 +18,7 @@ import sw.es.di.module.ApplicationModule;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(AndroidApp androidApp);
+
     @ForApplication Context provideAppContext();
+    Resources provideResources();
 }

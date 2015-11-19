@@ -4,6 +4,7 @@ import dagger.Component;
 import sw.es.di.common.PerActivity;
 import sw.es.di.module.AppWidgetConfigModule;
 import sw.es.di.module.shared.AppSharedModule;
+import sw.es.di.module.shared.IconModule;
 import sw.es.di.module.shared.SchedulerModule;
 import sw.es.view.activity.widgetconfig.AppWidgetConfigActivity;
 import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
@@ -19,7 +20,8 @@ import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
         modules = {
                 AppWidgetConfigModule.class,
                 SchedulerModule.class,
-                AppSharedModule.class
+                AppSharedModule.class,
+                IconModule.class
         }
 )
 public interface AppWidgetConfigComponent {

@@ -12,6 +12,7 @@ import sw.es.di.common.ExecutionScheduler;
 import sw.es.di.common.ForApplication;
 import sw.es.di.common.ListenScheduler;
 import sw.es.di.common.PerActivity;
+import sw.es.domain.mapper.IconMapper;
 import sw.es.domain.sharedprefs.AppShared;
 import sw.es.domain.sharedprefs.usecase.FetchFavLocationsUseCase;
 import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
@@ -29,11 +30,13 @@ public class AppWidgetConfigModule {
         return new AppWidgetConfigViewModel(fetchFavLocationsUseCase, appWidgetPublisher, appShared, forecastAppWidgetView);
     }
 
+
     @Provides
     @PerActivity
     FetchFavLocationsUseCase provideFetchFavLocationsUseCase(AppShared appShared, @ExecutionScheduler Scheduler executioScheduler, @ListenScheduler Scheduler listenScheduler){
         return new FetchFavLocationsUseCase(appShared, executioScheduler, listenScheduler);
     }
+
 
     @Provides
     @PerActivity
@@ -42,9 +45,10 @@ public class AppWidgetConfigModule {
         return publisher;
     }
 
+
     @Provides
     @PerActivity
-    ForecastAppWidgetView provideForecastAppWidgetView(@ForApplication Context context){
-        return new ForecastAppWidgetView(context);
+    ForecastAppWidgetView provideForecastAppWidgetView(@ForApplication Context context, IconMapper iconMapper){
+        return new ForecastAppWidgetView(context, iconMapper);
     }
 }

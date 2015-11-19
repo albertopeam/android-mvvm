@@ -1,6 +1,7 @@
 package sw.es.di.module;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import javax.inject.Singleton;
 
@@ -28,4 +29,10 @@ public class ApplicationModule {
         return this.application;
     }
 
+
+    @Provides
+    @Singleton
+    Resources provideResources() {
+        return this.application.getResources();
+    }
 }
