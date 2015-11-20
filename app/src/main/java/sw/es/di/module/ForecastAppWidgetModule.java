@@ -26,14 +26,6 @@ import sw.es.network.WeatherBackendAPI;
 public class ForecastAppWidgetModule {
 
 
-//    private Context context;
-//
-//
-//    public ForecastAppWidgetModule(Context context) {
-//        this.context = context;
-//    }
-
-
     @Provides
     @PerService
     ForecastView provideWeatherAppWidget(@ForApplication Context context, IconMapper iconMapper){

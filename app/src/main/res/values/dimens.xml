@@ -10,6 +10,6 @@
 
     <dimen name="app_widget_width">326dp</dimen>
     <dimen name="app_widget_width_column">76.5dp</dimen>
-    <dimen name="app_widget_height_column">154dp</dimen>
+    <dimen name="app_widget_height_column">152dp</dimen><!-- 8 menos que el app_widget_height -->
     <dimen name="app_widget_height">158dp</dimen>
 </resources>

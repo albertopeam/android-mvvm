@@ -101,7 +101,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:src="@drawable/rosecompass"
+                    android:src="@drawable/icon_explore"
                     android:scaleType="centerInside"
                     android:layout_width="12dp"
                     android:layout_height="12dp"/>
@@ -140,9 +140,9 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/icon_water_percent"
+                    android:src="@drawable/icon_water"
                     android:scaleType="fitCenter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="16dp"
                     android:layout_height="16dp"/>
 
                 <TextView
