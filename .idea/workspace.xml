@@ -98,18 +98,72 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_widget_column.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app_widget_column.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_widget_column.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.057954546">
+            <state vertical-scroll-proportion="-1.7586207">
               <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
               <folding>
                 <element signature="e#176#208#0" expanded="true" />
                 <element signature="e#235#268#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="row_app_widget_config.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_app_widget_config.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.137931">
+              <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+              <folding>
+                <element signature="e#502#513#0" expanded="true" />
+                <element signature="e#549#560#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppWidgetConfigActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/widgetconfig/AppWidgetConfigActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.71067107">
+              <caret line="102" column="71" selection-start-line="102" selection-start-column="71" selection-end-line="102" selection-end-column="71" />
+              <folding>
+                <element signature="e#4021#4022#0" expanded="true" />
+                <element signature="e#4063#4064#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_appwidget_config.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_appwidget_config.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.724138">
+              <caret line="36" column="52" selection-start-line="36" selection-start-column="52" selection-end-line="36" selection-end-column="52" />
+              <folding>
+                <element signature="e#1476#1500#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dimens.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1853,7 +1907,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/di/component/AppWidgetConfigModule.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/weather/FavouriteWeathersActivity.java" />
         <option value="$PROJECT_DIR$/app/src/test/java/sw/es/dagger2/WeatherCloudTest.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/row_app_widget_config.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/domain/units/DistanceMetrics.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/model/local/Weather.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_weather.xml" />
@@ -1864,7 +1917,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/appwidget/publisher/AppWidgetPublisher.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/widgetconfig/AppWidgetConfigActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/appwidget/view/ForecastView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/domain/sharedprefs/SharedPrefs.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/viewmodel/appwidgetconfig/AppWidgetConfigViewModel.java" />
@@ -1886,6 +1938,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/di/module/ForecastAppWidgetModule.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sw/es/domain/mapper/MaterialDesignIconMapper.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_widget_column.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/row_app_widget_config.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/widgetconfig/AppWidgetConfigActivity.java" />
       </list>
     </option>
   </component>
@@ -1952,6 +2006,24 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidMVVM" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1967,7 +2039,7 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
+              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2001,6 +2073,84 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="es" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidMVVM" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="es" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidMVVM" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="es" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidMVVM" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="es" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgetconfig" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2139,7 +2289,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.sdk.path" value="$USER_HOME$/softwhisper/SDK/android-sdk-macosx" />
     <property name="recentsLimit" value="5" />
-    <property name="SearchEverywhereHistoryKey" value="Android&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/android/AndroidApp.java&#10;Shared&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/domain/sharedprefs/SharedPrefs.java&#10;ForecastFetchUseCase&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/domain/repository/forecast/usecase/ForecastFetchUseCase.java&#10;Weather&#9;PSI&#9;JAVA://sw.es.model.local.Weather&#10;FavouriteLoca&#9;PSI&#9;JAVA://sw.es.model.local.FavouriteLocation&#10;weat&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/model/local/Weather.java&#10;ada&#9;PSI&#9;JAVA://sw.es.view.adapter.WeatherAdapter&#10;weather&#9;PSI&#9;JAVA://sw.es.model.local.Weather&#10;activi&#9;PSI&#9;JAVA://sw.es.view.FavouriteWeathersActivity" />
+    <property name="SearchEverywhereHistoryKey" value="row&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/res/layout/row_app_widget_config.xml&#10;Android&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/android/AndroidApp.java&#10;Shared&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/domain/sharedprefs/SharedPrefs.java&#10;ForecastFetchUseCase&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/domain/repository/forecast/usecase/ForecastFetchUseCase.java&#10;Weather&#9;PSI&#9;JAVA://sw.es.model.local.Weather&#10;FavouriteLoca&#9;PSI&#9;JAVA://sw.es.model.local.FavouriteLocation&#10;weat&#9;FILE&#9;file:///Users/albertopenasamor/Desarrollo/softwhisper/android/samples/AndroidMVVM/app/src/main/java/sw/es/model/local/Weather.java&#10;ada&#9;PSI&#9;JAVA://sw.es.view.adapter.WeatherAdapter&#10;weather&#9;PSI&#9;JAVA://sw.es.model.local.Weather&#10;activi&#9;PSI&#9;JAVA://sw.es.view.FavouriteWeathersActivity" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA930008FC" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="7tablet" />
     <property name="OverrideImplement.combined" value="true" />
@@ -2400,11 +2550,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328541" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328541" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.4978701" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2434,6 +2584,14 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -2501,13 +2659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15841584">
           <caret line="56" column="80" selection-start-line="56" selection-start-column="80" selection-end-line="56" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/widgetconfig/AppWidgetConfigActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83168316">
-          <caret line="154" column="29" selection-start-line="154" selection-start-column="29" selection-end-line="154" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -2654,10 +2805,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="108" column="16" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
           <folding>
-            <element signature="e#872#873#0" expanded="true" />
-            <element signature="e#901#902#0" expanded="true" />
-            <element signature="e#2410#2411#0" expanded="true" />
-            <element signature="e#2442#2443#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="false" />
+            <element signature="e#901#902#0" expanded="false" />
+            <element signature="e#2410#2411#0" expanded="false" />
+            <element signature="e#2442#2443#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2731,8 +2882,8 @@
         <state vertical-scroll-proportion="0.43014303">
           <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
           <folding>
-            <element signature="e#483#484#0" expanded="true" />
-            <element signature="e#529#530#0" expanded="true" />
+            <element signature="e#483#484#0" expanded="false" />
+            <element signature="e#529#530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2756,14 +2907,6 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/icon_weather_sunny.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/softwhisper/SDK/android-sdk-macosx/extras/android/m2repository/com/android/support/recyclerview-v7/23.1.0/recyclerview-v7-23.1.0-sources.jar!/android/support/v7/widget/RecyclerView.java">
@@ -2818,6 +2961,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_widget_column.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.7586207">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+          <folding>
+            <element signature="e#176#208#0" expanded="true" />
+            <element signature="e#235#268#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/forecast_app_widget_provider_info.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2826,16 +2983,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_widget_column.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_appwidget_config.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.057954546">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        <state vertical-scroll-proportion="-11.724138">
+          <caret line="36" column="52" selection-start-line="36" selection-start-column="52" selection-end-line="36" selection-end-column="52" />
           <folding>
-            <element signature="e#176#208#0" expanded="true" />
-            <element signature="e#235#268#0" expanded="true" />
+            <element signature="e#1476#1500#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_app_widget_config.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.137931">
+          <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+          <folding>
+            <element signature="e#502#513#0" expanded="true" />
+            <element signature="e#549#560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sw/es/view/activity/widgetconfig/AppWidgetConfigActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71067107">
+          <caret line="102" column="71" selection-start-line="102" selection-start-column="71" selection-end-line="102" selection-end-column="71" />
+          <folding>
+            <element signature="e#4021#4022#0" expanded="true" />
+            <element signature="e#4063#4064#0" expanded="true" />
           </folding>
         </state>
       </provider>

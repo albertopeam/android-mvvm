@@ -32,6 +32,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 /**
  * Created by albertopenasamor on 16/11/15.
  */
+//TODO: no funciona el ripple pq el listener de alguna manera se lo come....poner otro listener o lo que sea
 public class AppWidgetConfigActivity extends BaseActivity implements FavouriteLocationsCallback {
 
 
@@ -99,8 +100,7 @@ public class AppWidgetConfigActivity extends BaseActivity implements FavouriteLo
             }
 
             @Override
-            public void onItemLongPress(View childView, int position) {
-            }
+            public void onItemLongPress(View childView, int position) {}
         }));
         setSupportActionBar(binding.toolbar);
     }
