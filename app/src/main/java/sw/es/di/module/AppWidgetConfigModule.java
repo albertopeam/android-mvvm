@@ -13,6 +13,7 @@ import sw.es.di.common.ForApplication;
 import sw.es.di.common.ListenScheduler;
 import sw.es.di.common.PerActivity;
 import sw.es.domain.mapper.IconMapper;
+import sw.es.domain.mapper.StringMapper;
 import sw.es.domain.sharedprefs.AppShared;
 import sw.es.domain.sharedprefs.usecase.FetchFavLocationsUseCase;
 import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
@@ -48,7 +49,7 @@ public class AppWidgetConfigModule {
 
     @Provides
     @PerActivity
-    ForecastAppWidgetView provideForecastAppWidgetView(@ForApplication Context context, IconMapper iconMapper){
-        return new ForecastAppWidgetView(context, iconMapper);
+    ForecastAppWidgetView provideForecastAppWidgetView(@ForApplication Context context, IconMapper iconMapper, StringMapper stringMapper){
+        return new ForecastAppWidgetView(context, iconMapper, stringMapper);
     }
 }

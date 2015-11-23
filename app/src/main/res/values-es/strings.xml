@@ -12,4 +12,21 @@
     <string name="cloudiness">Nubosidad:</string>
     <string name="updated_at">Act.:</string>
     <string name="app_widget_config_process">App widget configuración en proceso...</string>
+
+    <string name="light_rain">Lluvia débil</string>
+    <string name="moderate_rain">LLuvia moderada</string>
+    <string name="heavy_intensity_rain">LLuvia muy intensa</string>
+    <string name="clear_sky">Cielo despejado</string>
+    <string name="few_clouds">Algunas nubes</string>
+    <string name="overcast_clouds">Nublado</string>
+    <string name="scattered_clouds">Nubes dispersas</string>
+    <string name="broken_clouds">Nubarrones</string>
+    <string name="shower_rain">LLuvia intensa</string>
+    <string name="thunderstorm">Tormenta</string>
+    <string name="rain">LLuvia</string>
+    <string name="snow">Nieve</string>
+    <string name="mist">Niebla</string>
+
+
+
 </resources>

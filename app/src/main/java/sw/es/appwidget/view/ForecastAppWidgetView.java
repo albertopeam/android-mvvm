@@ -19,6 +19,7 @@ import sw.es.appwidget.ForecastAppWidget;
 import sw.es.dagger2.BuildConfig;
 import sw.es.dagger2.R;
 import sw.es.domain.mapper.IconMapper;
+import sw.es.domain.mapper.StringMapper;
 import sw.es.model.local.Forecast;
 import sw.es.model.local.ForecastWeather;
 
@@ -35,12 +36,14 @@ public class ForecastAppWidgetView implements ForecastView{
     private Context context;
     private RemoteViews remoteView;
     private IconMapper iconMapper;
+    private StringMapper stringMapper;
 
 
     @Inject
-    public ForecastAppWidgetView(Context context, IconMapper iconMapper) {
+    public ForecastAppWidgetView(Context context, IconMapper iconMapper, StringMapper stringMapper) {
         this.context = context;
         this.iconMapper = iconMapper;
+        this.stringMapper = stringMapper;
         this.remoteView = new RemoteViews(context.getPackageName(), R.layout.app_widget);
     }
 
@@ -64,7 +67,7 @@ public class ForecastAppWidgetView implements ForecastView{
 
         List<ForecastWeather> forecastWeatherList = forecast.getForecastWeatherList();
         for(int i = 0; i < NUM_COLUMNS; i++) {
-            ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context, iconMapper);
+            ForecastColumnView forecastColumnView = new ForecastAppWidgetColumnView(context, iconMapper, stringMapper);
             RemoteViews remoteViews = forecastColumnView.build(i, forecast, forecastWeatherList.get(i));
             int viewId = forecastColumnView.viewId(i);
             remoteView.addView(viewId, remoteViews);
