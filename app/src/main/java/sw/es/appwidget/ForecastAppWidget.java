@@ -19,6 +19,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
  * Implementation of App Widget functionality.
  */
 //TODO: gestionar llegada de multiples widgetIds
+//TODO: implementar el delete y borrar de las shared el key:value
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
