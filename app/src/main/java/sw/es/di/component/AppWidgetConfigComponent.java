@@ -6,6 +6,7 @@ import sw.es.di.module.AppWidgetConfigModule;
 import sw.es.di.module.shared.AppSharedModule;
 import sw.es.di.module.shared.IconModule;
 import sw.es.di.module.shared.SchedulerModule;
+import sw.es.di.module.shared.StringTranslationModule;
 import sw.es.view.activity.widgetconfig.AppWidgetConfigActivity;
 import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
 
@@ -21,7 +22,9 @@ import sw.es.viewmodel.appwidgetconfig.AppWidgetConfigViewModel;
                 AppWidgetConfigModule.class,
                 SchedulerModule.class,
                 AppSharedModule.class,
-                IconModule.class
+                IconModule.class,
+                StringTranslationModule.class
+
         }
 )
 public interface AppWidgetConfigComponent {

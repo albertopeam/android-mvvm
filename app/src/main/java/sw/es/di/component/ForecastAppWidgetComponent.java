@@ -10,6 +10,7 @@ import sw.es.di.module.ForecastAppWidgetModule;
 import sw.es.di.module.shared.IconModule;
 import sw.es.di.module.shared.NetworkModule;
 import sw.es.di.module.shared.SchedulerModule;
+import sw.es.di.module.shared.StringTranslationModule;
 
 /**
  * Created by albertopenasamor on 2/11/15.
@@ -23,7 +24,8 @@ import sw.es.di.module.shared.SchedulerModule;
                 ForecastAppWidgetModule.class,
                 NetworkModule.class,
                 SchedulerModule.class,
-                IconModule.class
+                IconModule.class,
+                StringTranslationModule.class
         }
 )
 public interface ForecastAppWidgetComponent {

@@ -6,24 +6,26 @@ import android.widget.RemoteViews;
 
 import sw.es.dagger2.R;
 import sw.es.domain.mapper.IconMapper;
+import sw.es.domain.mapper.StringMapper;
 import sw.es.model.local.Forecast;
 import sw.es.model.local.ForecastWeather;
 
 /**
  * Created by alberto on 3/11/15.
  */
-//TODO: imagenes... recortar las imagenes de la lib meteocons
-//TODO: https://www.iconfinder.com/icons/110802/fog_sun_icon#size=128 o convertir a blanco o aplicar filtro, recoratar...
 public class ForecastAppWidgetColumnView implements ForecastColumnView {
 
 
     private Context context;
     private IconMapper iconMapper;
+    private StringMapper stringMapper;
 
 
-    public ForecastAppWidgetColumnView(Context context, IconMapper iconMapper) {
+    public ForecastAppWidgetColumnView(Context context, IconMapper iconMapper, StringMapper stringMapper) {
         this.context = context;
         this.iconMapper = iconMapper;
+        this.stringMapper = stringMapper;
+
     }
 
 
@@ -38,7 +40,7 @@ public class ForecastAppWidgetColumnView implements ForecastColumnView {
         remote.setImageViewResource(R.id.appwidget_icon, iconMapper.resourceFor(forecastWeather.getIcon()));
         remote.setTextViewText(R.id.appwidget_location, forecast.getName());
         remote.setTextViewText(R.id.appwidget_date, forecastWeather.getDatetimeFormatted());
-        remote.setTextViewText(R.id.appwidget_description, forecastWeather.getDescription());
+        remote.setTextViewText(R.id.appwidget_description, stringMapper.traslationFor(forecastWeather.getDescription()));
         remote.setTextViewText(R.id.appwidget_humidity, forecastWeather.getHumidityPercent());
         remote.setTextViewText(R.id.appwidget_cloudiness, forecastWeather.getCloudinessPercent());
         remote.setTextViewText(R.id.appwidget_temp, forecastWeather.getTempInCelsiusC());

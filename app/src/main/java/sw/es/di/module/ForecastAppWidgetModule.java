@@ -13,6 +13,7 @@ import sw.es.di.common.ForApplication;
 import sw.es.di.common.ListenScheduler;
 import sw.es.di.common.PerService;
 import sw.es.domain.mapper.IconMapper;
+import sw.es.domain.mapper.StringMapper;
 import sw.es.domain.repository.forecast.datastore.CloudForecastCityDataStore;
 import sw.es.domain.repository.forecast.usecase.ForecastFetchUseCase;
 import sw.es.domain.sharedprefs.AppShared;
@@ -28,8 +29,8 @@ public class ForecastAppWidgetModule {
 
     @Provides
     @PerService
-    ForecastView provideWeatherAppWidget(@ForApplication Context context, IconMapper iconMapper){
-        return new ForecastAppWidgetView(context, iconMapper);
+    ForecastView provideWeatherAppWidget(@ForApplication Context context, IconMapper iconMapper, StringMapper stringMapper){
+        return new ForecastAppWidgetView(context, iconMapper, stringMapper);
     }
 
 
