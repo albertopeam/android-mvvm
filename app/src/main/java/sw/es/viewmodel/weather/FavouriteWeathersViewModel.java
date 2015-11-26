@@ -20,6 +20,7 @@ import sw.es.viewmodel.abs.AbsViewModel;
 /**
  * Created by alberto on 15/10/15.
  */
+//TODO: cambiar por presenter y meter viewmodel nuevo, "Richa estructure"
 public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavouriteWeathersViewModel {
 
 
@@ -28,7 +29,7 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
     private WeatherRemoveUseCase weatherRemoveUseCase;//repo remove case
     private FetchFavouritesLocationsUseCase fetchFavouritesLocationsUseCase;//shared fetch locations
     private StoreFavouriteLocationUseCase storeFavouriteLocationUseCase;//shared store locations
-    private RemoveFavouriteLocationUseCase removeFavouriteLocationUseCase;
+    private RemoveFavouriteLocationUseCase removeFavouriteLocationUseCase;//shared remove location
     private FavouriteLocations favouriteLocations;//mem fav locations
     private boolean loading = false;
     private boolean empty = false;
@@ -54,8 +55,9 @@ public class FavouriteWeathersViewModel extends AbsViewModel implements AbsFavou
 
     @Override
     public void destroy() {
-        //TODO: cancelar las posibles peticiones.... subscriptions.... booleanos....
-        //TODO: isRunning
+        //TODO: falta el fetchFavouritesLocationsUseCase por cancelar...o modificar para que no haga tantas ops
+        weatherPullUseCase.cancel();
+        weatherRemoveUseCase.cancel();
         viewCallback = null;
     }
 

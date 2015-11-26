@@ -2,6 +2,7 @@ package sw.es.domain.repository.repo.repository;
 
 import rx.Observable;
 import rx.Scheduler;
+import rx.Subscription;
 import rx.functions.Action1;
 import sw.es.domain.repository.repo.criteria.LoadCriteria;
 import sw.es.domain.repository.repo.criteria.RemoveCriteria;
@@ -10,14 +11,13 @@ import sw.es.domain.repository.repo.datastore.DataStore;
 import sw.es.domain.repository.repo.datastore.DataStoreFactory;
 import sw.es.domain.repository.repo.exception.CriteriaExpiredException;
 import sw.es.domain.repository.repo.exception.NoMoreCriteriaException;
-import sw.es.domain.repository.repo.exception.NotFoundInDataStoreException;
 import sw.es.domain.repository.repo.outdate.Outdate;
 
 
 /**
  * Created by albertopenasamor on 22/10/15.
  */
-//TODO: gestionar la parada de los observables....Subscription.... OPCION: que lo gestione el caso de uso, y así se cancela desde afuera. sin guardar listas ni nada aquí dentro... QUIZA LA MEJOR
+//TODO: el commit y el remove solo tienen un datastore
 public class AbstractRepository<Model, Params> implements Repository<Model, Params> {
 
 
@@ -34,11 +34,11 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
 
 
     @Override
-    public void fetch(final Params params, final LoadCriteria loadCriteria, final LoadCallback<Model, Params> callback) {
+    public Subscription fetch(final Params params, final LoadCriteria loadCriteria, final LoadCallback<Model, Params> callback) {
         try {
             DataStore dataStore = dataStoreFactory.get(loadCriteria, params);
             Observable<Model> fetchObservable = dataStore.fetch(params);
-            fetchObservable
+            Subscription subscription = fetchObservable
                     .observeOn(publishScheduler)
                     .subscribe(new Action1<Model>() {
                         @Override
@@ -48,18 +48,10 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                     }, new Action1<Throwable>() {
                         @Override
                         public void call(Throwable throwable) {
-                            if (throwable instanceof NotFoundInDataStoreException) {
-                                try {
-                                    LoadCriteria newLoadCriteria = loadCriteria.next();
-                                    fetch(params, newLoadCriteria, callback);
-                                } catch (NoMoreCriteriaException e) {
-                                    callback.onFetchError(params, loadCriteria, e);
-                                }
-                            }else{
-                                callback.onFetchError(params, loadCriteria, throwable);
-                            }
+                            callback.onFetchError(params, loadCriteria, throwable);
                         }
                     });
+            return subscription;
         }catch (CriteriaExpiredException e){
             LoadCriteria newCriteria = null;
             try {
@@ -67,21 +59,21 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
             } catch (NoMoreCriteriaException e1) {
                 callback.onFetchError(params, loadCriteria, e1);
             }
-            fetch(params, newCriteria, callback);
+            return fetch(params, newCriteria, callback);
         }
     }
 
 
     @Override
-    public void commit(final Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
+    public Subscription commit(final Model model, final StoreCriteria storeCriteria, final CommitCallback callback) {
         DataStore dataStore = dataStoreFactory.get(storeCriteria);
         Observable<Boolean> storeObservable = dataStore.commit(model);
-        storeObservable
+        Subscription subscription = storeObservable
                 .observeOn(publishScheduler)
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean result) {
-                        if (result){
+                        if (result) {
                             outdate.setLastUpdate(model);
                         }
                         callback.onCommit(storeCriteria, result);
@@ -93,13 +85,14 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                         callback.onCommitError(storeCriteria, throwable);
                     }
                 });
+        return subscription;
     }
 
     @Override
-    public void remove(final Params params, final RemoveCriteria removeCriteria, final RemoveCallback callback) {
+    public Subscription remove(final Params params, final RemoveCriteria removeCriteria, final RemoveCallback callback) {
         DataStore dataStore = dataStoreFactory.get(removeCriteria);
-        Observable<Boolean> storeObservable = dataStore.remove(params);
-        storeObservable
+        Observable<Boolean> removeObservable = dataStore.remove(params);
+        Subscription subscription = removeObservable
                 .observeOn(publishScheduler)
                 .subscribe(new Action1<Boolean>() {
                     @Override
@@ -116,6 +109,7 @@ public class AbstractRepository<Model, Params> implements Repository<Model, Para
                         callback.onRemoveError(removeCriteria, throwable);
                     }
                 });
+        return subscription;
     }
 
 }

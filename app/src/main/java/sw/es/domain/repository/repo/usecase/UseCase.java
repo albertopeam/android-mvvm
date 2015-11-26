@@ -5,4 +5,5 @@ package sw.es.domain.repository.repo.usecase;
  */
 public interface UseCase<Params> {
     void run(Params params, UseCaseCallback callback);
+    void cancel();
 }
