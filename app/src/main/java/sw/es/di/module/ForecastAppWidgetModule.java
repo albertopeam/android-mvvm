@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import rx.Scheduler;
 import sw.es.appwidget.ForecastAppWidget;
+import sw.es.appwidget.RemoveAppWidget;
 import sw.es.appwidget.publisher.AppWidgetPublisher;
 import sw.es.appwidget.view.ForecastAppWidgetView;
 import sw.es.appwidget.view.ForecastView;
@@ -17,7 +18,6 @@ import sw.es.domain.mapper.StringMapper;
 import sw.es.domain.repository.forecast.datastore.CloudForecastCityDataStore;
 import sw.es.domain.repository.forecast.usecase.ForecastFetchUseCase;
 import sw.es.domain.sharedprefs.AppShared;
-import sw.es.domain.sharedprefs.SharedPrefs;
 import sw.es.network.WeatherBackendAPI;
 
 /**
@@ -48,12 +48,6 @@ public class ForecastAppWidgetModule {
         return publisher;
     }
 
-    @Provides
-    @PerService
-    AppShared provideAppShared(@ForApplication Context context){
-        return new SharedPrefs(context);
-    }
-
 
     @Provides
     @PerService
@@ -65,5 +59,12 @@ public class ForecastAppWidgetModule {
     @PerService
     ForecastFetchUseCase provideForecastFetchUseCase(CloudForecastCityDataStore cloudForecastCityDataStore){
         return new ForecastFetchUseCase(cloudForecastCityDataStore);
+    }
+
+
+    @Provides
+    @PerService
+    RemoveAppWidget provideRemoveAppWidget(AppShared appShared){
+        return new RemoveAppWidget(appShared);
     }
 }
