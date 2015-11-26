@@ -21,6 +21,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 //TODO: gestionar llegada de multiples widgetIds
 //TODO: quiza quitar el service y meter algún otro objeto que lo gestione mejor
 //TODO: implementar el delete y borrar de las shared el key:value
+//TODO: java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid item position 0(offset:1).state:1
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
@@ -43,13 +44,12 @@ public class ForecastAppWidget extends AppWidgetProvider {
         refreshWidgets(context, appWidgetIds);
     }
 
-
     @Override
-    public void onEnabled(Context context) {}
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        inyectar objeto para borrar
+    }
 
-
-    @Override
-    public void onDisabled(Context context) {}
 
 
     /**
@@ -75,6 +75,8 @@ public class ForecastAppWidget extends AppWidgetProvider {
             Log.e(TAG, "initializeInjections");
         }
         AndroidApp androidApp = (AndroidApp) context.getApplicationContext();
+        sobra esta inyección o meter otra diferente, porque esta se usa en otro lado
+
         ForecastAppWidgetComponent component = DaggerForecastAppWidgetComponent.builder()
                 .applicationComponent(androidApp.getApplicationComponent())
                 .forecastAppWidgetModule(new ForecastAppWidgetModule())

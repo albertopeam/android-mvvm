@@ -37,7 +37,7 @@ public class MaterialDesignIconMapper extends IconMapper{
         }else if (iconCode.equalsIgnoreCase("01n")){
             return R.drawable.icon_weather_night;
         }else if (iconCode.equalsIgnoreCase("02n")){
-            return R.drawable.icon_weather_cloudy;
+            return R.drawable.icon_weather_partlycloudy;
         }else if (iconCode.equalsIgnoreCase("03n")){
             return R.drawable.icon_weather_cloudy;
         }else if (iconCode.equalsIgnoreCase("04n")){
