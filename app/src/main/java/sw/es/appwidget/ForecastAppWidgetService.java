@@ -24,7 +24,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 
 //TODO: migrar de los putos services infernales....¿pueden correr varios a la vez? malo sera que por tiempo se lanzen a la vez...
 //TODO: se petan al arrancar la app con dos a la vez(dos widgets)
-//TODO: se intercambian los widgets cuando hay dos por ejemplo. Se mezclan una vez uno es una ciudad y la siguiente el otro
+//TODO: se intercambian los widgets cuando hay dos por ejemplo. Se mezclan una vez uno es una ciudad y la siguiente el otro. PROBABLEMENTE EL SERVICE....
 public class ForecastAppWidgetService extends Service implements UseCaseCallback<String, Forecast> {
 
 

@@ -18,9 +18,10 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 /**
  * Implementation of App Widget functionality.
  */
-//TODO: gestionar llegada de multiples widgetIds
+//TODO: gestionar llegada de multiples widgetIds - service. debe ser por lo que chocan
+//TODO: no actualiza bien cada hora....
 //TODO: quiza quitar el service y meter algún otro objeto que lo gestione mejor
-//TODO: implementar el delete y borrar de las shared el key:value
+//TODO: implementar el delete y borrar de las shared el key:value(en otro objeto)
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
