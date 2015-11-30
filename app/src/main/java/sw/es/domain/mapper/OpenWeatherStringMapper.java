@@ -22,7 +22,7 @@ public class OpenWeatherStringMapper extends StringMapper{
             return resources.getString(R.string.moderate_rain);
         }else if (name.equals("heavy intensity rain")){
             return resources.getString(R.string.heavy_intensity_rain);
-        }else if (name.equals("clear sky")){
+        }else if (name.equals("clear sky") || name.equals("sky is clear")){
             return resources.getString(R.string.clear_sky);
         }else if (name.equals("few clouds")){
             return resources.getString(R.string.few_clouds);

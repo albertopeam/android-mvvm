@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import javax.inject.Inject;
+
 import sw.es.android.AndroidApp;
 import sw.es.dagger2.BuildConfig;
 import sw.es.di.component.DaggerForecastAppWidgetComponent;
@@ -21,11 +23,12 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 //TODO: gestionar llegada de multiples widgetIds - service. debe ser por lo que chocan
 //TODO: no actualiza bien cada hora....
 //TODO: quiza quitar el service y meter algún otro objeto que lo gestione mejor
-//TODO: implementar el delete y borrar de las shared el key:value(en otro objeto)
+//TODO: java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid item position 0(offset:1).state:1
 public class ForecastAppWidget extends AppWidgetProvider {
 
 
     private static final String TAG = ForecastAppWidget.class.getSimpleName();
+    @Inject RemoveAppWidget removeAppWidget;
 
 
     /**
@@ -39,31 +42,32 @@ public class ForecastAppWidget extends AppWidgetProvider {
         if (DEBUG) {
             e(TAG, "onUpdate");
         }
-        initializeInjections(context);
         printAppWidgetIds(appWidgetIds);
         refreshWidgets(context, appWidgetIds);
     }
 
 
-    @Override
-    public void onEnabled(Context context) {}
-
-
-    @Override
-    public void onDisabled(Context context) {}
-
-
     /**
-     * This is called for every broadcast and before each of the above callback methods.
+     * Every call to the widget
      * @param context
      * @param intent
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (DEBUG) {
-            e(TAG, "onReceive");
-        }
+        initializeInjections(context);
         super.onReceive(context, intent);
+    }
+
+
+    /**
+     * Widget removed
+     * @param context
+     * @param appWidgetIds
+     */
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        removeAppWidget.run(appWidgetIds);
     }
 
 
@@ -92,7 +96,6 @@ public class ForecastAppWidget extends AppWidgetProvider {
             for (int i=0;appWidgetIds != null && i<appWidgetIds.length;i++){
                 e(TAG, "appWidgetId: " + appWidgetIds[i]);
             }
-
         }
     }
 
@@ -105,7 +108,5 @@ public class ForecastAppWidget extends AppWidgetProvider {
         for (Integer appWidgetId:appWidgetIds){
             context.startService(ForecastAppWidgetService.newInstance(context, appWidgetId));
         }
-
     }
-
 }
