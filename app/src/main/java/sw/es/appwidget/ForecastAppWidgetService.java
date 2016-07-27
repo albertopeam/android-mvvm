@@ -27,7 +27,7 @@ import static sw.es.dagger2.BuildConfig.DEBUG;
 //TODO: se intercambian los widgets cuando hay dos por ejemplo. Se mezclan una vez uno es una ciudad y la siguiente el otro. PROBABLEMENTE EL SERVICE....
 public class ForecastAppWidgetService extends Service implements UseCaseCallback<String, Forecast> {
 
-
+posible problema con las fechas, lanzando por la web el servicio me devuleve a las 15 y en el movil a las 16 la primera prediccion
     private static final String TAG = ForecastAppWidgetService.class.getSimpleName();
     private int startId;
     private int appWidgetId;
